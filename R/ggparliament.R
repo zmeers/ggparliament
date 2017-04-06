@@ -34,14 +34,14 @@ ggparliament <-
 function(data, party, seats1, seats2,
          style = c("dots", "arc"), 
          portion = 0.75, 
-         nrows = NULL,
+         nrows = 10,
          ...) {
 
     if (!missing(data)) {
-        party <- data[[as.character(substitute(party))]]
-        seats1 <- data[[as.character(substitute(seats1))]]
+        party <- data$party <- data[[as.character(substitute(party))]]
+        seats1 <- data$seats1 <- data[[as.character(substitute(seats1))]]
         if (!missing(seats2)) {
-            seats2 <- data[[as.character(substitute(seats2))]]
+            seats2 <- data$seats2 <- data[[as.character(substitute(seats2))]]
         }
     } else {
         party <- party
@@ -56,7 +56,7 @@ function(data, party, seats1, seats2,
             }
         }
     }
-    
+
     # remove superfluous theme elements
     simple_theme <- theme(axis.text.x = element_blank(), 
                           axis.text.y = element_blank(), 
@@ -92,14 +92,14 @@ function(data, party, seats1, seats2,
         
         # post-election
         p <- p + 
-          geom_rect(aes(fill = Party, xmax = xmax, xmin = xmin, ymax = 2, ymin = 1.5)) + 
-          geom_text(aes(y = 2.2, x = xmid, label = seats1, colour = Party))
+          geom_text(aes(y = 2.2, x = xmid, label = seats1, colour = party)) +
+          geom_rect(aes(fill = party, xmax = xmax, xmin = xmin, ymax = 2, ymin = 1.5), colour = NA)
           
         # pre-election
         if (!missing(seats2)) {
             p <- p +
-              geom_rect(aes(fill = Party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5)) + 
-              geom_text(aes(y = 1.2, x = xmid2, label = seats2, colour = Party))
+              geom_text(aes(y = 1.2, x = xmid2, label = seats2, colour = party)) + 
+              geom_rect(aes(fill = party, colour = party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5), colour = NA) 
         }
         
     } else if (style == "dots") {
@@ -110,14 +110,9 @@ function(data, party, seats1, seats2,
                            class = "data.frame",
                            row.names = seq_len(sum(seats1)))
         
-        # seats per row is circumference of each ring: (portion*pi*y)/dotsize
-        nperrow <- 12 + (1:100)*ceiling(1.75*pi)
-        if (is.null(nrows)) {
-            nrows <- which(cumsum(nperrow) > nrow(polar))[1L]
-            nperrow <- nperrow[1L:nrows]
-        } else {
-            nperrow <- nperrow[1L:nrows]
-        }
+        # seats per row is circumference of each ring
+        circ <- floor(2*(portion*nrows)*pi)
+        nperrow <- floor(seq(12, circ, length.out = nrows))
         
         # modify for based upon excess seats
         remainder <- sum(nperrow) - nrow(polar)
@@ -151,14 +146,14 @@ function(data, party, seats1, seats2,
         polar[["azimuth"]] <- head(pos, nrow(polar))
         
         polar <- polar[order(polar$azimuth, polar$radius),]
-        polar[["party"]] <- rep(party, times = seats1)
+        polar[["party"]] <- rep(levels(party), times = seats1)
         
         # make plot
         p <- ggplot(polar, aes(x = azimuth, y = radius, colour = party)) + 
           geom_point(...) + 
           coord_polar(start = -(portion*pi)) + 
           xlab("") + ylab("") +
-          xlim(c(0, 1)) + ylim(c(0, nrows))
+          xlim(c(0, 1)) + ylim(c(0, nrows + 3))
     }
     
     p + simple_theme

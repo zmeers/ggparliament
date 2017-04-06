@@ -6,7 +6,8 @@ This package attempts to implement "parliament plots" - visual representations o
 
 Here are some examples for a "small" parliament:
 
-```{r}
+
+```r
 library("ggplot2")
 library("ggparliament")
 
@@ -19,21 +20,32 @@ d <- data.frame(Party = c("D", "R", "I"),
 cols1 <- scale_color_manual(values = c("D" = "Blue", "I" = "Gray", "R" = "Red"))
 ggparliament(d, party = Party, seats1 = Number, 
              style = "dots", portion = 0.5, nrows = 6) + cols1
-             
+```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png)
+
+```r
 # arc-style
 cols2 <- scale_fill_manual(values = c("D" = "Blue", "I" = "Gray", "R" = "Red"))
 ggparliament(d, party = Party, seats1 = Number, style = "arc") + cols1 + cols2
+```
 
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-2.png)
+
+```r
 # double arc-style
 ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, 
              style = "arc") + cols1 + cols2
 ```
 
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-3.png)
+
 
 
 Here are some examples for a "large" parliament:
 
-```{r}
+
+```r
 # example
 d <- data.frame(Party = factor(c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA")),
                 Number = c(35, 184, 55, 84, 265, 54, 32, 27),
@@ -41,13 +53,23 @@ d <- data.frame(Party = factor(c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", 
 
 # dot-style
 ggparliament(d, party = Party, seats1 = Number, style = "dots", nrows = 15)
+```
 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+
+```r
 # arc-style
 ggparliament(d, party = Party, seats1 = Number, style = "arc")
+```
 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-2.png)
+
+```r
 # double arc-style
 ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, style = "arc")
 ```
+
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-3.png)
 
 ## Requirements and Installation
 
