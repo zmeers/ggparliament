@@ -1,0 +1,17 @@
+# Parliament plots
+
+```{r}
+# example
+d <- data.frame(Party = factor(c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA")),
+                Number = c(35, 184, 55, 84, 265, 54, 32, 27),
+                NumberPre = c(20, 166, 90, 40, 210, 130, 60, 20))
+
+# dot-style
+ggparliament(d, party = Party, seats1 = Number, style = "dots")
+
+# arc-style
+ggparliament(d, party = Party, seats1 = Number, style = "arc")
+
+# double arc-style
+ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, style = "arc")
+```

@@ -1,0 +1,20 @@
+Package: ggparliament
+Type: Package
+Title: Parliament Plots
+Description: Simple parliament plots using 'ggplot2'.
+License: MIT + file LICENSE
+Version: 0.1.1
+Date: 2017-04-06
+Authors@R: c(person("Thomas J.", "Leeper",
+                    role = c("aut", "cre"),
+                    email = "thosjleeper@gmail.com")
+             )
+URL: https://github.com/leeper/ggparliament
+BugReports: https://github.com/leeper/ggparliament/issues
+Imports:
+    ggplot2
+Suggests:
+    knitr,
+    testthat
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
