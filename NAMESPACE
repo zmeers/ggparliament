@@ -2,3 +2,5 @@
 
 export(ggparliament)
 import(ggplot2)
+importFrom(stats,aggregate)
+importFrom(utils,head)

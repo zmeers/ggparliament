@@ -4,8 +4,9 @@
 \alias{ggparliament}
 \title{Parliament Plots}
 \usage{
-ggparliament(data, party, seats1, seats2, style = c("dots", "arc"),
-  portion = 0.75, nrows = 15, ...)
+ggparliament(data, party, seats1, seats2, style = c("dots", "arc", "bar",
+  "pie", "rose"), label = c("name", "seats", "both", "neither"),
+  portion = 0.75, nrows = 10, size = 2L, ...)
 }
 \arguments{
 \item{data}{A data frame}
@@ -18,11 +19,15 @@ ggparliament(data, party, seats1, seats2, style = c("dots", "arc"),
 
 \item{style}{A character string specifying the style of the graph. Either \dQuote{arc} or \dQuote{dots}.}
 
+\item{label}{A character string specifying the type of label to place next to each party group.}
+
 \item{portion}{A numeric value specifying what proportion of a full circle should be used for drawing the plot.}
 
 \item{nrows}{If \code{style = "dots"}, a numeric value indicating how many rows to use.}
 
-\item{\dots}{Additional arguments passed to \code{\link[ggplot2]{geom_point}}.}
+\item{size}{A numeric value specifying the size of dots if \code{style = "dots"}.}
+
+\item{\dots}{Ignored}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.

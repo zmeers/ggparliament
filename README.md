@@ -12,33 +12,44 @@ library("ggplot2")
 library("ggparliament")
 
 # example data (114th vs 115th US Senate)
-d <- data.frame(Party = c("D", "R", "I"),
+d <- data.frame(Party = factor(c("D", "R", "I"), levels = c("D", "R", "I")),
                 Number = c(46, 52, 2),
                 NumberPre = c(53, 45, 2))
 
 # dot-style
-cols1 <- scale_color_manual(values = c("D" = "Blue", "I" = "Gray", "R" = "Red"))
+cols1 <- scale_color_manual(values = c("D" = "blue", "R" = "red", "I" = "gray40"))
 ggparliament(d, party = Party, seats1 = Number, 
-             style = "dots", portion = 0.5, nrows = 6) + cols1
+  style = "dots", portion = 0.5, nrows = 6, size = 5) + 
+  theme_void() + ggtitle("Partisan Composition of the 115th US Senate") + cols1
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png)
+![plot of chunk small](figure/small-1.png)
 
 ```r
 # arc-style
-cols2 <- scale_fill_manual(values = c("D" = "Blue", "I" = "Gray", "R" = "Red"))
-ggparliament(d, party = Party, seats1 = Number, style = "arc") + cols1 + cols2
+cols2 <- scale_fill_manual(values = c("D" = "blue", "I" = "gray40", "R" = "red"))
+ggparliament(d, party = Party, seats1 = Number, 
+  portion = 0.5, style = "arc") + cols1 + cols2
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-2.png)
+![plot of chunk small](figure/small-2.png)
 
 ```r
 # double arc-style
 ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, 
-             style = "arc") + cols1 + cols2
+  portion = 0.5, style = "arc", label = "both") + cols1 + cols2 + 
+  ggtitle("Party Seat Shares in the 115th versus 114th US Senates")
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-3.png)
+![plot of chunk small](figure/small-3.png)
+
+```r
+# bar-style
+ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, 
+  style = "bar", label = "both") + theme_void() + cols1 + cols2
+```
+
+![plot of chunk small](figure/small-4.png)
 
 
 
@@ -47,29 +58,29 @@ Here are some examples for a "large" parliament:
 
 ```r
 # example
-d <- data.frame(Party = factor(c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA")),
-                Number = c(35, 184, 55, 84, 265, 54, 32, 27),
-                NumberPre = c(20, 166, 90, 40, 210, 130, 60, 20))
+d2 <- data.frame(Party = factor(c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA")),
+                 Number = c(35, 184, 55, 84, 265, 54, 32, 27),
+                 NumberPre = c(20, 166, 90, 40, 210, 130, 60, 20))
 
 # dot-style
-ggparliament(d, party = Party, seats1 = Number, style = "dots", nrows = 15)
+ggparliament(d2, party = Party, seats1 = Number, style = "dots", label = "seats", nrows = 15)
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+![plot of chunk large](figure/large-1.png)
 
 ```r
 # arc-style
-ggparliament(d, party = Party, seats1 = Number, style = "arc")
+ggparliament(d2, party = Party, seats1 = Number, style = "arc")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-2.png)
+![plot of chunk large](figure/large-2.png)
 
 ```r
 # double arc-style
-ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, style = "arc")
+ggparliament(d2, party = Party, seats1 = Number, seats2 = NumberPre, style = "arc", label = "seats")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-3.png)
+![plot of chunk large](figure/large-3.png)
 
 ## Requirements and Installation
 
@@ -87,3 +98,4 @@ if (!require("ghit")) {
 }
 install_github("leeper/ggparliament")
 ```
+

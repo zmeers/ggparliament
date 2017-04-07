@@ -5,9 +5,11 @@
 #' @param seats1 The name of a variable in \code{data} containing the number of seats for each party. If \code{data} is missing, this can be a vector of seat counts.
 #' @param seats2 Optionally, the name of a variable in \code{data} containing a second set of numbers of seats for each party. If \code{data} is missing, this can be a vector of seat counts. This can be useful for showing, e.g., pre-/post-election changes in numbers of seats.
 #' @param style A character string specifying the style of the graph. Either \dQuote{arc} or \dQuote{dots}.
+#' @param label A character string specifying the type of label to place next to each party group.
 #' @param portion A numeric value specifying what proportion of a full circle should be used for drawing the plot.
 #' @param nrows If \code{style = "dots"}, a numeric value indicating how many rows to use.
-#' @param \dots Additional arguments passed to \code{\link[ggplot2]{geom_point}}.
+#' @param size A numeric value specifying the size of dots if \code{style = "dots"}.
+#' @param \dots Ignored
 #' @details This transforms a data frame of party seat counts into ggplot scatterplot using \code{\link[ggplot2]{coord_polar}}.
 #' @return A \code{\link[ggplot2]{ggplot}} object.
 #' @references
@@ -29,12 +31,16 @@
 #' ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, style = "arc")
 #' 
 #' @import ggplot2
+#' @importFrom stats aggregate
+#' @importFrom utils head
 #' @export
 ggparliament <- 
 function(data, party, seats1, seats2,
-         style = c("dots", "arc"), 
+         style = c("dots", "arc", "bar", "pie", "rose"), 
+         label = c("name", "seats", "both", "neither"),
          portion = 0.75, 
          nrows = 10,
+         size = 2L,
          ...) {
 
     if (!missing(data)) {
@@ -66,10 +72,31 @@ function(data, party, seats1, seats2,
                           panel.grid.minor = element_blank())
 
     
+    # labels
+    label <- match.arg(label)
+    labeltext1 <- switch(label,
+      name = party,
+      seats = as.character(seats1),
+      both = paste0(party, " (", seats1, ")"),
+      neither = rep("", length(party))
+    )
+    if (!missing(seats2)) {
+        labeltext2 <- switch(label,
+          name = party,
+          seats = as.character(seats2),
+          both = paste0(party, " (", seats2, ")"),
+          neither = rep("", length(party))
+        )
+    }
+    
     # plot type
     style <- match.arg(style)
-    if (style == "arc") {
-
+    if (style %in% c("arc", "bar")) {
+        
+        if (style == "bar") {
+            portion <- 1L
+        }
+        
         # post-election
         data$share <- portion * (seats1 / sum(seats1))
         data$xmax <- cumsum(data$share)
@@ -85,21 +112,23 @@ function(data, party, seats1, seats2,
         }
 
         # setup plot
-        p <- ggplot(data) + 
-          coord_polar(theta = "x", start = -(portion*pi)) + 
-          xlab("") + ylab("") +
-          xlim(c(0, 1)) + ylim(c(0, 2.3))
+        p <- ggplot(data) + xlab("") + ylab("") + xlim(c(0, 1)) + ylim(c(0, 2.3))
+        if (style == "arc") {
+            p <- p + coord_polar(theta = "x", start = -(portion*pi))
+        }
         
         # post-election
-        p <- p + 
-          geom_text(aes(y = 2.2, x = xmid, label = seats1, colour = party)) +
-          geom_rect(aes(fill = party, xmax = xmax, xmin = xmin, ymax = 2, ymin = 1.5), colour = NA)
+        if (label != "neither") {
+            p <- p + geom_text(aes(y = 2.2, x = xmid, label = labeltext1, colour = party))
+        }
+        p <- p + geom_rect(aes(fill = party, xmax = xmax, xmin = xmin, ymax = 2, ymin = 1.5), colour = NA)
           
         # pre-election
         if (!missing(seats2)) {
-            p <- p +
-              geom_text(aes(y = 1.2, x = xmid2, label = seats2, colour = party)) + 
-              geom_rect(aes(fill = party, colour = party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5), colour = NA) 
+            if (label != "neither") {
+                p <- p + geom_text(aes(y = 1.2, x = xmid2, label = labeltext2, colour = party))
+            }
+            p <- p + geom_rect(aes(fill = party, colour = party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5), colour = NA) 
         }
         
     } else if (style == "dots") {
@@ -118,7 +147,6 @@ function(data, party, seats1, seats2,
         remainder <- sum(nperrow) - nrow(polar)
         i <- nrows
         while (remainder > 0) {
-            ## NEED TO MODIFY THIS TO SUBTRACT MORE BASED UPON ROW
             nperrow[i] <- nperrow[i] - 1L
             remainder <- remainder - 1L
             if (i == 3) {
@@ -128,10 +156,9 @@ function(data, party, seats1, seats2,
             }
         }
         while (remainder < 0) {
-            ## NEED TO MODIFY THIS TO ADD MORE BASED UPON ROW
             nperrow[i] <- nperrow[i] + 1L
             remainder <- remainder + 1L
-            if (i == 3) {
+            if (i == 1) {
                 i <- nrows
             } else {
                 i <- i - 1L
@@ -150,10 +177,26 @@ function(data, party, seats1, seats2,
         
         # make plot
         p <- ggplot(polar, aes(x = azimuth, y = radius, colour = party)) + 
-          geom_point(...) + 
           coord_polar(start = -(portion*pi)) + 
           xlab("") + ylab("") +
-          xlim(c(0, 1)) + ylim(c(0, nrows + 3))
+          xlim(c(0, 1)) + ylim(c(0, nrows + 8))
+          
+        if (label != "neither") {
+            labeldata <- aggregate(azimuth ~ party, data = polar, FUN = mean, na.rm = TRUE)
+            labeldata[["labeltext"]] <- labeltext1
+            labeldata[["y"]] <- nrows
+            p <- p + geom_text(aes(x = azimuth, y = y, label = labeltext), data = labeldata, nudge_y = 6, inherit.aes = FALSE)
+        }
+        
+        p <- p + geom_point(size = size)
+        
+    } else if (style == "pie") {
+        stop("style 'pie' not currently implemented")
+    } else if (style == "rose") {
+        p <- ggplot(, aes(x = factor(party), y = seats1, fill = factor(party))) + 
+          xlab("") + ylab("") + 
+          geom_bar(width = 1, stat = "identity") + 
+          coord_polar(theta = "x")
     }
     
     p + simple_theme

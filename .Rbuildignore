@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*\.yml$
+Makefile
+^README\.html$
