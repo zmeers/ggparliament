@@ -6,7 +6,7 @@
 \usage{
 ggparliament(data, party, seats1, seats2, style = c("dots", "arc", "bar",
   "pie", "rose"), label = c("name", "seats", "both", "neither"),
-  portion = 0.75, nrows = 10, size = 2L, ...)
+  portion = 0.75, nrows = 10, size = 2L, total = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame}
@@ -26,6 +26,8 @@ ggparliament(data, party, seats1, seats2, style = c("dots", "arc", "bar",
 \item{nrows}{If \code{style = "dots"}, a numeric value indicating how many rows to use.}
 
 \item{size}{A numeric value specifying the size of dots if \code{style = "dots"}.}
+
+\item{total}{A numeric value indicating the font size of a text label indicating the number of seats in the parliament. If \code{NULL} (the default), this is omitted.}
 
 \item{\dots}{Ignored}
 }

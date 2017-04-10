@@ -21,15 +21,15 @@ d <- data.frame(Party = factor(c("D", "R", "I"), levels = c("D", "R", "I")),
 # dot-style
 cols1 <- scale_color_manual(values = c("D" = "blue", "R" = "red", "I" = "gray40"))
 ggparliament(d, party = Party, seats1 = Number, 
-  style = "dots", portion = 0.5, nrows = 6, size = 5) + 
-  theme_void() + ggtitle("Partisan Composition of the 115th US Senate") + cols1
+  style = "dots", portion = 0.5, nrows = 6, size = 5) + cols1 + 
+  theme_void() + ggtitle("Partisan Composition of the 115th US Senate")
 ```
 
 ![plot of chunk small](figure/small-1.png)
 
 ```r
 # arc-style
-cols2 <- scale_fill_manual(values = c("D" = "blue", "I" = "gray40", "R" = "red"))
+cols2 <- scale_fill_manual(values = c("D" = "blue", "R" = "red", "I" = "gray40"))
 ggparliament(d, party = Party, seats1 = Number, 
   portion = 0.5, style = "arc") + cols1 + cols2
 ```
@@ -39,8 +39,9 @@ ggparliament(d, party = Party, seats1 = Number,
 ```r
 # double arc-style
 ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, 
-  portion = 0.5, style = "arc", label = "both") + cols1 + cols2 + 
-  ggtitle("Party Seat Shares in the 115th versus 114th US Senates")
+  portion = 0.5, style = "arc", label = "both", total = 6) + cols1 + cols2 + 
+  ggtitle("Party Seat Shares in the 115th versus 114th US Senates") +
+  geom_segment(aes(x = 0.25, xend = 0.25, y = 0.5, yend = 2), linetype = "dashed")
 ```
 
 ![plot of chunk small](figure/small-3.png)
@@ -65,7 +66,7 @@ d2 <- data.frame(Party = factor(c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP",
                  NumberPre = c(20, 166, 90, 40, 210, 130, 60, 20))
 
 # dot-style
-ggparliament(d2, party = Party, seats1 = Number, style = "dots", label = "seats", nrows = 15)
+ggparliament(d2, party = Party, seats1 = Number, style = "dots", label = "seats", nrows = 15, total = 6)
 ```
 
 ![plot of chunk large](figure/large-1.png)

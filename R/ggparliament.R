@@ -9,6 +9,7 @@
 #' @param portion A numeric value specifying what proportion of a full circle should be used for drawing the plot.
 #' @param nrows If \code{style = "dots"}, a numeric value indicating how many rows to use.
 #' @param size A numeric value specifying the size of dots if \code{style = "dots"}.
+#' @param total A numeric value indicating the font size of a text label indicating the number of seats in the parliament. If \code{NULL} (the default), this is omitted.
 #' @param \dots Ignored
 #' @details This transforms a data frame of party seat counts into ggplot scatterplot using \code{\link[ggplot2]{coord_polar}}.
 #' @return A \code{\link[ggplot2]{ggplot}} object.
@@ -41,6 +42,7 @@ function(data, party, seats1, seats2,
          portion = 0.75, 
          nrows = 10,
          size = 2L,
+         total = NULL,
          ...) {
 
     if (!missing(data)) {
@@ -119,7 +121,7 @@ function(data, party, seats1, seats2,
         
         # post-election
         if (label != "neither") {
-            p <- p + geom_text(aes(y = 2.2, x = xmid, label = labeltext1, colour = party))
+            p <- p + geom_text(aes(y = 2.2, x = xmid, label = labeltext1, color = party))
         }
         p <- p + geom_rect(aes(fill = party, xmax = xmax, xmin = xmin, ymax = 2, ymin = 1.5), colour = NA)
           
@@ -129,6 +131,9 @@ function(data, party, seats1, seats2,
                 p <- p + geom_text(aes(y = 1.2, x = xmid2, label = labeltext2, colour = party))
             }
             p <- p + geom_rect(aes(fill = party, colour = party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5), colour = NA) 
+        }
+        if (!is.null(total)) {
+            p <- p + geom_text(aes(x = 0.25, y = 0.2), label = sum(seats1), size = total, color = "black")
         }
         
     } else if (style == "dots") {
@@ -186,6 +191,10 @@ function(data, party, seats1, seats2,
             labeldata[["labeltext"]] <- labeltext1
             labeldata[["y"]] <- nrows
             p <- p + geom_text(aes(x = azimuth, y = y, label = labeltext), data = labeldata, nudge_y = 6, inherit.aes = FALSE)
+        }
+        
+        if (!is.null(total)) {
+            p <- p + geom_text(aes(x = 0.25, y = 0.2), label = sum(seats1), size = total, color = "black")
         }
         
         p <- p + geom_point(size = size)
