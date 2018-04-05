@@ -61,18 +61,17 @@ ggparliament(d2, party = Party, seats1 = Number, seats2 = NumberPre, style = "ar
 
 ## Requirements and Installation
 
-[![CRAN](http://www.r-pkg.org/badges/version/ggparliament)](https://cran.r-project.org/package=ggparliament)
+[![CRAN](https://www.r-pkg.org/badges/version/ggparliament)](https://cran.r-project.org/package=ggparliament)
 [![Build Status](https://travis-ci.org/leeper/ggparliament.svg?branch=master)](https://travis-ci.org/leeper/ggparliament)
-[![codecov.io](http://codecov.io/github/leeper/ggparliament/coverage.svg?branch=master)](http://codecov.io/github/leeper/ggparliament?branch=master)
+[![codecov.io](https://codecov.io/github/leeper/ggparliament/coverage.svg?branch=master)](https://codecov.io/github/leeper/ggparliament?branch=master)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
-The development version of this package can be installed directly from GitHub using `ghit`:
+The development version of this package can be installed directly from GitHub using:
 
 ```R
-if (!require("ghit")) {
-    install.packages("ghit")
-    library("ghit")
+if (!require("remotes")) {
+    install.packages("remotes")
 }
-install_github("leeper/ggparliament")
+remotes::install_github("leeper/ggparliament")
 ```
 
