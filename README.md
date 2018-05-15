@@ -22,13 +22,12 @@ data <- US_congress
 data <- data[which(data$congress == 115 & data$chamber == "upper"),]
 
 #lets plot these results
-p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
-                 #aesthetics for the plot
-                 style = c("dots"), portion = 0.5, nrows = 5, size = 2,
-                 #label the parties by their name
-                 label = c("name"))
+ggparl_dots(data = data, party = "party_short", seats1 = "seats",
+  #aesthetics for the plot
+  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
+  #label the parties by their name
+  label = c("name"))
 
-p
 ```
 
 ```{r}
@@ -38,20 +37,18 @@ col_data <- data.frame(party = c("Democrats", "Republicans", "Other"),
 data <- merge(data, col_data, by = "party")
 
 #add this to the plot
-p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
-                 style = c("dots"), portion = 0.5, nrows = 5, size = 2,
-                 label = c("name"), colour = "colour")
+ggparl_dots(data = data, party = "party_short", seats1 = "seats",
+  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
+  label = c("name"), colour = "colour")
 
-p
 ```
 
 ```{r}
 #a party needs >50% of the seats for control of the senate
-p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
-                 style = c("dots"), portion = 0.5, nrows = 5, size = 2,
-                 label = c("both"), colour = "colour", segment = 0.5)
+ggparl_dots(data = data, party = "party_short", seats1 = "seats",
+  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
+  label = c("both"), colour = "colour", segment = 0.5)
 
-p
 ```
 
 ```{r}
@@ -60,12 +57,10 @@ control_data <- data.frame(party = c("Democrats", "Republicans", "Other"),
                            control = c(NA, 1, NA))
 data <- merge(data, control_data, by = "party")
 
-p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
-                 style = c("dots"), portion = 0.5, nrows = 5, size = 2,
+ggparl_dots(data = data, party = "party_short", seats1 = "seats",
+  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
+  label = c("both"), colour = "colour", segment = 0.5, government = "control")
 
-          label = c("both"), colour = "colour", segment = 0.5, government = "control")
-
-p
 ```
 
 ```{r}
@@ -81,10 +76,9 @@ control_data <- data.frame(party = c("Democrats", "Republicans", "Other"),
                            control = c(NA, 1, NA))
 data <- merge(data, control_data, by = "party")
 
-p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
-                 style = c("dots"), portion = 0.5, nrows = 5, size = 2,
-                 label = c("both"), colour = "colour", segment = 0.5, government = "control", group = "chamber",
-                 autoscale = "yes")
-
+ggparl_dots(data = data, party = "party_short", seats1 = "seats",
+  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
+  label = c("both"), colour = "colour", segment = 0.5, government = "control", group = "chamber",
+  autoscale = "yes")
 
 ```
