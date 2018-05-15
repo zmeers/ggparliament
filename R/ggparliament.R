@@ -17,29 +17,29 @@
 #' \url{http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart}
 #'
 #' @examples
-#' d <- data.frame(Party = c("GUE/NGL", "S&D", "Greens/EFA", 
+#' d <- data.frame(Party = c("GUE/NGL", "S&D", "Greens/EFA",
 #'                           "ALDE", "EPP", "ECR", "EFD", "NA"),
 #'                 Number = c(35, 184, 55, 84, 265, 54, 32, 27),
 #'                 NumberPre = c(20, 166, 90, 40, 210, 130, 60, 20))
-#' 
+#'
 #' # dot-type
 #' ggparliament(d, party = Party, seats1 = Number)
-#' 
+#'
 #' # arc-type
 #' ggparliament(d, party = Party, seats1 = Number, style = "arc")
-#' 
+#'
 #' # arc-type with pre/post changes
 #' ggparliament(d, party = Party, seats1 = Number, seats2 = NumberPre, style = "arc")
-#' 
+#'
 #' @import ggplot2
 #' @importFrom stats aggregate
 #' @importFrom utils head
 #' @export
-ggparliament <- 
+ggparliament <-
 function(data, party, seats1, seats2,
-         style = c("dots", "arc", "bar", "pie", "rose"), 
+         style = c("dots", "arc", "bar", "pie", "rose"),
          label = c("name", "seats", "both", "neither"),
-         portion = 0.75, 
+         portion = 0.75,
          nrows = 10,
          size = 2L,
          total = NULL,
@@ -66,14 +66,14 @@ function(data, party, seats1, seats2,
     }
 
     # remove superfluous theme elements
-    simple_theme <- theme(axis.text.x = element_blank(), 
-                          axis.text.y = element_blank(), 
+    simple_theme <- theme(axis.text.x = element_blank(),
+                          axis.text.y = element_blank(),
                           axis.ticks.x = element_blank(),
                           axis.ticks.y = element_blank(),
-                          panel.grid.major = element_blank(), 
+                          panel.grid.major = element_blank(),
                           panel.grid.minor = element_blank())
 
-    
+
     # labels
     label <- match.arg(label)
     labeltext1 <- switch(label,
@@ -90,21 +90,21 @@ function(data, party, seats1, seats2,
           neither = rep("", length(party))
         )
     }
-    
+
     # plot type
     style <- match.arg(style)
     if (style %in% c("arc", "bar")) {
-        
+
         if (style == "bar") {
             portion <- 1L
         }
-        
+
         # post-election
         data$share <- portion * (seats1 / sum(seats1))
         data$xmax <- cumsum(data$share)
         data$xmin <- c(0, head(data$xmax, n= -1))
         data$xmid <- rowMeans(cbind(data$xmin, data$xmax))
-        
+
         # pre-election
         if (!missing(seats2)) {
             data$share2 <- portion * (seats2 / sum(seats2))
@@ -118,24 +118,24 @@ function(data, party, seats1, seats2,
         if (style == "arc") {
             p <- p + coord_polar(theta = "x", start = -(portion*pi))
         }
-        
+
         # post-election
         if (label != "neither") {
             p <- p + geom_text(aes(y = 2.2, x = xmid, label = labeltext1, color = party))
         }
         p <- p + geom_rect(aes(fill = party, xmax = xmax, xmin = xmin, ymax = 2, ymin = 1.5), colour = NA)
-          
+
         # pre-election
         if (!missing(seats2)) {
             if (label != "neither") {
                 p <- p + geom_text(aes(y = 1.2, x = xmid2, label = labeltext2, colour = party))
             }
-            p <- p + geom_rect(aes(fill = party, colour = party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5), colour = NA) 
+            p <- p + geom_rect(aes(fill = party, colour = party, xmax = xmax2, xmin = xmin2, ymax = 1, ymin = 0.5), colour = NA)
         }
         if (!is.null(total)) {
             p <- p + geom_text(aes(x = 0.25, y = 0.2), label = sum(seats1), size = total, color = "black")
         }
-        
+
     } else if (style == "dots") {
 
         # construct new data structure
@@ -143,11 +143,11 @@ function(data, party, seats1, seats2,
                                 radius = numeric(sum(seats1))),
                            class = "data.frame",
                            row.names = seq_len(sum(seats1)))
-        
+
         # seats per row is circumference of each ring
         circ <- floor(2*(portion*nrows)*pi)
         nperrow <- floor(seq(12, circ, length.out = nrows))
-        
+
         # modify for based upon excess seats
         remainder <- sum(nperrow) - nrow(polar)
         i <- nrows
@@ -169,44 +169,44 @@ function(data, party, seats1, seats2,
                 i <- i - 1L
             }
         }
-        
+
         # y position (which ring)
         ring <- rep(seq_len(nrows) + 3L, times = nperrow)
         polar[["radius"]] <- head(ring, nrow(polar))
         # x position within ring
         pos <- unlist(lapply(nperrow, function(x) seq(0, portion, length.out = x)))
         polar[["azimuth"]] <- head(pos, nrow(polar))
-        
+
         polar <- polar[order(polar$azimuth, polar$radius),]
         polar[["party"]] <- rep(levels(party), times = seats1)
-        
+
         # make plot
-        p <- ggplot(polar, aes(x = azimuth, y = radius, colour = party)) + 
-          coord_polar(start = -(portion*pi)) + 
+        p <- ggplot(polar, aes(x = azimuth, y = radius, colour = party)) +
+          coord_polar(start = -(portion*pi)) +
           xlab("") + ylab("") +
           xlim(c(0, 1)) + ylim(c(0, nrows + 8))
-          
+
         if (label != "neither") {
             labeldata <- aggregate(azimuth ~ party, data = polar, FUN = mean, na.rm = TRUE)
             labeldata[["labeltext"]] <- labeltext1
             labeldata[["y"]] <- nrows
             p <- p + geom_text(aes(x = azimuth, y = y, label = labeltext), data = labeldata, nudge_y = 6, inherit.aes = FALSE)
         }
-        
+
         if (!is.null(total)) {
             p <- p + geom_text(aes(x = 0.25, y = 0.2), label = sum(seats1), size = total, color = "black")
         }
-        
+
         p <- p + geom_point(size = size)
-        
+
     } else if (style == "pie") {
         stop("style 'pie' not currently implemented")
     } else if (style == "rose") {
-        p <- ggplot(, aes(x = factor(party), y = seats1, fill = factor(party))) + 
-          xlab("") + ylab("") + 
-          geom_bar(width = 1, stat = "identity") + 
+        p <- ggplot(, aes(x = factor(party), y = seats1, fill = factor(party))) +
+          xlab("") + ylab("") +
+          geom_bar(width = 1, stat = "identity") +
           coord_polar(theta = "x")
     }
-    
+
     p + simple_theme
 }
