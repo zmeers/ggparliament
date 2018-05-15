@@ -28,6 +28,10 @@ p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
                  #label the parties by their name
                  label = c("name"))
 
+p
+```
+
+```{r}
 #add colour data for the parties to make the chart intelligible
 col_data <- data.frame(party = c("Democrats", "Republicans", "Other"),
                        colour = c("Blue", "Red", "Grey"))
@@ -38,11 +42,19 @@ p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
                  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
                  label = c("name"), colour = "colour")
 
+p
+```
+
+```{r}
 #a party needs >50% of the seats for control of the senate
 p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
                  style = c("dots"), portion = 0.5, nrows = 5, size = 2,
                  label = c("both"), colour = "colour", segment = 0.5)
 
+p
+```
+
+```{r}
 #republicans clearly have control of the senate, lets make this explicit in the graph
 control_data <- data.frame(party = c("Democrats", "Republicans", "Other"),
                            control = c(NA, 1, NA))
@@ -53,6 +65,7 @@ p <- ggparl_dots(data = data, party = "party_short", seats1 = "seats",
 
           label = c("both"), colour = "colour", segment = 0.5, government = "control")
 
+p
 ```
 
 ```{r}
