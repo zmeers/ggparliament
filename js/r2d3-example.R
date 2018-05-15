@@ -47,3 +47,10 @@ r2d3(data = dat_ordered,
      dependencies = system.file('js/d3-parliament.js', package = 'ggparliament'),
      css = system.file('js/german2017.css', package = 'ggparliament'),
      d3_version = '4', viewer = 'browser')
+
+# Issue 4 ####
+# Problem: d3-parliament modifies the svg element in html
+# See    : While using r2d3, svg is provided by r2d3, this is so that dynamic sizing can occur (https://github.com/rstudio/r2d3#d3-variables).
+#          Related was one of the PRs I created in the official repo: https://github.com/geoffreybr/d3-parliament/pull/1
+# Note   : In this example, width and height is explicitly set at the js/d3plot.js file. However, the script would default to 500 and still modify
+#          the parent svg, even without this.
