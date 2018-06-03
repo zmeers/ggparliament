@@ -12,6 +12,7 @@ Authors@R: c(person("Thomas J.", "Leeper",
              )
 URL: https://github.com/leeper/ggparliament
 BugReports: https://github.com/leeper/ggparliament/issues
+LazyData: true
 Imports:
     stats,
     utils,
