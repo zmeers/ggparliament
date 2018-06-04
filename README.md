@@ -5,17 +5,6 @@ load("election_data.rda")
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
-
-    ## ✔ ggplot2 2.2.1.9000     ✔ purrr   0.2.4     
-    ## ✔ tibble  1.4.2          ✔ dplyr   0.7.5     
-    ## ✔ tidyr   0.8.1          ✔ stringr 1.3.1     
-    ## ✔ readr   1.1.1          ✔ forcats 0.3.0
-
-    ## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-
 Parliament plots
 ================
 
@@ -110,7 +99,7 @@ uk_parliament <- combine_opposingbenches(left = leftside, right = rightside)
 uk_parliament
 ```
 
-![](parliament_dotplots_example_files/figure-markdown_github/unnamed-chunk-2-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 Semicircle parliament
 ---------------------
@@ -155,7 +144,7 @@ ggplot(us_congress1, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = us_congress1$colour, limits = us_congress1$party_short)
 ```
 
-![](parliament_dotplots_example_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 ``` r
 senate <- ggplot(us_senate, aes(x=x, y=y, colour=party_long)) +
@@ -169,7 +158,7 @@ senate <- ggplot(us_senate, aes(x=x, y=y, colour=party_long)) +
 senate 
 ```
 
-![](parliament_dotplots_example_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 ``` r
 germany <- election_data %>%
@@ -185,7 +174,7 @@ ggplot(germany, aes(x,y,colour=party_short))+
   scale_colour_manual(values = germany$colour, limits=germany$party_short)
 ```
 
-![](parliament_dotplots_example_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
 Horseshoe parliament
 --------------------
@@ -221,7 +210,7 @@ ggplot(aus, aes(x, y, colour=party_long)) +
   scale_colour_manual(values = aus$colour, limits = aus$party_long)
 ```
 
-![](parliament_dotplots_example_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 Circle parliament
 -----------------
@@ -262,4 +251,4 @@ ggplot(russia, aes(x, y, colour = party_short)) +
   labs(colour = "", title = "Russian Parliament") 
 ```
 
-![](parliament_dotplots_example_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
