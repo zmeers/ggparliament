@@ -5,35 +5,39 @@
 
 #' A function that prepares data for parliamentary plots
 #' @param electiondata aggregate election results
+#' @param parl_rows number of rows in parliament
+#' @param data[[party_seats]] seats per party
+#' @param total_seats the total number of seats in parliament
+#' @param data[[party_names]] names of political parties in parliament
 #' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
-#' @param totalseats the total number of seats in parliament
-#' @param parlrows number of rows in parliament
-#' @param seatspp seats per party
-#' @param party_names names of political parties in parliament
 #'
 #' @example
 #'
-#' df1 <- parliament_data(electiondata=df1, type="semicircle, seatspp=df1$Number, parlrows=6, totalseats=sum(df1$Number))
+#' data <- election_data[which(election_data$year == 2017 & election_data$country == "UK"),]
+#' parl_data <- parliament_data(electiondata = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
 #' ggplot(df, aes(x, y, color=party_long)) + geom_point()
 #'
 #' @author
 #' Zoe Meers
-parliament_data <- function(electiondata=data,
-                            totalseats=NULL, parlrows=NULL,
-                            seatspp=NULL,
-                            party_names=NULL,
-                            type=c(
+parliament_data <- function(electiondata = data,
+                            parl_rows = NULL,
+                            data[[party_seats]] = NULL,
+                            total_seats = sum(data[[party_seats]]),
+                            data[[party_names]] = NULL,
+                            type = c(
                               "horseshoe",
                               "semicircle",
                               "circle",
                               "classroom"
-                              # "opposing_benches"
+                              #"opposing_benches"
                             )) {
   if (type == "horseshoe") {
     seats <- function(N, M) {
+      
       radii <- seq(5.5, 7, len = M)
 
       counts <- numeric(M)
+      
       pts <- do.call(
         rbind,
         lapply(1:M, function(i) {
@@ -56,78 +60,82 @@ parliament_data <- function(electiondata=data,
       seats$party <- rep(1:length(counts), counts)
       seats
     }
-    layout <- seats(totalseats, parlrows)
-    result <- election(layout, seatspp)
-    dat <- tidyr::uncount(electiondata, seatspp)
+    layout <- seats(total_seats, parl_rows)
+    result <- election(layout, data[[data[[party_seats]]]])
+    dat <- tidyr::uncount(electiondata, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
+  else if (type == "semicircle") {
+    seats <- function(N, M) {
+      radii <- seq(1, 2, len = M)
+      
+      counts <- numeric(M)
+      pts <- do.call(
+        rbind,
+        lapply(1:M, function(i) {
+          counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
+          theta <- seq(0, pi, len = counts[i])
+          N <<- N - counts[i]
+          data.frame(
+            x = radii[i] * cos(theta), y = radii[i] * sin(theta), r = i,
+            theta = theta
+          )
+        })
+      )
+      pts <- pts[order(-pts$theta, -pts$r), ]
+      pts
+    }
+    
+    election <- function(seats, counts) {
+      stopifnot(sum(counts) == nrow(seats))
+      seats$party <- rep(1:length(counts), counts)
+      seats
+      
+  }
   else if (type == "circle") {
     result <- expand.grid(
-      x = 1:parlrows,
-      y = seq_len(ceiling(sum(seatspp) / parlrows))
+      x = 1:parl_rows,
+      y = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
     )
 
-    vec <- rep(party_names, seatspp)
+    vec <- rep(data[[party_names]], data[[party_seats]])
     result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-    dat <- tidyr::uncount(electiondata, seatspp)
+    dat <- tidyr::uncount(electiondata, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
   else if (type == "classroom") {
     result <- expand.grid(
-      y = 1:parlrows,
-      x = seq_len(ceiling(sum(seatspp) / parlrows))
+      y = 1:parl_rows,
+      x = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
     )
 
-    vec <- rep(party_names, seatspp)
+    vec <- rep(data[[party_names]], data[[party_seats]])
     result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-    dat <- tidyr::uncount(electiondata, seatspp)
+    dat <- tidyr::uncount(electiondata, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
   # else if (type == "opposing_benches") {
   #   result <- expand.grid(
-  #     x = 1:parlrows,
-  #     y = seq_len(ceiling(sum(seatspp) / parlrows))
+  #     x = 1:parl_rows,
+  #     y = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
   #   )
   # 
-  #   # vec <- rep(party_names, seatspp)
+  #   # vec <- rep(data[[party_names]], data[[party_seats]])
   #   # result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-  #   dat <- tidyr::uncount(electiondata, seatspp)
+  #   dat <- tidyr::uncount(electiondata, data[[party_seats]])
   #   dat <- cbind(dat, result)
   #   return(dat)
   # }
   else {
-    seats <- function(N, M) {
-      radii <- seq(1, 2, len = M)
-
-      counts <- numeric(M)
-      pts <- do.call(
-        rbind,
-        lapply(1:M, function(i) {
-          counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
-          theta <- seq(0, pi, len = counts[i])
-          N <<- N - counts[i]
-          data.frame(
-            x = radii[i] * cos(theta), y = radii[i] * sin(theta), r = i,
-            theta = theta
-          )
-        })
-      )
-      pts <- pts[order(-pts$theta, -pts$r), ]
-      pts
-    }
-
-
-    election <- function(seats, counts) {
-      stopifnot(sum(counts) == nrow(seats))
-      seats$party <- rep(1:length(counts), counts)
-      seats
-    }
-    layout <- seats(totalseats, parlrows)
-    result <- election(layout, seatspp)
-    dat <- tidyr::uncount(electiondata, seatspp)
+    warning("parliament layout not supported")
+  }
+    
+    layout <- seats(total_seats, parl_rows)
+    result <- election(layout, data[[party_seats]])
+    dat <- tidyr::uncount(electiondata, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
@@ -143,26 +151,26 @@ theme_parliament <- function() {
 
 #' A ggplot2 geom for parliament plots
 #' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
-#' @param totalseats the total number of seats in parliament
-#' @param parlrows number of rows in parliament
-#' @param seatspp seats per party
-#' @param party_names names of political parties in parliament
+#' @param total_seats the total number of seats in parliament
+#' @param parl_rows number of rows in parliament
+#' @param data[[party_seats]] seats per party
+#' @param data[[party_names]] names of political parties in parliament
 #'
 #' @example
 #' df <- data.frame(Party = c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA"),Number = c(35, 184, 55, 84, 265, 54, 32, 27))
 #' df1 <- parliament_data(df)
-#' ggplot() + geom_parliament_dots(type="semicircle, seatspp=df1$Number, parlrows=6, totalseats=sum(df1$Number))
+#' ggplot() + geom_parliament_dots(type="semicircle, data[[party_seats]]=df1$Number, parl_rows=6, total_seats=sum(df1$Number))
 #'
 #' @author
 #' Zoe Meers
-geom_parliament_waffle<- function(totalseats=NULL, parlrows=NULL, seatspp=NULL, size = NULL, party_names=NULL, type="opposing_benches") {
+geom_parliament_waffle<- function(total_seats=NULL, parl_rows=NULL, data[[party_seats]]=NULL, size = NULL, data[[party_names]]=NULL, type="opposing_benches") {
   
   result <- expand.grid(
-    x = 1:parlrows,
-    y = seq_len(ceiling(sum(seatspp) / parlrows))
+    x = 1:parl_rows,
+    y = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
   )
   
-  vec <- rep(party_names, seatspp)
+  vec <- rep(data[[party_names]], data[[party_seats]])
   result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
   
   # Plot it
