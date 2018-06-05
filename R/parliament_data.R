@@ -8,6 +8,7 @@
 #' @param parl_rows number of rows in parliament
 #' @param party_seats seats per party
 #' @param total_seats the total number of seats in parliament
+#' @param party_names the names of parties elected to parliament
 #' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
 #'
 #' @example
@@ -20,8 +21,9 @@
 #' Zoe Meers
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
-                            party_seats = NULL,
-                            total_seats = sum(election_data[[party_seats]]),
+                            party_seats = election_data$seats,
+                            total_seats = sum(election_data$seats),
+                            party_names = election_data$party,
                             type = c(
                               "horseshoe",
                               "semicircle",
@@ -66,12 +68,10 @@ parliament_data <- function(election_data = NULL,
       pts <- pts[order(-pts$theta, -pts$r), ]
       pts
     }
-
-    coordinates <- calc_coordinates(total_seats, parl_rows)
-    #bind the coordinates to the uncounted original data
-    parl_data <- tidyr::uncount(election_data, election_data[[party_seats]])
-    parl_data <- cbind(election_data, coordinates)
-    return(dat)
+    
+    #calculate the layout of the final plot from supplied data
+    parl_layout <- calc_coordinates(total_seats, parl_rows)
+    parl_layout$party <- rep(party_names, party_seats)
   }
   else if (type == "semicircle") {
     seats <- function(N, M) {
@@ -99,6 +99,11 @@ parliament_data <- function(election_data = NULL,
       seats$party <- rep(1:length(counts), counts)
       seats
       
+      layout <- seats(total_seats, parl_rows)
+      result <- election(layout, data[[party_seats]])
+    }
+    
+      
   }
   else if (type == "circle") {
     result <- expand.grid(
@@ -108,9 +113,6 @@ parliament_data <- function(election_data = NULL,
 
     vec <- rep(data[[party_names]], data[[party_seats]])
     result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-    dat <- tidyr::uncount(election_data, data[[party_seats]])
-    dat <- cbind(dat, result)
-    return(dat)
   }
   else if (type == "classroom") {
     result <- expand.grid(
@@ -120,9 +122,6 @@ parliament_data <- function(election_data = NULL,
 
     vec <- rep(data[[party_names]], data[[party_seats]])
     result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-    dat <- tidyr::uncount(election_data, data[[party_seats]])
-    dat <- cbind(dat, result)
-    return(dat)
   }
   # else if (type == "opposing_benches") {
   #   result <- expand.grid(
@@ -132,20 +131,22 @@ parliament_data <- function(election_data = NULL,
   # 
   #   # vec <- rep(data[[party_names]], data[[party_seats]])
   #   # result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-  #   dat <- tidyr::uncount(election_data, data[[party_seats]])
-  #   dat <- cbind(dat, result)
-  #   return(dat)
   # }
   else {
     warning("parliament layout not supported")
   }
     
-    layout <- seats(total_seats, parl_rows)
-    result <- election(layout, data[[party_seats]])
-    dat <- tidyr::uncount(election_data, data[[party_seats]])
-    dat <- cbind(dat, result)
-    return(dat)
+  #bind layout results back to expanded election_data?
+  if(!is.null(election_data)) {
+    #bind the coordinates to the uncounted original data
+    parl_data <- tidyr::uncount(election_data, party_seats)
+    parl_data <- cbind(parl_data, parl_layout)
+    
+  #otherwise just return the coordinates with the party names attached
+  } else {
+    parl_data <- parl_layout
   }
+  return(parl_data)
 }
 
 
