@@ -4,26 +4,24 @@
 ##
 
 #' A function that prepares data for parliamentary plots
-#' @param electiondata aggregate election results
+#' @param election_data aggregate election results
 #' @param parl_rows number of rows in parliament
-#' @param data[[party_seats]] seats per party
+#' @param party_seats seats per party
 #' @param total_seats the total number of seats in parliament
-#' @param data[[party_names]] names of political parties in parliament
 #' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
 #'
 #' @example
 #'
 #' data <- election_data[which(election_data$year == 2017 & election_data$country == "UK"),]
-#' parl_data <- parliament_data(electiondata = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
+#' parl_data <- parliament_data(election_data = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
 #' ggplot(df, aes(x, y, color=party_long)) + geom_point()
 #'
 #' @author
 #' Zoe Meers
-parliament_data <- function(electiondata = data,
+parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
-                            data[[party_seats]] = NULL,
-                            total_seats = sum(data[[party_seats]]),
-                            data[[party_names]] = NULL,
+                            party_seats = NULL,
+                            total_seats = sum(election_data[[party_seats]]),
                             type = c(
                               "horseshoe",
                               "semicircle",
@@ -31,8 +29,11 @@ parliament_data <- function(electiondata = data,
                               "classroom"
                               #"opposing_benches"
                             )) {
+  #for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
-    seats <- function(N, M) {
+    #function to calculate the coordinates of each seat in the house
+    #takes N (total_seats) and M (parl_rows)
+    calc_coordinates <- function(N, M) {
       
       radii <- seq(5.5, 7, len = M)
 
@@ -41,29 +42,35 @@ parliament_data <- function(electiondata = data,
       pts <- do.call(
         rbind,
         lapply(1:M, function(i) {
+          #find how many seats for this parl_row
           counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
+          #seq from 0-180degress for the row for the cartesian position
           theta <- seq(0, pi, len = counts[i])
+          #subtract the seats already plotted from N
+          #N becomes 'seats left to calculate'
           N <<- N - counts[i]
+          
+          #wrap this into a df
+          #calculate x and y coords
           data.frame(
-            x = radii[i] * cos(theta), y = radii[i] * sin(theta), r = i,
+            x = radii[i] * cos(theta),
+            y = radii[i] * sin(theta),
+            row = i,
             theta = theta
           )
         })
       )
+      
+      #arrange by angle then row
+      #assume 'first' party starts in bottom left
       pts <- pts[order(-pts$theta, -pts$r), ]
       pts
     }
 
-
-    election <- function(seats, counts) {
-      stopifnot(sum(counts) == nrow(seats))
-      seats$party <- rep(1:length(counts), counts)
-      seats
-    }
-    layout <- seats(total_seats, parl_rows)
-    result <- election(layout, data[[data[[party_seats]]]])
-    dat <- tidyr::uncount(electiondata, data[[party_seats]])
-    dat <- cbind(dat, result)
+    coordinates <- calc_coordinates(total_seats, parl_rows)
+    #bind the coordinates to the uncounted original data
+    parl_data <- tidyr::uncount(election_data, election_data[[party_seats]])
+    parl_data <- cbind(election_data, coordinates)
     return(dat)
   }
   else if (type == "semicircle") {
@@ -101,7 +108,7 @@ parliament_data <- function(electiondata = data,
 
     vec <- rep(data[[party_names]], data[[party_seats]])
     result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-    dat <- tidyr::uncount(electiondata, data[[party_seats]])
+    dat <- tidyr::uncount(election_data, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
@@ -113,7 +120,7 @@ parliament_data <- function(electiondata = data,
 
     vec <- rep(data[[party_names]], data[[party_seats]])
     result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-    dat <- tidyr::uncount(electiondata, data[[party_seats]])
+    dat <- tidyr::uncount(election_data, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
@@ -125,7 +132,7 @@ parliament_data <- function(electiondata = data,
   # 
   #   # vec <- rep(data[[party_names]], data[[party_seats]])
   #   # result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-  #   dat <- tidyr::uncount(electiondata, data[[party_seats]])
+  #   dat <- tidyr::uncount(election_data, data[[party_seats]])
   #   dat <- cbind(dat, result)
   #   return(dat)
   # }
@@ -135,7 +142,7 @@ parliament_data <- function(electiondata = data,
     
     layout <- seats(total_seats, parl_rows)
     result <- election(layout, data[[party_seats]])
-    dat <- tidyr::uncount(electiondata, data[[party_seats]])
+    dat <- tidyr::uncount(election_data, data[[party_seats]])
     dat <- cbind(dat, result)
     return(dat)
   }
