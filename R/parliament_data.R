@@ -114,6 +114,7 @@ theme_parliament <- function() {
 #'
 #' @author
 #' Zoe Meers
+#' ### ROB - not sure this needs to be here - does it add anything over using the square geom_point? ###
 geom_parliament_waffle <- function(total_seats = NULL,
                                   parl_rows = NULL,
                                   party_seats = NULL,
@@ -134,7 +135,7 @@ geom_parliament_waffle <- function(total_seats = NULL,
   
 }
 
-
+###ROB - same as above, seems better to arrange by (e.g. government) in parliament_data and then separate the coordinates there? ###
 #' Combine left and right bench for opposing bench-style parliaments
 #' @param left left hand side
 #' @param right right hand side
