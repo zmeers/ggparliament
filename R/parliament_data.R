@@ -22,7 +22,7 @@
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
                             party_seats = election_data$seats,
-                            total_seats = sum(election_data$seats),
+                            total_seats = sum(party_seats),
                             party_names = election_data$party,
                             type = c(
                               "horseshoe",
@@ -33,98 +33,40 @@ parliament_data <- function(election_data = NULL,
                             )) {
   #for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
-    #function to calculate the coordinates of each seat in the house
-    #takes N (total_seats) and M (parl_rows)
-    calc_coordinates <- function(N, M) {
-      
-      radii <- seq(5.5, 7, len = M)
-
-      counts <- numeric(M)
-      
-      pts <- do.call(
-        rbind,
-        lapply(1:M, function(i) {
-          #find how many seats for this parl_row
-          counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
-          #seq from 0-180degress for the row for the cartesian position
-          theta <- seq(0, pi, len = counts[i])
-          #subtract the seats already plotted from N
-          #N becomes 'seats left to calculate'
-          N <<- N - counts[i]
-          
-          #wrap this into a df
-          #calculate x and y coords
-          data.frame(
-            x = radii[i] * cos(theta),
-            y = radii[i] * sin(theta),
-            row = i,
-            theta = theta
-          )
-        })
-      )
-      
-      #arrange by angle then row
-      #assume 'first' party starts in bottom left
-      pts <- pts[order(-pts$theta, -pts$row), ]
-      pts
-    }
-    
     #calculate the layout of the final plot from supplied data
-    parl_layout <- calc_coordinates(total_seats, parl_rows)
+    parl_layout <- calc_coordinates(total_seats, parl_rows, c(5.5, 7))
+    #add in a column for the party names
     parl_layout$party <- rep(party_names, party_seats)
   }
+  
   else if (type == "semicircle") {
-    seats <- function(N, M) {
-      radii <- seq(1, 2, len = M)
-      
-      counts <- numeric(M)
-      pts <- do.call(
-        rbind,
-        lapply(1:M, function(i) {
-          counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
-          theta <- seq(0, pi, len = counts[i])
-          N <<- N - counts[i]
-          data.frame(
-            x = radii[i] * cos(theta), 
-            y = radii[i] * sin(theta), 
-            row = i,
-            theta = theta
-          )
-        })
-      )
-      pts <- pts[order(-pts$theta, -pts$row), ]
-      pts
-    }
-    
-    election <- function(seats, counts) {
-      stopifnot(sum(counts) == nrow(seats))
-      seats$party <- rep(1:length(counts), counts)
-      seats
-      
-      layout <- seats(total_seats, parl_rows)
-      result <- election(layout, data[[party_seats]])
-    }
-    
-      
+    parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2))
+    parl_layout$party <- rep(party_names, party_seats)
   }
+  
   else if (type == "circle") {
-    result <- expand.grid(
-      x = 1:parl_rows,
-      y = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
-    )
-
-    vec <- rep(data[[party_names]], data[[party_seats]])
-    result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
+    parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2), segment = 1)
+    parl_layout$party <- rep(party_names, party_seats)
   }
+  
   else if (type == "classroom") {
-    result <- expand.grid(
+    #calculate parl_layour by expanding a grid of rows vs the length each row needs to be
+    parl_layout <- expand.grid(
       y = 1:parl_rows,
-      x = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
+      x = seq_len(ceiling(sum(party_seats) / parl_rows))
     )
+    
+    #remove the extra seats that are added by expanding a grid
+    #removes from either end of back row
+    ### ROB - Clean up/ find better way // and also make work for odd numbers left over? ###
+    leftovers <- nrow(parl_layout) - total_seats
+    parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
+                                        parl_layout$x %in% c(tail(1:max(parl_layout$x), leftovers/2),
+                                                             head(1:max(parl_layout$x), leftovers/2))),]
 
-    vec <- rep(data[[party_names]], data[[party_seats]])
-    result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
+    parl_layout$party <- rep(party_names, party_seats)
   }
+  
   # else if (type == "opposing_benches") {
   #   result <- expand.grid(
   #     x = 1:parl_rows,
@@ -134,6 +76,7 @@ parliament_data <- function(election_data = NULL,
   #   # vec <- rep(data[[party_names]], data[[party_seats]])
   #   # result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
   # }
+  
   else {
     warning("parliament layout not supported")
   }
@@ -150,8 +93,6 @@ parliament_data <- function(election_data = NULL,
   }
   return(parl_data)
 }
-
-
 
 
 #' A ggplot2 theme for parliament plots
@@ -173,7 +114,12 @@ theme_parliament <- function() {
 #'
 #' @author
 #' Zoe Meers
-geom_parliament_waffle<- function(total_seats=NULL, parl_rows=NULL, data[[party_seats]]=NULL, size = NULL, data[[party_names]]=NULL, type="opposing_benches") {
+geom_parliament_waffle <- function(total_seats = NULL,
+                                  parl_rows = NULL,
+                                  party_seats = NULL,
+                                  size = NULL, 
+                                  party_names = NULL,
+                                  type = "opposing_benches") {
   
   result <- expand.grid(
     x = 1:parl_rows,
@@ -219,6 +165,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
   plot$layers <- append(new_layer, plot$layers)
   plot
 }
+
 #' @rdname ggplot2-ggproto
 #' @format NULL
 #' @usage NULL
@@ -249,6 +196,7 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
                      
                      draw_key = ggplot2::draw_key_point
 )
+
 #' Parliament seats
 #' The parliament seats geom is used for plotting data from parliament_data().
 #' @param x

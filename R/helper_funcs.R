@@ -1,57 +1,50 @@
-#' @title Arrange Dot Layout
-#' @description Function to calculate the position of polar co-ords for a dot layout parliament plot
-#' @param portion A numeric value specifying what proportion of a full circle should be used for drawing the plot.
-#' @param nrows If \code{style = "dots"}, a numeric value indicating how many rows to use.
-#' @param group The grouping of the data to be lapply-d to the function (i.e. to work out positions for each group on a separate graph)
+## Functions to create parliaments for ggparliament
+## Zoe Meers
+##
+##
 
-arrange_dot_layout <- function(portion, nrows, group, df = long_df){
-  total_seats <- length(which(df$group == group))
-  polar <- structure(list(azimuth = numeric(sum(total_seats)),
-                          radius = numeric(sum(total_seats))),
-                     class = "data.frame",
-                     row.names = seq_len(sum(total_seats)))
+#' A function that calculates the coordinates of parliamentary seats in incomplete circular parliaments
+#' E.g. The US (semicircle) and Australian (horsehoe) shaped parliaments
+#' @param N the total of number of seats
+#' @param M the number of rows in parliament
+#' @param limits the limits to seq the radii between- controls the 'shape' of the parliament
+#' @param segment the percentage of a full circle for the final plot- defaults to 0.5 (a semicircle)
+#'
+#' @author
+#' Zoe Meers
 
-  # seats per row is circumference of each ring
-  circ <- floor(2*(portion*nrows)*pi)
-  nperrow <- floor(seq(12, circ, length.out = nrows))
-
-  # modify for based upon excess seats
-  remainder <- sum(nperrow) - nrow(polar)
-  i <- nrows
-  while (remainder > 0) {
-    nperrow[i] <- nperrow[i] - 1L
-    remainder <- remainder - 1L
-    if (i == 3) {
-      i <- nrows
-    } else {
-      i <- i - 1L
-    }
-  }
-  while (remainder < 0) {
-    nperrow[i] <- nperrow[i] + 1L
-    remainder <- remainder + 1L
-    if (i == 1) {
-      i <- nrows
-    } else {
-      i <- i - 1L
-    }
-  }
-
-  nperrow <- sort(nperrow)
-
-  #if any nperrow are negative this won't work
-  if(any(nperrow < 0) | is.unsorted(nperrow)){
-    stop("choose more suitable 'portion' or 'row; arguments")
-  }
-
-  # y position (which ring)
-  ring <- rep(seq_len(nrows) + 3L, times = nperrow)
-  polar[["radius"]] <- head(ring, nrow(polar))
-  # x position within ring
-  pos <- unlist(lapply(nperrow, function(x) seq(0, portion, length.out = x)))
-  polar[["azimuth"]] <- head(pos, nrow(polar))
-
-  polar <- polar[order(polar$azimuth, polar$radius),]
-
-  return(polar)
+calc_coordinates <- function(N, M, limits, segment = 0.5) {
+  #controls the spread of the seats
+  #tigher limits = more 'pinched' circle
+  radii <- seq(limits[1], limits[2], len = M)
+  
+  counts <- numeric(M)
+  
+  pts <- do.call(
+    rbind,
+    lapply(1:M, function(i) {
+      #find how many seats for this parl_row
+      counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
+      #seq from 0-180degress for the row for the cartesian position
+      ### ROB- Need to symmetry-ise this for non 0.5/1 values of segment ###
+      theta <- seq(0, segment * 2 * pi, len = counts[i])
+      #subtract the seats already plotted from N
+      #N becomes 'seats left to calculate'
+      N <<- N - counts[i]
+      
+      #wrap this into a df
+      #calculate x and y coords
+      data.frame(
+        x = radii[i] * cos(theta),
+        y = radii[i] * sin(theta),
+        row = i,
+        theta = theta
+      )
+    })
+  )
+  
+  #arrange by angle then row
+  #assume 'first' party starts in bottom left
+  pts <- pts[order(-pts$theta, -pts$row), ]
+  pts
 }
