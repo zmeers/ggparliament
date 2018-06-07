@@ -65,7 +65,7 @@ parliament_data <- function(election_data = NULL,
       
       #arrange by angle then row
       #assume 'first' party starts in bottom left
-      pts <- pts[order(-pts$theta, -pts$r), ]
+      pts <- pts[order(-pts$theta, -pts$row), ]
       pts
     }
     
@@ -85,12 +85,14 @@ parliament_data <- function(election_data = NULL,
           theta <- seq(0, pi, len = counts[i])
           N <<- N - counts[i]
           data.frame(
-            x = radii[i] * cos(theta), y = radii[i] * sin(theta), r = i,
+            x = radii[i] * cos(theta), 
+            y = radii[i] * sin(theta), 
+            row = i,
             theta = theta
           )
         })
       )
-      pts <- pts[order(-pts$theta, -pts$r), ]
+      pts <- pts[order(-pts$theta, -pts$row), ]
       pts
     }
     
