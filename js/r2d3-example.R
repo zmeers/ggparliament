@@ -1,56 +1,28 @@
 data("German_elections")
 
-r2d3(data = German_elections[German_elections$year == 2017, ],
-     script = system.file('js/d3plot.js', package = 'ggparliament'),
-     dependencies = system.file('js/d3-parliament.js', package = 'ggparliament'),
-     d3_version = '4', viewer = 'browser')
-
-# Issue 1 ####
-# Problem : d3-parliament expects data in a particular format, e.g. party names specified by an "id" attribute. The script fails to read the party names properly using the example dataset. 
-# See     : d3-parliament.js L116-L120 or example data (https://github.com/geoffreybr/d3-parliament/blob/master/example/french.json)
-#           The problem is visible if you open developer tools in your browser and check the classes of any circle: <circle class='seat'>.
-#           If the JS code is able to parse the party name, circles should be assigned to parties by class.
-
-# Hacky solution: change the names of the data
 dat <- German_elections[German_elections$year == 2017, ]
 names(dat) <- c('year', 'legend', 'id', 'seats', 'colour', 'government')
 
-r2d3(data = dat,
-     script = system.file('js/d3plot.js', package = 'ggparliament'),
-     dependencies = system.file('js/d3-parliament.js', package = 'ggparliament'),
-     d3_version = '4', viewer = 'browser')
-
-# Issue 2 ####
-# Problem: d3-parliament expects color information to be provided with CSS, I'm guessing due to performance considerations. This is why
-#          you do not see colors, although the party names are read properly           
-# See    : example/index.html L21-L41.
-
-# Hacky solution: create CSS file, and populate based on the dataframe.
-# (since this is quite some work, I added a file for specific German data)
+#' d3-parliament now makes use of the colour column:
+#' Temporary note: At the moment this is not merged into main repository, but soon will be...
+#'                 https://github.com/geoffreybr/d3-parliament/pull/3
 
 r2d3(data = dat,
-     script = system.file('js/d3plot.js', package = 'ggparliament'),
-     dependencies = system.file('js/d3-parliament.js', package = 'ggparliament'),
-     css = system.file('js/german2017.css', package = 'ggparliament'),
+     script = 'js/d3plot.js',
+     dependencies = 'js/d3-parliament.js',
      d3_version = '4', viewer = 'browser')
 
-# Issue 3 ####
-# Problem: d3-parliament orders the plots by the order in data           
-# See    : Example below
-
-# Hacky solution: create CSS file, and populate based on the dataframe.
-# (since this is quite some work, I added a file for specific German data)
-
-dat_ordered <- dat[order(dat$seats), ]
-r2d3(data = dat_ordered,
-     script = system.file('js/d3plot.js', package = 'ggparliament'),
-     dependencies = system.file('js/d3-parliament.js', package = 'ggparliament'),
-     css = system.file('js/german2017.css', package = 'ggparliament'),
+dat$colour[1] <- 'gray'
+r2d3(data = dat,
+     script = 'js/d3plot.js',
+     dependencies = 'js/d3-parliament.js',
      d3_version = '4', viewer = 'browser')
 
-# Issue 4 ####
-# Problem: d3-parliament modifies the svg element in html
-# See    : While using r2d3, svg is provided by r2d3, this is so that dynamic sizing can occur (https://github.com/rstudio/r2d3#d3-variables).
-#          Related was one of the PRs I created in the official repo: https://github.com/geoffreybr/d3-parliament/pull/1
-# Note   : In this example, width and height is explicitly set at the js/d3plot.js file. However, the script would default to 500 and still modify
-#          the parent svg, even without this.
+# You can still use CSS after a litle adjustment in d3plot.js.
+# If you'd like to try this, first open d3plot.js, then call r2d3:
+
+# r2d3(data = dat,
+#      script = 'js/d3plot.js',
+#      dependencies = 'js/d3-parliament.js',
+#      css = 'js/german2017.css',
+#      d3_version = '4', viewer = 'browser')
