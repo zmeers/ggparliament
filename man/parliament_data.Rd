@@ -25,6 +25,12 @@ parliament_data(election_data = NULL, parl_rows = NULL,
 \description{
 A function that prepares data for parliamentary plots
 }
+\examples{
+data <- election_data[which(election_data$year == 2017 & election_data$country == "UK"),]
+parl_data <- parliament_data(election_data = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
+ggplot(df, aes(x, y, color=party_long)) + geom_point()
+
+}
 \author{
 Zoe Meers
 }

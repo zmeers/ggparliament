@@ -14,6 +14,9 @@ geom_highlight_government(expr)
 Highlight governments
 Define the government variable in the function.
 }
+\examples{
+geom_highlight_parliament(government==1)
+}
 \author{
 Zoe Meers
 }
