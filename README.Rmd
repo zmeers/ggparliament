@@ -8,6 +8,7 @@ output: html_document
 ```{r}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 source("R/parliament_data.R")
+source("R/helper_funcs.R")
 load("data/election_data.rda")
 library(tidyverse)
 ```

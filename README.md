@@ -9,6 +9,7 @@ output: html_document
 ```r
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 source("R/parliament_data.R")
+source("R/helper_funcs.R")
 load("data/election_data.rda")
 library(tidyverse)
 ```
@@ -64,13 +65,6 @@ us_congress1 <- parliament_data(election_data = us_congress,
   parl_rows = 10,
   party_names = us_congress$party_short,
   party_seats = us_congress$seats)
-```
-
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(1, 2)): could not find function "calc_coordinates"
-```
-
-```r
 us_senate <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
@@ -82,10 +76,6 @@ us_senate <- parliament_data(
   parl_rows = 4,
   party_names = us_senate$party_short,
   party_seats = us_senate$seats)
-```
-
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(1, 2)): could not find function "calc_coordinates"
 ```
 
 #### Plot
@@ -101,9 +91,7 @@ ggplot(us_congress1, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = us_congress1$colour, limits = us_congress1$party_short)
 ```
 
-```
-## Error in ggplot(us_congress1, aes(x, y, colour = party_short)): object 'us_congress1' not found
-```
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
 
 
 ```r
@@ -116,10 +104,6 @@ senate <- ggplot(us_senate, aes(x=x, y=y, colour=party_long)) +
        subtitle = "Government encircled in black.") +
   scale_colour_manual(values = us_senate$colour, limits=us_senate$party_long)
 senate 
-```
-
-```
-## Error in FUN(X[[i]], ...): object 'x' not found
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
@@ -135,23 +119,13 @@ germany <- parliament_data(election_data=germany,
                            parl_rows=10,
                            party_seats=germany$seats, 
                            type='semicircle')
-```
 
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(1, 2)): could not find function "calc_coordinates"
-```
-
-```r
 ggplot(germany, aes(x,y,colour=party_short))+
   geom_parliament_seats()+
   #geom_highlight_government(government==1) + 
   labs(colour="Party", title="Germany 2017 Election Results") + 
   theme_void()+
   scale_colour_manual(values = germany$colour, limits=germany$party_short)
-```
-
-```
-## Error in FUN(X[[i]], ...): object 'x' not found
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
@@ -178,10 +152,6 @@ aus <- parliament_data(election_data = australia,
   type = "horseshoe")
 ```
 
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(5.5, 7)): could not find function "calc_coordinates"
-```
-
 #### Plot
 
 
@@ -196,8 +166,6 @@ ggplot(aus, aes(x, y, colour=party_long)) +
   scale_colour_manual(values = aus$colour, limits = aus$party_long)
 ```
 
-```
-## Error in ggplot(aus, aes(x, y, colour = party_long)): object 'aus' not found
-```
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 
