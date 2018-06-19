@@ -1,6 +1,6 @@
 ---
 title: "README"
-author: "Zoe Meers"
+author: "Zoe Meers & Robert Hickman"
 date: "19/06/2018"
 output: html_document
 ---
@@ -10,7 +10,10 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 source("R/parliament_data.R")
 source("R/helper_funcs.R")
 load("data/election_data.rda")
-library(tidyverse)
+
+#extra libraries for munging and plotting
+library(dplyr)
+library(ggplot2)
 ```
 
 # Parliament plots
@@ -36,20 +39,26 @@ Monkey Cage article :
 #### Data
 
 ```{r}
+#filter the election data for the most recent US House of Representatives
 us_congress <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
     house == "Representatives")
-us_congress1 <- parliament_data(election_data = us_congress,
+
+#convert this into coordinates for plotting using parliament_data()
+us_congress <- parliament_data(election_data = us_congress,
   type = "semicircle",
   total_seats = sum(us_congress$seats),
   parl_rows = 10,
   party_names = us_congress$party_short,
   party_seats = us_congress$seats)
+
+#do the same for the Senate
 us_senate <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
     house == "Senate")
+
 us_senate <- parliament_data(
   election_data = us_senate,
   type = "semicircle",
@@ -62,41 +71,57 @@ us_senate <- parliament_data(
 #### Plot
 
 ```{r}
-ggplot(us_congress1, aes(x, y, colour = party_short)) +
+#plot the congress data
+ggplot(us_congress, aes(x, y, colour = party_short)) +
+  #plot the seats as dots
   geom_parliament_seats() + 
+  #highlight the government with black encircling
   geom_highlight_government(government == 1) +
+  #other aesthetics
   theme_void() +
-  labs(colour = "", title = "United States Congress") +
-  annotate("text", x=0, y=0, label=paste("Total:", sum(us_congress$seats), "Reps"), fontface="bold", size=8) +
-  scale_colour_manual(values = us_congress1$colour, limits = us_congress1$party_short)
+  labs(colour = "",
+       title = "United States Congress",
+       subtitle = "Government encircled in black.") +
+  annotate("text", x=0, y=0,
+           label=paste("Total:", sum(us_congress$seats[which(!duplicated(us_congress$party_long))]), "Reps"),
+           fontface="bold", size=8) +
+  scale_colour_manual(values = us_congress$colour,
+                      limits = us_congress$party_short)
 ```
 
 ```{r}
-senate <- ggplot(us_senate, aes(x=x, y=y, colour=party_long)) +
+#do the same for the Senate
+ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   theme_void() +
   labs(colour = "", 
        title = "United States Senate",
        subtitle = "Government encircled in black.") +
-  scale_colour_manual(values = us_senate$colour, limits=us_senate$party_long)
-senate 
+  annotate("text", x=0, y=0,
+           label=paste("Total:", sum(us_senate$seats[which(!duplicated(us_senate$party_long))]), "Reps"),
+           fontface="bold", size=8) +
+  scale_colour_manual(values = us_senate$colour, 
+                      limits = us_senate$party_long)
 ```
 
 
 ```{r}
+#filter the election data for the most recent German federal election
 germany <- election_data %>%
-  filter(year==2017 & country=="Germany")
-#View(germany)
-germany <- parliament_data(election_data=germany, 
+  filter(year==2017 & country=="Germany") %>%
+  #arrange by government and seats for the plot
+  arrange(government, -seats)
+
+germany <- parliament_data(election_data = germany, 
                            total_seats = sum(germany$seats), 
-                           parl_rows=10,
-                           party_seats=germany$seats, 
-                           type='semicircle')
+                           parl_rows = 10,
+                           party_seats = germany$seats, 
+                           type = 'semicircle') 
 
 ggplot(germany, aes(x,y,colour=party_short))+
   geom_parliament_seats()+
-  #geom_highlight_government(government==1) + 
+  geom_highlight_government(government==1) + 
   labs(colour="Party", title="Germany 2017 Election Results") + 
   theme_void()+
   scale_colour_manual(values = germany$colour, limits=germany$party_short)
@@ -112,11 +137,11 @@ ggplot(germany, aes(x,y,colour=party_short))+
 ```{r}
 australia <- election_data %>%
   filter(year == 2016 &
-    country == "Australia" &
-    house == "Representatives")
-australia <- australia[c(1, 5, 6, 7, 4, 3, 2), ]
-
-aus <- parliament_data(election_data = australia,
+           country == "Australia" &
+           house == "Representatives") %>%
+  arrange(-government, - seats)
+  
+australia <- parliament_data(election_data = australia,
   total_seats = sum(australia$seats),
   party_seats = australia$seats,
   parl_rows = 4,
@@ -126,13 +151,14 @@ aus <- parliament_data(election_data = australia,
 #### Plot
 
 ```{r}
-ggplot(aus, aes(x, y, colour=party_long)) +
+ggplot(australia, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   theme_void() +
   geom_highlight_government(government == 1) + 
   labs(colour = "", title = "Australia House of Representatives",
     subtitle = "Government encircled in black.") +
-  annotate("text", x=0, y=0, label=paste("Total: 150 MPs"), fontface="bold", size=12) +
+  annotate("text", x = 0, y = 0, label=paste("Total: 150 MPs"), 
+           fontface="bold", size = 12) +
   scale_colour_manual(values = aus$colour, limits = aus$party_long)
 ```
 
