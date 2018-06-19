@@ -10,7 +10,11 @@ geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
   inherit.aes = TRUE)
 }
 \arguments{
-\item{colour}{ggplot(us_senate, aes(x,y,colour=colour))}
+\item{x}{the x coordinates}
+
+\item{y}{the y coordinates}
+
+\item{colour}{the colour variable}
 }
 \description{
 Parliament seats

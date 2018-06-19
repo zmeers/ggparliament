@@ -5,29 +5,11 @@ date: "19/06/2018"
 output: html_document
 ---
 
-
-```r
+```{r}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 source("R/parliament_data.R")
 load("data/election_data.rda")
 library(tidyverse)
-```
-
-```
-## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
-```
-
-```
-## ✔ ggplot2 2.2.1.9000     ✔ purrr   0.2.5     
-## ✔ tibble  1.4.2          ✔ dplyr   0.7.5     
-## ✔ tidyr   0.8.1          ✔ stringr 1.3.1     
-## ✔ readr   1.1.1          ✔ forcats 0.3.0
-```
-
-```
-## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
 ```
 
 # Parliament plots
@@ -52,8 +34,7 @@ Monkey Cage article :
 
 #### Data
 
-
-```r
+```{r}
 us_congress <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
@@ -64,13 +45,6 @@ us_congress1 <- parliament_data(election_data = us_congress,
   parl_rows = 10,
   party_names = us_congress$party_short,
   party_seats = us_congress$seats)
-```
-
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(1, 2)): could not find function "calc_coordinates"
-```
-
-```r
 us_senate <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
@@ -84,14 +58,9 @@ us_senate <- parliament_data(
   party_seats = us_senate$seats)
 ```
 
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(1, 2)): could not find function "calc_coordinates"
-```
-
 #### Plot
 
-
-```r
+```{r}
 ggplot(us_congress1, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
@@ -101,12 +70,7 @@ ggplot(us_congress1, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = us_congress1$colour, limits = us_congress1$party_short)
 ```
 
-```
-## Error in ggplot(us_congress1, aes(x, y, colour = party_short)): object 'us_congress1' not found
-```
-
-
-```r
+```{r}
 senate <- ggplot(us_senate, aes(x=x, y=y, colour=party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
@@ -118,15 +82,8 @@ senate <- ggplot(us_senate, aes(x=x, y=y, colour=party_long)) +
 senate 
 ```
 
-```
-## Error in FUN(X[[i]], ...): object 'x' not found
-```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
-
-
-
-```r
+```{r}
 germany <- election_data %>%
   filter(year==2017 & country=="Germany")
 #View(germany)
@@ -135,13 +92,7 @@ germany <- parliament_data(election_data=germany,
                            parl_rows=10,
                            party_seats=germany$seats, 
                            type='semicircle')
-```
 
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(1, 2)): could not find function "calc_coordinates"
-```
-
-```r
 ggplot(germany, aes(x,y,colour=party_short))+
   geom_parliament_seats()+
   #geom_highlight_government(government==1) + 
@@ -150,12 +101,6 @@ ggplot(germany, aes(x,y,colour=party_short))+
   scale_colour_manual(values = germany$colour, limits=germany$party_short)
 ```
 
-```
-## Error in FUN(X[[i]], ...): object 'x' not found
-```
-
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
-
 
 ## Horseshoe parliament
 
@@ -163,8 +108,7 @@ ggplot(germany, aes(x,y,colour=party_short))+
 
 #### Data
 
-
-```r
+```{r}
 australia <- election_data %>%
   filter(year == 2016 &
     country == "Australia" &
@@ -178,14 +122,9 @@ aus <- parliament_data(election_data = australia,
   type = "horseshoe")
 ```
 
-```
-## Error in calc_coordinates(total_seats, parl_rows, c(5.5, 7)): could not find function "calc_coordinates"
-```
-
 #### Plot
 
-
-```r
+```{r}
 ggplot(aus, aes(x, y, colour=party_long)) +
   geom_parliament_seats() + 
   theme_void() +
@@ -194,10 +133,6 @@ ggplot(aus, aes(x, y, colour=party_long)) +
     subtitle = "Government encircled in black.") +
   annotate("text", x=0, y=0, label=paste("Total: 150 MPs"), fontface="bold", size=12) +
   scale_colour_manual(values = aus$colour, limits = aus$party_long)
-```
-
-```
-## Error in ggplot(aus, aes(x, y, colour = party_long)): object 'aus' not found
 ```
 
 

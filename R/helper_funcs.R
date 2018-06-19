@@ -12,6 +12,7 @@
 #'
 #' @author
 #' Zoe Meers
+#' @export
 
 calc_coordinates <- function(N, M, limits, segment = 0.5) {
   #controls the spread of the seats
