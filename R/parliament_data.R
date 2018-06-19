@@ -11,14 +11,14 @@
 #' @param party_names the names of parties elected to parliament
 #' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
 #'
-#' @example
-#'
+#' @examples 
 #' data <- election_data[which(election_data$year == 2017 & election_data$country == "UK"),]
 #' parl_data <- parliament_data(election_data = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
 #' ggplot(df, aes(x, y, color=party_long)) + geom_point()
 #'
 #' @author
 #' Zoe Meers
+#' @export
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
                             party_seats = election_data$seats,
@@ -95,11 +95,6 @@ parliament_data <- function(election_data = NULL,
 }
 
 
-#' A ggplot2 theme for parliament plots
-theme_parliament <- function() {
-  theme_void()
-}
-
 #' A ggplot2 geom for parliament plots
 #' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
 #' @param total_seats the total number of seats in parliament
@@ -107,7 +102,7 @@ theme_parliament <- function() {
 #' @param data[[party_seats]] seats per party
 #' @param data[[party_names]] names of political parties in parliament
 #'
-#' @example
+#' @examples
 #' df <- data.frame(Party = c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA"),Number = c(35, 184, 55, 84, 265, 54, 32, 27))
 #' df1 <- parliament_data(df)
 #' ggplot() + geom_parliament_dots(type="semicircle, data[[party_seats]]=df1$Number, parl_rows=6, total_seats=sum(df1$Number))
@@ -140,16 +135,18 @@ geom_parliament_waffle <- function(total_seats = NULL,
 #' @param left left hand side
 #' @param right right hand side
 #' @author Zoe Meers
+#' @export
 combine_opposingbenches <- function(left=NA, right=NA) {
   left + patchwork::plot_spacer() + right
 }
 
 #' Highlight governments
 #' Define the government variable in the function.
-#' @example 
+#' @examples
 #' geom_highlight_parliament(government==1)
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
+#' @export
 geom_highlight_government <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "highlight")
 }
@@ -168,6 +165,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
 }
 
 #' @rdname ggplot2-ggproto
+#' @name GeomParliamentSeats
 #' @format NULL
 #' @usage NULL
 #' @export
@@ -200,11 +198,11 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
 
 #' Parliament seats
 #' The parliament seats geom is used for plotting data from parliament_data().
-#' @param x
-#' @param y
-#' @param colour 
-#' ggplot(us_senate, aes(x,y,colour=colour))
+#' @param x the x coordinates
+#' @param y the y coordinates
+#' @param colour the colour variable 
 #' @author Zoe Meers
+#' @export
 geom_parliament_seats <- function(mapping = NULL, data = NULL,
                        stat = "identity", position = "identity",
                        ...,
