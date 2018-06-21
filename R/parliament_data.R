@@ -21,6 +21,7 @@
 #' @export
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
+                            government = election_data$government,
                             party_seats = election_data$seats,
                             total_seats = sum(party_seats),
                             party_names = election_data$party,
@@ -28,8 +29,8 @@ parliament_data <- function(election_data = NULL,
                               "horseshoe",
                               "semicircle",
                               "circle",
-                              "classroom"
-                              #"opposing_benches"
+                              "classroom",
+                              "opposing_benches"
                             )) {
   #for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
@@ -67,16 +68,17 @@ parliament_data <- function(election_data = NULL,
     parl_layout$party <- rep(party_names, party_seats)
   }
   
-  # else if (type == "opposing_benches") {
-  #   result <- expand.grid(
-  #     x = 1:parl_rows,
-  #     y = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
-  #   )
-  # 
-  #   # vec <- rep(data[[party_names]], data[[party_seats]])
-  #   # result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-  # }
-  
+  else if (type == "opposing_benches") {
+    
+    result <- expand.grid(
+      y = 1:parl_rows,
+      x = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
+    )
+
+    vec <- rep(data[[party_names]], data[[party_seats]])
+    result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
+  }
+
   else {
     warning("parliament layout not supported")
   }
@@ -94,41 +96,6 @@ parliament_data <- function(election_data = NULL,
   return(parl_data)
 }
 
-
-#' A ggplot2 geom for parliament plots
-#' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
-#' @param total_seats the total number of seats in parliament
-#' @param parl_rows number of rows in parliament
-#' @param data[[party_seats]] seats per party
-#' @param data[[party_names]] names of political parties in parliament
-#'
-#' @examples
-#' df <- data.frame(Party = c("GUE/NGL", "S&D", "Greens/EFA", "ALDE", "EPP", "ECR", "EFD", "NA"),Number = c(35, 184, 55, 84, 265, 54, 32, 27))
-#' df1 <- parliament_data(df)
-#' ggplot() + geom_parliament_dots(type="semicircle, data[[party_seats]]=df1$Number, parl_rows=6, total_seats=sum(df1$Number))
-#'
-#' @author
-#' Zoe Meers
-#' ### ROB - not sure this needs to be here - does it add anything over using the square geom_point? ###
-geom_parliament_waffle <- function(total_seats = NULL,
-                                  parl_rows = NULL,
-                                  party_seats = NULL,
-                                  size = NULL, 
-                                  party_names = NULL,
-                                  type = "opposing_benches") {
-  
-  result <- expand.grid(
-    x = 1:parl_rows,
-    y = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
-  )
-  
-  vec <- rep(data[[party_names]], data[[party_seats]])
-  result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
-  
-  # Plot it
-  geom_tile(data = result, aes(x, y, fill=as.character(party)),colour="white", size=0.8)
-  
-}
 
 ###ROB - same as above, seems better to arrange by (e.g. government) in parliament_data and then separate the coordinates there? ###
 #' Combine left and right bench for opposing bench-style parliaments
