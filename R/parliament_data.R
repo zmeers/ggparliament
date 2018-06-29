@@ -70,13 +70,17 @@ parliament_data <- function(election_data = NULL,
   
   else if (type == "opposing_benches") {
     
-    result <- expand.grid(
+    parl_layout <- expand.grid(
       y = 1:parl_rows,
-      x = seq_len(ceiling(sum(data[[party_seats]]) / parl_rows))
+      x = seq_len(ceiling(sum(party_seats) / parl_rows))
     )
+    leftovers <- nrow(parl_layout) - total_seats
+    parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
+                                        parl_layout$x %in% c(tail(1:max(parl_layout$x), leftovers/2),
+                                                             head(1:max(parl_layout$x), leftovers/2))),]
+    
+    parl_layout$party <- rep(party_names, party_seats)
 
-    vec <- rep(data[[party_names]], data[[party_seats]])
-    result$party <- c(vec, rep(NA, nrow(result) - length(vec)))
   }
 
   else {
@@ -125,7 +129,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = alpha("black", 1),
     show.legend = FALSE,
-    size = 5
+    size = 4
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
@@ -140,10 +144,14 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
                      required_aes = c("x", "y", "colour"),
                      non_missing_aes = c("size", "shape"),
                      default_aes = ggplot2::aes(
-                       shape = 19, colour = "black", size=3, fill = NA,
-                       alpha = NA, stroke = 1
+                       shape = 19, 
+                       colour = "black", 
+                       size=2, 
+                       fill = NA,
+                       alpha = NA, 
+                       stroke = 1
                      ),
-                     
+                  
                      draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
                        coords <- coord$transform(data, panel_params)
                        ggname("geom_parliament_seats",
@@ -186,7 +194,7 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      size=3,
+      size=2,
       ...
     )
   )
