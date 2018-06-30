@@ -32,6 +32,7 @@ geom_majorityrule <- function(mapping = NULL, data = NULL,
 }
 
 #' @rdname ggplot2-ggproto
+#' @name GeomMajorityRule
 #' @format NULL
 #' @usage NULL
 #' @export
@@ -41,11 +42,11 @@ GeomMajorityRule <- ggproto("GeomMajorityRule", Geom,
 
                              data$x    <- 0
                              data$xend <- 0
-                             data$y    <- 0.8
-                             data$yend <- 2.2
+                             data$y    <- 7.8
+                             data$yend <- 10.2
                          
                          
-                         GeomSegment$draw_panel(unique(data), panel_params, coord)
+                         GeomMajorityRule$draw_panel(unique(data), panel_params, coord)
                      },
                      
                      default_aes = aes(colour = "slategray", size = 1.5, linetype = 2, alpha = 0.9),

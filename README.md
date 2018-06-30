@@ -11,8 +11,9 @@ output:
 
 # Parliament plots
 
-This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats color-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats,
-respectively.
+This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats color-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
+
+This `R` package is a `ggplot2` extension.
 
 To install the package:
 
@@ -35,7 +36,9 @@ It is a pretty useful reference.
 
 ### EU, France, United States, and so on...
 
-#### Data
+
+### Plot of US Congress
+
 
 
 ```r
@@ -43,16 +46,20 @@ us_congress <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
     house == "Representatives")
+
 us_congress1 <- parliament_data(election_data = us_congress,
   type = "semicircle",
   total_seats = sum(us_congress$seats),
   parl_rows = 10,
   party_names = us_congress$party_short,
   party_seats = us_congress$seats)
+
 us_senate <- election_data %>%
   filter(country == "USA" &
     year == "2016" &
     house == "Senate")
+
+
 us_senate <- parliament_data(
   election_data = us_senate,
   type = "semicircle",
@@ -61,8 +68,6 @@ us_senate <- parliament_data(
   party_names = us_senate$party_short,
   party_seats = us_senate$seats)
 ```
-
-#### Plot of US Congress
 
 
 ```r
@@ -77,7 +82,7 @@ ggplot(us_congress1, aes(x, y, colour = party_short)) +
 
 ![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-#### Plot of US Senate
+### Plot of US Senate
 
 
 ```r
@@ -95,7 +100,7 @@ senate
 ![](README_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
-## Plot of German Bundestag
+### Plot of German Bundestag
 
 
 ```r
@@ -119,12 +124,67 @@ ggplot(germany, aes(x,y,colour=party_short))+
 
 ![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
+## Opposing Benches Parliament
+
+### United Kingdom
+
+
+```r
+#data preparation
+uk_17 <- election_data %>% 
+  filter(country=="UK" & year=="2017")
+
+
+uk_17_left <- uk_17 %>% 
+  filter(government==0)
+uk_17_right <- uk_17 %>% 
+  filter(government==1)
+
+
+uk_17_left <- parliament_data(election_data = uk_17_left,
+  total_seats = sum(uk_17_left$seats),
+  party_seats =  uk_17_left$seats,
+  parl_rows = 10,
+  type = "opposing_benches")
+
+
+uk_17_right <- parliament_data(election_data = uk_17_right,
+  total_seats = sum(uk_17_right$seats),
+  party_seats = uk_17_right$seats,
+  parl_rows = 9,
+  type = "opposing_benches")
+
+right <- ggplot(uk_17_right, aes(x, y, color=party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  labs(colour = "") +
+  geom_highlight_government(government==1) + 
+  scale_colour_manual(values = uk_17_right$colour, 
+                      limits = uk_17_right$party_short) +
+  theme(legend.position = 'right')
+
+
+left <- ggplot(uk_17_left, aes(x, y, color=party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  labs(colour = "", 
+       title = "UK parliament in 2017",
+       subtitle="Government encircled in black.") +
+  scale_colour_manual(values = uk_17_left$colour, 
+                      limits = uk_17_left$party_short) +
+  theme(legend.position = 'left') 
+
+uk_parliament<- combine_opposingbenches(left=left, right=right)
+uk_parliament
+```
+
+![](README_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+
 
 ## Horseshoe parliament
 
 ### Australia, New Zealand
-
-#### Data
 
 
 ```r
@@ -142,12 +202,11 @@ australia <- parliament_data(election_data = australia,
   type = "horseshoe")
 ```
 
-#### Plot of Australian parliament
-
+### Plot of Australian parliament
 
 
 ```r
-ggplot(australia, aes(x, y, color=party_short)) +
+au <-ggplot(australia, aes(x, y, color=party_short)) +
   geom_parliament_seats() + 
   theme_void() +
   geom_highlight_government(government==1) + 
@@ -157,30 +216,33 @@ ggplot(australia, aes(x, y, color=party_short)) +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
   theme(legend.position = 'bottom') 
+au
 ```
 
-![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 
 
-## Facet the data and plot 
+# Faceting the data
  
-### American Congress from 2010 onwards
 
-If you want to facet Congress by each election year, you can use a split-apply-combine strategy in the dplyr chain.
+If you want to facet a parliament, you can use a split-apply-combine strategy in a `dplyr` chain.
+
+## Steps
 You must:
+
 1) split by year
-2) apply the coordinates for each party per year
+2) apply the coordinates for each party
 3) combine the rows into one large data frame.
 
-An example is as follows:
+A few examples are as follows:
+
+### American Congress from 2010 onwards
 
 ```r
 usa <- election_data %>%
   filter(country == "USA" &
     house == "Representatives")  %>% 
-  mutate(government = ifelse(is.na(government), 0, government)) %>% 
-  arrange(desc(party_short)) %>% 
   split(.$year) %>% # split
   map(~parliament_data(election_data = ., #apply
   total_seats = sum(.$seats),
@@ -190,7 +252,6 @@ usa <- election_data %>%
   bind_rows() # combine
 ```
 
-#### Plot of US Congress By Year
 
 ```r
 ggplot(usa, aes(x, y, color=party_short)) +
@@ -206,24 +267,23 @@ ggplot(usa, aes(x, y, color=party_short)) +
   facet_grid(~year, scales='free')
 ```
 
-![](README_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 
-#### Plot Australian Parliament By Year
+### Facet Australian Parliament by House
 
 ```r
 australia <- election_data %>%
   filter(country == "Australia" &
-    house == "Representatives")  %>% 
-  mutate(government = ifelse(is.na(government), 0, government)) %>% 
+    year == "2016")  %>% 
   arrange(government) %>% 
-  split(.$year) %>%
-  map(~parliament_data(election_data = .,
+  split(.$house) %>% # split
+  map(~parliament_data(election_data = ., # apply
   total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 4,
   type = "horseshoe")) %>%
-  bind_rows()
+  bind_rows() # combine
 ```
 
 
@@ -238,7 +298,82 @@ ggplot(australia, aes(x, y, color=party_short)) +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
   theme(legend.position = 'bottom') + 
-  facet_grid(~year, scales='free')
+  facet_grid(~house, scales='free')
 ```
 
-![](README_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
+### Facet UK Parliament
+
+
+```r
+uk_left<- election_data %>%
+  filter(country == "UK" & government==0)  %>%
+  arrange(party_short) %>%
+  split(.$year) %>%
+  map(~parliament_data(election_data = .,
+  total_seats = sum(.$seats),
+  party_seats = .$seats,
+  parl_rows = 13,
+  type = "opposing_benches")) %>%
+  bind_rows()
+
+uk_right<-election_data %>%
+  filter(country == "UK" & government=="1")  %>%
+  split(.$year) %>%
+  map(~parliament_data(election_data = .,
+  total_seats = sum(.$seats),
+  party_seats = .$seats,
+  parl_rows = 14,
+  type = "opposing_benches")) %>%
+  bind_rows()
+```
+
+
+
+```r
+right <- ggplot(uk_right, aes(x, y, color=party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  labs(colour = "") +
+  geom_highlight_government(government==1) + 
+  scale_colour_manual(values = uk_right$colour, 
+                      limits = uk_right$party_short) +
+  theme(legend.position = 'right')+
+  facet_wrap(~year, ncol=1)
+
+
+left <- ggplot(uk_left, aes(x, y, color=party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  labs(colour = "", 
+       title = "UK parliament",
+       subtitle="Government encircled in black.") +
+  scale_colour_manual(values = uk_left$colour, 
+                      limits = uk_left$party_short) +
+  theme(legend.position = 'left') +
+  facet_wrap(~year, ncol=1)
+
+uk_parliament_10_15_17 <- combine_opposingbenches(left=left, right=right)
+uk_parliament_10_15_17
+```
+
+![](README_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
+
+# Majority line (experimental)
+
+* Note: this significant needs work!
+
+I am working on creating a geom for a majority line. Essentially, this is a wrapper for `geom_segment()`. I would love to create a new geom, where x is 0 and y and yend are the end points for the points.
+  * This is 8 and 10 for the horseshoe style 
+  * 1 and 2 for the semicircle style
+I haven't figured it out but I'm not the best programmer so I'm sure it's completely obvious!
+
+
+# Labels
+
+* This also needs work
+Happy to take a look at your previous code, Rob, and add back into this branch.
+
+

@@ -92,7 +92,7 @@ parliament_data <- function(election_data = NULL,
   if(!is.null(election_data)) {
     #bind the coordinates to the uncounted original data
     parl_data <- tidyr::uncount(election_data, party_seats)
-    parl_data <- cbind(parl_data, parl_layout)
+    parl_data <- dplyr::bind_cols(parl_data, parl_layout)
     
   #otherwise just return the coordinates with the party names attached
   } else {
