@@ -35,7 +35,7 @@ parliament_data <- function(election_data = NULL,
   #for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
     #calculate the layout of the final plot from supplied data
-    parl_layout <- calc_coordinates(total_seats, parl_rows, c(5.5, 7))
+    parl_layout <- calc_coordinates(total_seats, parl_rows, c(8, 10))
     #add in a column for the party names
     parl_layout$party <- rep(party_names, party_seats)
   }
@@ -71,9 +71,10 @@ parliament_data <- function(election_data = NULL,
   else if (type == "opposing_benches") {
     
     parl_layout <- expand.grid(
-      y = 1:parl_rows,
-      x = seq_len(ceiling(sum(party_seats) / parl_rows))
+      x = 1:parl_rows,
+      y = seq_len(ceiling(sum(party_seats) / parl_rows))
     )
+    
     leftovers <- nrow(parl_layout) - total_seats
     parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
                                         parl_layout$x %in% c(tail(1:max(parl_layout$x), leftovers/2),
