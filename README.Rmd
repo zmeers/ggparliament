@@ -82,7 +82,8 @@ ggplot(us_congress1, aes(x, y, colour = party_short)) +
   theme_void() +
   labs(colour = "", title = "United States Congress") +
   annotate("text", x=0, y=0, label=paste("Total:", sum(us_congress$seats), "Reps"), fontface="bold", size=8) +
-  scale_colour_manual(values = us_congress1$colour, limits = us_congress1$party_short)
+  scale_colour_manual(values = us_congress1$colour, 
+                      limits = us_congress1$party_short)
 ```
 
 ### Plot of US Senate

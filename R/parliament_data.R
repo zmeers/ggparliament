@@ -124,7 +124,7 @@ geom_highlight_government <- function(expr) {
 }
 
 ggplot_add.highlight <- function(object, plot, object_name) {
-  new_data <- dplyr::filter(plot$data, !!object$expr)
+  new_data <- dplyr::filter(plot$data, !!!object$expr)
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
@@ -201,3 +201,55 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
   )
 }
 
+
+#' Highlight elected women
+#' Define the "women" variable in the function.
+#' @examples
+#' geom_women_in_parliament(female==1)
+#' @author Zoe Meers
+#' @source 
+#' @export
+geom_women_in_parliament <- function(expr) {
+  structure(list(expr = rlang::enquo(expr)), class = "womenMPs")
+}
+
+ggplot_add.womenMPs <- function(object, plot, object_name) {
+  new_data <- dplyr::filter(plot$data, !!!object$expr)
+  new_layer <- geom_point(
+    data = new_data,
+    mapping = plot$mapping,
+    colour = alpha(0.4),
+    alpha = 0.4,
+    show.legend = FALSE,
+    size = 4
+  )
+  plot$layers <- append(plot$layers, new_layer)
+  plot
+}
+
+
+
+#' Show electoral quotas
+#' Define the quota variable in the function.
+#' @examples
+#' geom_electoral_quota(quota==1)
+#' @author Zoe Meers
+#' @source 
+#' @export
+geom_electoral_quota <- function(expr) {
+  structure(list(expr = rlang::enquo(expr)), class = "quota")
+}
+
+ggplot_add.quota <- function(object, plot, object_name) {
+  new_data <- dplyr::filter(plot$data, !!!object$expr)
+  new_layer <- geom_point(
+    data = new_data,
+    mapping = plot$mapping,
+    colour = alpha("black", 1),
+    shape = 13,
+    show.legend = FALSE,
+    size = 3
+  )
+  plot$layers <- append(plot$layers, new_layer)
+  plot
+}
