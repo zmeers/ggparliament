@@ -214,7 +214,7 @@ geom_women_in_parliament <- function(expr) {
 }
 
 ggplot_add.womenMPs <- function(object, plot, object_name) {
-  new_data <- dplyr::filter(plot$data, !!!object$expr)
+  new_data <- dplyr::filter(plot$data, !(!!!object$expr))
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
@@ -241,7 +241,7 @@ geom_electoral_quota <- function(expr) {
 }
 
 ggplot_add.quota <- function(object, plot, object_name) {
-  new_data <- dplyr::filter(plot$data, !(!!!object$expr))
+  new_data <- dplyr::filter(plot$data, !!!object$expr)
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
