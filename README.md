@@ -77,7 +77,8 @@ ggplot(us_congress1, aes(x, y, colour = party_short)) +
   theme_void() +
   labs(colour = "", title = "United States Congress") +
   annotate("text", x=0, y=0, label=paste("Total:", sum(us_congress$seats), "Reps"), fontface="bold", size=8) +
-  scale_colour_manual(values = us_congress1$colour, limits = us_congress1$party_short)
+  scale_colour_manual(values = us_congress1$colour, 
+                      limits = us_congress1$party_short)
 ```
 
 ![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
@@ -355,8 +356,19 @@ uk_parliament_10_15_17
 
 ![](README_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
+# TODO
 
-# Majority line (experimental)
+## Women in parliament
+
+`geom_women_in_parliament()` now exists. When the user defines women MPs in the plot, the alpha on other MPs is set to 0.5, effectively bringing women to the forefront.
+
+## Electoral quotas
+
+`geom_electoral_quota()` has been created. It plots an X on top of the original point. I think we can think of more creative things to do here... I wonder if there are data that show whether someone was elected through a quota or through the "regular" process.
+
+**Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. I think the best way to do that would be to include aggregate data on women and those elected through a quota process, and then expand that number to a long logical variable. I.e. if the Australian Labor Party has 48 MPs, when the data is expanded, that column will turn into 48 1s and 0 for the remainder.
+
+## Majority line (experimental)
 
 * Note: this significant needs work!
 
@@ -366,7 +378,7 @@ I am working on creating a geom for a majority line. Essentially, this is a wrap
 I haven't figured it out but I'm not the best programmer so I'm sure it's completely obvious!
 
 
-# Labels
+## Labels
 
 * This also needs work
 Happy to take a look at your previous code, Rob, and add back into this branch.
