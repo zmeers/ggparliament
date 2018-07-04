@@ -105,8 +105,7 @@ senate
 
 ```r
 germany <- election_data %>%
-  filter(year==2017 & country=="Germany") %>%
-  arrange(government)
+  filter(year==2017 & country=="Germany") 
 
 germany <- parliament_data(election_data=germany, 
                            total_seats = sum(germany$seats), 
@@ -191,9 +190,7 @@ uk_parliament
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
-    year == "2016")  %>% 
-  mutate(government = ifelse(is.na(government), 0, government)) %>% 
-  arrange(government) 
+    year == "2016") 
 
 australia <- parliament_data(election_data = australia,
   total_seats = sum(australia$seats),
@@ -276,7 +273,6 @@ ggplot(usa, aes(x, y, color=party_short)) +
 australia <- election_data %>%
   filter(country == "Australia" &
     year == "2016")  %>% 
-  arrange(government) %>% 
   split(.$house) %>% # split
   map(~parliament_data(election_data = ., # apply
   total_seats = sum(.$seats),
@@ -309,12 +305,11 @@ ggplot(australia, aes(x, y, color=party_short)) +
 ```r
 uk_left<- election_data %>%
   filter(country == "UK" & government==0)  %>%
-  arrange(party_short) %>%
   split(.$year) %>%
   map(~parliament_data(election_data = .,
   total_seats = sum(.$seats),
   party_seats = .$seats,
-  parl_rows = 13,
+  parl_rows = 12,
   type = "opposing_benches")) %>%
   bind_rows()
 
