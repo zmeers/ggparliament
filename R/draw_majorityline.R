@@ -1,3 +1,10 @@
+#' Draw majority line
+#' @examples
+#' draw_majorityline(n = 76, type = 'horseshoe')
+#' @author Zoe Meers
+#' @export
+
+
 draw_majorityline <- function(..., 
                               n = NULL, 
                               type = c("horseshoe",

@@ -112,8 +112,7 @@ combine_opposingbenches <- function(left=NA, right=NA) {
   left + patchwork::plot_spacer() + right
 }
 
-#' Highlight governments
-#' Define the government variable in the function.
+#' Highlight governments or parties in control of the legislature
 #' @examples
 #' geom_highlight_parliament(government==1)
 #' @author Zoe Meers

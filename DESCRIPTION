@@ -24,3 +24,10 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
+Collate: 
+    'data.R'
+    'draw_majorityline.R'
+    'stat-.r'
+    'geom_majorityline_OLD.R'
+    'helper_funcs.R'
+    'parliament_data.R'
