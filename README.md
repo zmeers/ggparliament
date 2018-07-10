@@ -462,7 +462,7 @@ au <-ggplot(australia1, aes(x,
                             colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  draw_majoritythreshold(n=76,
+  draw_majoritythreshold(n = 76,
                          type = 'horseshoe') + 
   theme_void() +
   labs(colour = NULL, 
