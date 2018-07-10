@@ -5,7 +5,7 @@
 #' @export
 
 
-draw_majorityline <- function(..., 
+draw_majoritythreshold<- function(..., 
                               n = NULL, 
                               type = c("horseshoe",
                                        "semicircle",

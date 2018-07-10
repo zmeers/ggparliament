@@ -342,7 +342,7 @@ uk_parliament_10_15_17
 
 # Majority line
 
-I have added a function called `draw_majorityline()`. The user needs to define the number of seats that equals a majority and specify the type of parliament. Right now, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. It also adds an annotation noting the seats required for a government to form. 
+I have added a function called `draw_majoritythreshold()`. The user needs to define the number of seats that equals a majority and specify the type of parliament. Right now, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. It also adds an annotation noting the seats required for a government to form. 
 
 An example is as follows:
 
@@ -366,20 +366,20 @@ ggplot(usa_12, aes(x, y, color=party_short)) +
   scale_colour_manual(values = usa_12$colour, 
                       limits = usa_12$party_short) + 
   theme(legend.position = 'right') + 
-  draw_majorityline(n = 218, 
+  draw_majoritythreshold(n = 218, 
                     type = "semicircle")
 
 ```
 
 ```{r, fig.height=6}
 
-# redraw the right hand side for the UK with draw_majorityline()
+# redraw the right hand side for the UK with draw_majoritythreshold()
 right_new <- ggplot(uk_17_right, aes(x, y, color=party_short)) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = "") +
   geom_highlight_government(government==1) + 
-  draw_majorityline(n=326, 
+  draw_majoritythreshold(n=326, 
                     type = 'opposing_benches') + 
   scale_colour_manual(values = uk_17_right$colour, 
                       limits = uk_17_right$party_short) +
