@@ -431,6 +431,15 @@ Note: This works but we need to fix up our data. Australia, for example, has had
 
 * This also needs work
 
-Happy to take a look at your previous code, Rob, and add back into this branch.
+* Happy to take a look at your previous code, Rob, and add back into this branch.
 
+## Facets
 
+* I think we should bring in the old code that you wrote in the legacy branch. I really like the idea of shrinking the smaller house. 
+
+## Other styles
+
+* Bars -- maybe useful for plotting potential coalitions. 
+* Rose?
+* Pie?
+* Geo_facet?
