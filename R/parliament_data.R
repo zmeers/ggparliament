@@ -130,7 +130,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = "black",
     show.legend = FALSE,
-    size = 4
+    size = 5
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
@@ -201,7 +201,6 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
   )
 }
 
-
 #' Highlight elected women
 #' Define the "women" variable in the function.
 #' @examples
@@ -214,7 +213,7 @@ geom_women_in_parliament <- function(expr) {
 }
 
 ggplot_add.womenMPs <- function(object, plot, object_name) {
-  new_data <- dplyr::filter(plot$data, !(!!object$expr))
+  new_data <- dplyr::filter(plot$data, !(!!!object$expr))
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
@@ -245,7 +244,7 @@ ggplot_add.quota <- function(object, plot, object_name) {
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
-    colour = alpha("black", 1),
+    colour = "black",
     shape = 13,
     show.legend = FALSE,
     size = 3

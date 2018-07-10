@@ -193,7 +193,7 @@ australia <- election_data %>%
     house == "Representatives" &
     year == "2016") 
 
-australia <- parliament_data(election_data = australia,
+australia1 <- parliament_data(election_data = australia,
   total_seats = sum(australia$seats),
   party_seats = australia$seats,
   parl_rows = 4,
@@ -204,7 +204,7 @@ australia <- parliament_data(election_data = australia,
 
 
 ```r
-au <-ggplot(australia, aes(x, y, color=party_short)) +
+au <-ggplot(australia1, aes(x, y, color=party_short)) +
   geom_parliament_seats() + 
   theme_void() +
   geom_highlight_government(government==1) + 
@@ -242,7 +242,7 @@ usa <- election_data %>%
   filter(country == "USA" &
     house == "Representatives")  %>% 
   split(.$year) %>% # split
-  map(~parliament_data(election_data = ., #apply
+  map(~parliament_data(election_data = ., # apply
   total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 8,
@@ -262,7 +262,7 @@ ggplot(usa, aes(x, y, color=party_short)) +
   scale_colour_manual(values = usa$colour, 
                       limits = usa$party_short) + 
   theme(legend.position = 'bottom') + 
-  facet_grid(~year, scales='free')
+  facet_grid(~year, scales='free') 
 ```
 
 ![](README_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
@@ -328,7 +328,7 @@ uk_right<-election_data %>%
 
 
 ```r
-right <- ggplot(uk_right, aes(x, y, color=party_short)) +
+right_all <- ggplot(uk_right, aes(x, y, color=party_short)) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = "") +
@@ -339,7 +339,7 @@ right <- ggplot(uk_right, aes(x, y, color=party_short)) +
   facet_wrap(~year, ncol=1)
 
 
-left <- ggplot(uk_left, aes(x, y, color=party_short)) +
+left_all <- ggplot(uk_left, aes(x, y, color=party_short)) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = "", 
@@ -350,11 +350,69 @@ left <- ggplot(uk_left, aes(x, y, color=party_short)) +
   theme(legend.position = 'left') +
   facet_wrap(~year, ncol=1)
 
-uk_parliament_10_15_17 <- combine_opposingbenches(left=left, right=right)
+uk_parliament_10_15_17 <- combine_opposingbenches(left=left_all, right=right_all)
 uk_parliament_10_15_17
 ```
 
 ![](README_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
+# Majority line
+
+I have added a function called `draw_majorityline()`. The user needs to define the number of seats that equals a majority and specify the type of parliament. Right now, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. It also adds an annotation noting the seats required for a government to form. 
+
+An example is as follows:
+
+
+```r
+usa_12 <- election_data %>%
+  filter(country == "USA" &
+    house == "Representatives" & 
+      year == "2012")  %>% 
+  parliament_data(election_data = .,
+  total_seats = sum(.$seats),
+  party_seats = .$seats,
+  parl_rows = 8,
+  type = "semicircle")
+ggplot(usa_12, aes(x, y, color=party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  geom_highlight_government(government==1) + 
+  labs(colour = NULL, 
+       title = "2012 American Congress",
+       subtitle = "Party that controls the chamber is highlighted in black.") +
+  scale_colour_manual(values = usa_12$colour, 
+                      limits = usa_12$party_short) + 
+  theme(legend.position = 'right') + 
+  draw_majorityline(n = 218, 
+                    type = "semicircle")
+```
+
+![](README_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+
+
+```r
+# redraw the right hand side for the UK with draw_majorityline()
+right_new <- ggplot(uk_17_right, aes(x, y, color=party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  labs(colour = "") +
+  geom_highlight_government(government==1) + 
+  draw_majorityline(n=326, 
+                    type = 'opposing_benches') + 
+  scale_colour_manual(values = uk_17_right$colour, 
+                      limits = uk_17_right$party_short) +
+  theme(legend.position = 'right')
+
+# combine
+uk_parliament<- combine_opposingbenches(left=left, right=right_new)
+uk_parliament
+```
+
+![](README_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
+
+Note: This works but we need to fix up our data. Australia, for example, has had several hung parliaments in recent years. In 2010, the ALP formed a coalition with several independent candidates and 1 Green's candidate but these are represented in the data. As a result,because the user will define the majority to be 76 -- and there aren't 76 government seats represented -- this function doesn't work. The underlying function uses `dplyr` to filter on the government variable before finding the x and y coordinates of the `row_number()== n`. 
+
 
 # TODO
 
@@ -368,19 +426,11 @@ uk_parliament_10_15_17
 
 **Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. I think the best way to do that is to include aggregate data on women as well as those elected through a quota process as two new variables, and then expand that number to a long logical variable. i.e. if the Australian Labor Party has 48 female MPs in the House of Representatives in 2016, that column will expand into 48 1s and 0 for the remainder.
 
-## Majority line (experimental)
-
-* Note: this significant needs work!
-
-I am working on creating a geom for a majority line. Essentially, this is a wrapper for `geom_segment()`. I would love to create a new geom, where x is 0 and y and yend are the end points for the points.
-  * This is 8 and 10 for the horseshoe style 
-  * 1 and 2 for the semicircle style
-I haven't figured it out but I'm not the best programmer so I'm sure it's completely obvious!
-
 
 ## Labels
 
 * This also needs work
+
 Happy to take a look at your previous code, Rob, and add back into this branch.
 
 
