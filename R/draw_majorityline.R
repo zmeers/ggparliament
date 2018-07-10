@@ -34,12 +34,12 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
   if (object$type == "semicircle") {
     plot +
       ggplot2::geom_segment(aes(y = 0.8, yend = 2.2, x = x_pos, xend = x_pos), colour = "grey", size = 0.6, linetype = 2, alpha = 0.5) +
-      ggplot2::annotate("text", x = x_pos + 0.85, y = 2.1, label = paste0(object$n, " seats needed for a majority."))
+      ggplot2::annotate("text", x = x_pos + 0.8, y = 2.2, label = paste0(object$n, " seats needed for a majority."))
   } else {
     if (object$type == "horseshoe") {
       plot +
         ggplot2::geom_segment(aes(y = 7, yend = 10.2, x = x_pos, xend = x_pos), colour = "grey", size = 0.6, linetype = 2, alpha = 0.5) +
-        ggplot2::annotate("text", x = x_pos + 0.85, y = 10.1, label = paste0(object$n, " seats needed for a majority."))
+        ggplot2::annotate("text", x = x_pos + 0.8, y = 10.2, label = paste0(object$n, " seats needed for a majority."))
     } else {
       if (object$type == "opposing_benches") {
         plot +
