@@ -371,7 +371,7 @@ ggplot(usa_12, aes(x, y, color=party_short)) +
 
 ```
 
-```{r}
+```{r, fig.height=6}
 
 # redraw the right hand side for the UK with draw_majorityline()
 right_new <- ggplot(uk_17_right, aes(x, y, color=party_short)) +
