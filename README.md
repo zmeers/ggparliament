@@ -144,14 +144,14 @@ uk_17_right <- uk_17 %>%
 uk_17_left <- parliament_data(election_data = uk_17_left,
   total_seats = sum(uk_17_left$seats),
   party_seats =  uk_17_left$seats,
-  parl_rows = 10,
+  parl_rows = 12,
   type = "opposing_benches")
 
 
 uk_17_right <- parliament_data(election_data = uk_17_right,
   total_seats = sum(uk_17_right$seats),
   party_seats = uk_17_right$seats,
-  parl_rows = 9,
+  parl_rows = 12,
   type = "opposing_benches")
 
 right <- ggplot(uk_17_right, aes(x, y, color=party_short)) +
@@ -320,7 +320,7 @@ uk_right<-election_data %>%
   map(~parliament_data(election_data = .,
   total_seats = sum(.$seats),
   party_seats = .$seats,
-  parl_rows = 14,
+  parl_rows = 12,
   type = "opposing_benches")) %>%
   bind_rows()
 ```
