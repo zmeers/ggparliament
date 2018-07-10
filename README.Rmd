@@ -121,7 +121,7 @@ germany <- parliament_data(election_data = germany,
                            party_seats = germany$seats, 
                            type = 'semicircle')
 
-ger <- ggplot(germany, aes(x,
+ggplot(germany, aes(x,
                     y,
                     colour = party_short))+
   geom_parliament_seats()+
