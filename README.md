@@ -122,19 +122,17 @@ germany <- parliament_data(election_data = germany,
                            party_seats = germany$seats, 
                            type = 'semicircle')
 
-ggplot(germany, aes(x,
+ger <- ggplot(germany, aes(x,
                     y,
                     colour = party_short))+
   geom_parliament_seats()+
-  geom_highlight_government(government==1) + 
+  geom_highlight_government(government == 1) + 
   labs(colour="Party", 
        title="Germany 2017 Election Results") + 
   theme_void()+
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short)
 ```
-
-![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ## Opposing Benches Parliament
 
@@ -171,9 +169,9 @@ right <- ggplot(uk_17_right, aes(x,
                                  y, 
                                  colour = party_short)) +
   geom_parliament_seats() + 
+  geom_highlight_government(government==1) + 
   theme_void() +
   labs(colour = NULL) +
-  geom_highlight_government(government==1) + 
   scale_colour_manual(values = uk_17_right$colour, 
                       limits = uk_17_right$party_short) +
   theme(legend.position = 'right')
@@ -447,8 +445,36 @@ uk_parliament
 ![](README_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 
-Note: This works but we need to fix up our data. Australia, for example, has had several hung parliaments in recent years. In 2010, the ALP formed a coalition with several independent candidates and 1 Green's candidate but these are represented in the data. As a result,because the user will define the majority to be 76 -- and there aren't 76 government seats represented -- this function doesn't work. The underlying function uses `dplyr` to filter on the government variable before finding the x and y coordinates of the `row_number()== n`. 
+```r
+australia <- election_data %>%
+  filter(country == "Australia" &
+    house == "Representatives" &
+    year == 2016) 
 
+australia1 <- parliament_data(election_data = australia,
+  total_seats = sum(australia$seats),
+  party_seats = australia$seats,
+  parl_rows = 4,
+  type = "horseshoe")
+
+au <-ggplot(australia1, aes(x, 
+                            y, 
+                            colour = party_short)) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n=76,
+                         type = 'horseshoe') + 
+  theme_void() +
+  labs(colour = NULL, 
+       title = "Australian Parliament",
+       subtitle = "Government encircled in black.") +
+  scale_colour_manual(values = australia$colour, 
+                      limits = australia$party_short) + 
+  theme(legend.position = 'bottom') 
+au
+```
+
+![](README_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 # TODO
 
