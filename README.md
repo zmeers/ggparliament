@@ -476,6 +476,36 @@ au
 
 ![](README_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
+
+
+```r
+germany <- election_data %>%
+  filter(year == 2017 & 
+           country == "Germany") 
+
+germany <- parliament_data(election_data = germany, 
+                           total_seats = sum(germany$seats), 
+                           parl_rows = 10,
+                           party_seats = germany$seats, 
+                           type = 'semicircle')
+
+german_parliament <- ggplot(germany, aes(x,
+                    y,
+                    colour = party_short))+
+  geom_parliament_seats()+
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 355,
+                         type = 'semicircle') +
+  labs(colour="Party", 
+       title="Germany 2017 Election Results") + 
+  theme_void()+
+  scale_colour_manual(values = germany$colour, 
+                      limits = germany$party_short)
+german_parliament
+```
+
+![](README_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+
 # TODO
 
 ## Women in parliament

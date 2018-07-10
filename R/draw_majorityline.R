@@ -35,7 +35,7 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
   if (object$type == "semicircle") {
     plot +
       ggplot2::geom_segment(aes(y = 0.8, yend = max(plot$data$y)+0.2, x = 0, xend = 0), colour = "grey", size = 0.8, linetype = 2, alpha = 0.5) +
-      ggplot2::annotate("text", x = x_pos + 0.85, y = max(plot$data$y) + 0.2, label = paste0(object$n, " seats needed for a majority."))
+      ggplot2::annotate("text", x = 0.85, y = max(plot$data$y) + 0.2, label = paste0(object$n, " seats needed for a majority."))
   } else {
     if (object$type == "horseshoe") {
       plot +
