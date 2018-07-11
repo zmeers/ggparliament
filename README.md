@@ -521,8 +521,8 @@ ggplot(usa_12, aes(x,
   draw_legislaturelabels(total_parliamentary_seats = 435,
                          type = 'semicircle') + 
   theme_void() +
-  labs(colour = NULL, 
-       title = "2012 American Congress",
+  theme(legend.position = 'none') + 
+  labs(title = "2012 American Congress",
        subtitle = "Party that controls the chamber is highlighted in black.") +
   scale_colour_manual(values = usa_12$colour, 
                       limits = usa_12$party_short) 
@@ -541,8 +541,8 @@ au <-ggplot(australia1, aes(x,
   draw_legislaturelabels(total_parliamentary_seats = 150,
                          type = 'horseshoe') + 
   theme_void() +
-  labs(colour = NULL, 
-       title = "Australian Parliament",
+  theme(legend.position = 'none') + 
+  labs(title = "Australian Parliament",
        subtitle = "Government encircled in black.") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short)
@@ -551,6 +551,27 @@ au
 
 ![](README_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
+
+```r
+german_parliament_labelled <- ggplot(germany, aes(x,
+                    y,
+                    colour = party_short))+
+  geom_parliament_seats()+
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 355,
+                         type = 'semicircle', 
+                         label = TRUE) + 
+  draw_legislaturelabels(total_parliamentary_seats = 709,
+                         type = 'semicircle') + 
+  labs(title="Germany 2017 Election Results") + 
+  theme_void() +
+  theme(legend.position = 'none') +
+  scale_colour_manual(values = germany$colour, 
+                      limits = germany$party_short)
+german_parliament_labelled
+```
+
+![](README_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 
 # TODO

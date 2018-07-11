@@ -39,7 +39,10 @@ ggplot_add.legislatureLabels <- function(object, plot, object_name) {
     dplyr::group_by(party_short, seats, colour) %>%
     dplyr::summarise(mean_x = mean(x), mean_y = mean(y)) 
   
-  
+  pos_movement_horseshoe <- c(new_dat$mean_x + 2)
+  pos_movement_semicircle <- c(new_dat$mean_x + 0.8)
+  neg_movement_horseshoe <- c(new_dat$mean_x - 2)
+  neg_movement_semicircle <- c(new_dat$mean_x - 0.8)
   
   if (object$type == "semicircle") {
     if (!object$total_seats_label){
@@ -52,18 +55,18 @@ ggplot_add.legislatureLabels <- function(object, plot, object_name) {
       plot
     } else {
       plot +
-        ggplot2::annotate("text", x = new_dat$mean_x, y = new_dat$mean_y + 0.8, label= new_dat$party_short, fontface="bold", colour = new_dat$colour) 
+        ggplot2::annotate("text",  x = ifelse(new_dat$mean_x>0, pos_movement_semicircle, neg_movement_semicircle), y = new_dat$mean_y, label= new_dat$party_short, fontface="bold", colour = new_dat$colour) 
     } 
     if (!object$seats_per_party){
       plot
     } else {
       plot + 
-        ggplot2::annotate("text", x = new_dat$mean_x, y = new_dat$mean_y + 0.8, label= new_dat$seats, fontface="bold", colour = new_dat$colour) 
+        ggplot2::annotate("text",  x = ifelse(new_dat$mean_x>0, pos_movement_semicircle, neg_movement_semicircle), y = new_dat$mean_y,label= new_dat$seats, fontface="bold", colour = new_dat$colour) 
     }
     if(object$total_seats_label == TRUE & object$party_names == TRUE & object$seats_per_party == TRUE) {
       plot + 
         ggplot2::annotate("text", x = 0, y = 0.2, label = object$total_parliamentary_seats, fontface = "bold", size = 8) + 
-        ggplot2::annotate("text", x = new_dat$mean_x, y = new_dat$mean_y + 0.8, label= paste0(new_dat$party_short,"\n", "(", new_dat$seats, ")"), fontface="bold", colour = new_dat$colour) 
+        ggplot2::annotate("text",  x = ifelse(new_dat$mean_x>0, pos_movement_semicircle, neg_movement_semicircle), y = new_dat$mean_y, label= paste0(new_dat$party_short,"\n", "(", new_dat$seats, ")"), fontface="bold", colour = new_dat$colour) 
     }
   }else{
     if (object$type == "horseshoe") {
@@ -77,18 +80,18 @@ ggplot_add.legislatureLabels <- function(object, plot, object_name) {
         plot
       } else {
         plot +
-          ggplot2::annotate("text", x = new_dat$mean_x, y = new_dat$mean_y + 2, label= new_dat$party_short, fontface="bold", colour = new_dat$colour) 
+          ggplot2::annotate("text", x = ifelse(new_dat$mean_x>0, pos_movement_horseshoe, neg_movement_horseshoe), y = new_dat$mean_y, label= new_dat$party_short, fontface="bold", colour = new_dat$colour) 
       } 
       if (!object$seats_per_party){
         plot
       } else {
         plot + 
-          ggplot2::annotate("text", x = new_dat$mean_x, y = new_dat$mean_y + 2, label= new_dat$seats, fontface="bold", colour = new_dat$colour) 
+          ggplot2::annotate("text", x = ifelse(new_dat$mean_x>0, pos_movement_horseshoe, neg_movement_horseshoe), y = new_dat$mean_y, label= new_dat$seats, fontface="bold", colour = new_dat$colour) 
       }
       if(object$total_seats_label == TRUE & object$party_names == TRUE & object$seats_per_party == TRUE) {
         plot + 
           ggplot2::annotate("text", x = 0, y = 0.2, label = object$total_parliamentary_seats, fontface = "bold", size = 8) + 
-          ggplot2::annotate("text", x = new_dat$mean_x, y = new_dat$mean_y + 2, label= paste0(new_dat$party_short,"\n", "(", new_dat$seats, ")"), fontface="bold", colour = new_dat$colour) 
+          ggplot2::annotate("text", x = ifelse(new_dat$mean_x>0, pos_movement_horseshoe, neg_movement_horseshoe), y = new_dat$mean_y,  label= paste0(new_dat$party_short, "\n(", new_dat$seats, ")"), fontface="bold", colour = new_dat$colour, vjust = "outward")
       }
     } 
   }
