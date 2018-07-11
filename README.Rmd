@@ -472,7 +472,7 @@ german_parliament <- ggplot(germany, aes(x,
   geom_highlight_government(government == 1) + 
   draw_majoritythreshold(n = 355,
                          type = 'semicircle', 
-                         label = FALSE) +
+                         label = FALSE) + 
   labs(colour="Party", 
        title="Germany 2017 Election Results") + 
   theme_void()+
@@ -491,7 +491,7 @@ german_parliament
 
 `geom_electoral_quota()` has been created. It plots an X on top of the original point. I think we can think of more creative things to do here... I wonder if there are any data that show whether someone was elected through a quota or through the "regular" process.
 
-**Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. I think the best way to do that is to include aggregate data on women as well as those elected through a quota process as two new variables, and then expand that number to a long logical variable. i.e. if the Australian Labor Party has 48 female MPs in the House of Representatives in 2016, that column will expand into 48 1s and 0 for the remainder.
+**Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. I think the best way to do that is to include aggregate data on women as well as those elected through a quota process as two new variables, and then expand that number to a long logical variable. i.e. if the Australian Labor Party has 48 female MPs in the House of Representatives in 2016, that column will expand into 48 1s and 0 for the remainder. I don't think we need to find data to match election_data. We can either find a new dataset with the variables we need or we make one (but I'm sure someone has it already). 
 
 
 ## Labels
