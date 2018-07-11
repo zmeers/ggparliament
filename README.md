@@ -483,7 +483,7 @@ germany <- election_data %>%
 
 germany <- parliament_data(election_data = germany, 
                            total_seats = sum(germany$seats), 
-                           parl_rows = 10,
+                           parl_rows = 12,
                            party_seats = germany$seats, 
                            type = 'semicircle')
 
@@ -566,7 +566,8 @@ german_parliament_labelled <- ggplot(germany, aes(x,
                          type = 'semicircle') + 
   labs(title="Germany 2017 Election Results") + 
   theme_void() +
-  theme(legend.position = 'none') +
+  theme(legend.position = 'none',
+        plot.title = element_text(hjust=0.5)) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short)
 german_parliament_labelled

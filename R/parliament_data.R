@@ -130,7 +130,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = "black",
     show.legend = FALSE,
-    size = 5
+    size = 3.5
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
