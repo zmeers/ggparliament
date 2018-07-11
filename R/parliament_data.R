@@ -13,7 +13,7 @@
 #'
 #' @examples 
 #' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$party_seats, party_names = data$party_short, parl_rows = 12)
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #'
 #' @author
 #' Zoe Meers
@@ -114,7 +114,7 @@ combine_opposingbenches <- function(left=NA, right=NA) {
 #' Highlight governments or parties in control of the legislature
 #' @examples
 #' #' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$party_seats, party_names = data$party_short, parl_rows = 12)
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majorityline(n = 316, type = 'opposing_benches', label = FALSE) + geom_highlight_parliament(government==1)
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
