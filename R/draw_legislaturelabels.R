@@ -40,7 +40,7 @@ ggplot_add.legislatureLabels <- function(object, plot, object_name) {
     dplyr::summarise(mean_x = mean(x), mean_y = mean(y)) 
   
   pos_movement_horseshoe <- c(new_dat$mean_x + 2)
-  pos_movement_semicircle <- c(new_dat$mean_x + 0.5)
+  pos_movement_semicircle <- c(new_dat$mean_x + 0.8)
   neg_movement_horseshoe <- c(new_dat$mean_x - 2)
   neg_movement_semicircle <- c(new_dat$mean_x - 0.8)
   
