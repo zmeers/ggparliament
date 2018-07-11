@@ -132,7 +132,9 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = "black",
     show.legend = FALSE,
-    size = 3.5
+    size = 4,
+    shape = 21,
+    stroke = 2
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
@@ -161,7 +163,7 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      size = size,
+      size = 3,
       ...
     )
   )
@@ -252,6 +254,33 @@ ggplot_add.quota <- function(object, plot, object_name) {
     shape = 13,
     show.legend = FALSE,
     size = 3
+  )
+  plot$layers <- append(plot$layers, new_layer)
+  plot
+}
+
+
+
+#' Show hangins seats
+#' Define hanging seats in the function
+#' @examples
+#' geom_hanging_seats(hanging_seats==1)
+#' @author Zoe Meers
+#' @source
+#' @export
+geom_hanging_seats <- function(expr) {
+  structure(list(expr = rlang::enquo(expr)), class = "hangingseats")
+}
+
+ggplot_add.hangingseats <- function(object, plot, object_name) {
+  new_data <- dplyr::filter(plot$data, !!object$expr)
+  new_layer <- geom_point(
+    data = new_data,
+    mapping = plot$mapping,
+    colour = "white",
+    shape = 19,
+    show.legend = FALSE,
+    size = 2
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
