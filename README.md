@@ -78,10 +78,8 @@ ggplot(us_congress1, aes(x,
   theme_void() +
   labs(colour = NULL, 
        title = "United States Congress") +
-  annotate("text", x=0, y=0, 
-           label=paste("Total:", sum(us_congress$seats), "Reps"), fontface="bold", size=8) +
   scale_colour_manual(values = us_congress1$colour, 
-                      limits = us_congress1$party_short)
+                      limits = us_congress1$party_short) 
 ```
 
 ![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
@@ -415,8 +413,7 @@ ggplot(usa_12, aes(x,
        title = "2012 American Congress",
        subtitle = "Party that controls the chamber is highlighted in black.") +
   scale_colour_manual(values = usa_12$colour, 
-                      limits = usa_12$party_short) + 
-  theme(legend.position = 'right') 
+                      limits = usa_12$party_short) 
 ```
 
 ![](README_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
@@ -508,7 +505,59 @@ german_parliament
 
 ![](README_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
+# Labels
+
+I created `draw_legislaturelabels()`... It currently plots the center text with total number of seats (as defined by user), the party name and seats per party. All are logical options. You need to define 'type' here as well -- currently only supports 'semicircle' and 'horseshoe'
+
+
+```r
+ggplot(usa_12, aes(x, 
+                   y, 
+                   colour = party_short)) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 218,
+                         type = "semicircle") + 
+  draw_legislaturelabels(total_parliamentary_seats = 435,
+                         type = 'semicircle') + 
+  theme_void() +
+  labs(colour = NULL, 
+       title = "2012 American Congress",
+       subtitle = "Party that controls the chamber is highlighted in black.") +
+  scale_colour_manual(values = usa_12$colour, 
+                      limits = usa_12$party_short) 
+```
+
+![](README_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+
+```r
+au <-ggplot(australia1, aes(x, 
+                            y, 
+                            colour = party_short)) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 76,
+                         type = 'horseshoe') + 
+  draw_legislaturelabels(total_parliamentary_seats = 150,
+                         type = 'horseshoe') + 
+  theme_void() +
+  labs(colour = NULL, 
+       title = "Australian Parliament",
+       subtitle = "Government encircled in black.") +
+  scale_colour_manual(values = australia$colour, 
+                      limits = australia$party_short)
+au
+```
+
+![](README_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+
+
+
 # TODO
+## Theme 
+
+We might need to make our own theme...
+I think theme_void() + theme(legend.postion = 'none') might work... Thoughts?
 
 ## Women in parliament
 
@@ -520,12 +569,6 @@ german_parliament
 
 **Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. I think the best way to do that is to include aggregate data on women as well as those elected through a quota process as two new variables, and then expand that number to a long logical variable. i.e. if the Australian Labor Party has 48 female MPs in the House of Representatives in 2016, that column will expand into 48 1s and 0 for the remainder. I don't think we need to find data to match election_data. We can either find a new dataset with the variables we need or we make one (but I'm sure someone has it already). 
 
-
-## Labels
-
-* This also needs work
-
-* Happy to take a look at your previous code, Rob, and add back into this branch.
 
 ## Facets
 
