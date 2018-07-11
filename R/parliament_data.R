@@ -132,7 +132,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = "black",
     show.legend = FALSE,
-    size = 4,
+    size = 1,
     shape = 21,
     stroke = 2
   )
@@ -163,7 +163,7 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      size = 3,
+      size = 1,
       ...
     )
   )
@@ -268,6 +268,10 @@ ggplot_add.quota <- function(object, plot, object_name) {
 #' @author Zoe Meers
 #' @source
 #' @export
+#'  
+#' 
+
+
 geom_hanging_seats <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "hangingseats")
 }
@@ -280,7 +284,7 @@ ggplot_add.hangingseats <- function(object, plot, object_name) {
     colour = "white",
     shape = 19,
     show.legend = FALSE,
-    size = 2
+    size = 1
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
