@@ -11,7 +11,7 @@
 #' @param party_names the names of parties elected to parliament
 #' @param type type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)
 #'
-#' @examples 
+#' @examples
 #' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #'
@@ -31,69 +31,71 @@ parliament_data <- function(election_data = NULL,
                               "classroom",
                               "opposing_benches"
                             )) {
-  #for horseshoe shaped parliaments- e.g. Australia
+  # for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
-    #calculate the layout of the final plot from supplied data
+    # calculate the layout of the final plot from supplied data
     parl_layout <- calc_coordinates(total_seats, parl_rows, c(8, 10))
-    #add in a column for the party names
+    # add in a column for the party names
     parl_layout$party <- rep(party_names, party_seats)
   }
-  
+
   else if (type == "semicircle") {
     parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2))
     parl_layout$party <- rep(party_names, party_seats)
   }
-  
+
   else if (type == "circle") {
     parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2), segment = 1)
     parl_layout$party <- rep(party_names, party_seats)
   }
-  
+
   else if (type == "classroom") {
-    #calculate parl_layour by expanding a grid of rows vs the length each row needs to be
+    # calculate parl_layour by expanding a grid of rows vs the length each row needs to be
     parl_layout <- expand.grid(
       y = 1:parl_rows,
       x = seq_len(ceiling(sum(party_seats) / parl_rows))
     )
-    
-    #remove the extra seats that are added by expanding a grid
-    #removes from either end of back row
+
+    # remove the extra seats that are added by expanding a grid
+    # removes from either end of back row
     ### ROB - Clean up/ find better way // and also make work for odd numbers left over? ###
     leftovers <- nrow(parl_layout) - total_seats
     parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
-                                        parl_layout$x %in% c(tail(1:max(parl_layout$x), leftovers/2),
-                                                             head(1:max(parl_layout$x), leftovers/2))),]
+      parl_layout$x %in% c(
+        tail(1:max(parl_layout$x), leftovers / 2),
+        head(1:max(parl_layout$x), leftovers / 2)
+      )), ]
 
     parl_layout$party <- rep(party_names, party_seats)
   }
-  
+
   else if (type == "opposing_benches") {
-    
     parl_layout <- expand.grid(
       x = 1:parl_rows,
       y = seq_len(ceiling(sum(party_seats) / parl_rows))
     )
-    
+
     leftovers <- nrow(parl_layout) - total_seats
     parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
-                                        parl_layout$x %in% c(tail(1:max(parl_layout$x), leftovers/2),
-                                                             head(1:max(parl_layout$x), leftovers/2))),]
-    
-    parl_layout$party <- rep(party_names, party_seats)
+      parl_layout$x %in% c(
+        tail(1:max(parl_layout$x), leftovers / 2),
+        head(1:max(parl_layout$x), leftovers / 2)
+      )), ]
 
+    parl_layout$party <- rep(party_names, party_seats)
   }
 
   else {
     warning("parliament layout not supported")
   }
-    
-  #bind layout results back to expanded election_data?
-  if(!is.null(election_data)) {
-    #bind the coordinates to the uncounted original data
+
+  # bind layout results back to expanded election_data?
+  if (!is.null(election_data)) {
+    # bind the coordinates to the uncounted original data
     parl_data <- tidyr::uncount(election_data, party_seats)
     parl_data <- dplyr::bind_cols(parl_data, parl_layout)
-    
-  #otherwise just return the coordinates with the party names attached
+
+    # otherwise just return the coordinates with the party names attached
   } else {
     parl_data <- parl_layout
   }
@@ -101,7 +103,7 @@ parliament_data <- function(election_data = NULL,
 }
 
 
-###ROB - same as above, seems better to arrange by (e.g. government) in parliament_data and then separate the coordinates there? ###
+### ROB - same as above, seems better to arrange by (e.g. government) in parliament_data and then separate the coordinates there? ###
 #' Combine left and right bench for opposing bench-style parliaments
 #' @param left left hand side
 #' @param right right hand side
@@ -136,84 +138,86 @@ ggplot_add.highlight <- function(object, plot, object_name) {
   plot
 }
 
+#' Parliament seats
+#' The parliament seats geom is used for plotting data from parliament_data().
+#' @param x the x coordinates
+#' @param y the y coordinates
+#' @param colour the colour variable
+#' @author Zoe Meers
+#' @export
+geom_parliament_seats <- function(mapping = NULL, data = NULL,
+                                  stat = "identity", position = "identity",
+                                  ...,
+                                  na.rm = FALSE,
+                                  show.legend = NA,
+                                  inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomParliamentSeats,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      na.rm = na.rm,
+      size = size,
+      ...
+    )
+  )
+}
+
+
 #' @rdname ggplot2-ggproto
 #' @name GeomParliamentSeats
 #' @format NULL
 #' @usage NULL
 #' @export
 GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
-                     required_aes = c("x", "y", "colour"),
-                     non_missing_aes = c("size", "shape"),
-                     default_aes = ggplot2::aes(
-                       shape = 19, 
-                       colour = "black", 
-                       size=2, 
-                       fill = NA,
-                       alpha = NA, 
-                       stroke = 1
-                     ),
-                  
-                     draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
-                       coords <- coord$transform(data, panel_params)
-                       ggname("geom_parliament_seats",
-                              grid::pointsGrob(
-                                coords$x, coords$y,
-                                pch = coords$shape,
-                                gp = gpar(
-                                  col = alpha(coords$colour, coords$alpha),
-                                  fill = alpha(coords$fill, coords$alpha),
-                                  fontsize = coords$size * ggplot2::.pt + coords$stroke * .stroke,
-                                  lwd = coords$stroke * .stroke
-                                )
-                              )
-                       )
-                     },
-                     
-                     draw_key = ggplot2::draw_key_point
-)
+  required_aes = c("x", "y", "colour"),
+  non_missing_aes = c("size", "shape"),
+  default_aes = ggplot2::aes(
+    shape = 19,
+    colour = "black",
+    size = 1,
+    fill = NA,
+    alpha = NA,
+    stroke = 0.5
+  ),
 
-#' Parliament seats
-#' The parliament seats geom is used for plotting data from parliament_data().
-#' @param x the x coordinates
-#' @param y the y coordinates
-#' @param colour the colour variable 
-#' @author Zoe Meers
-#' @export
-geom_parliament_seats <- function(mapping = NULL, data = NULL,
-                       stat = "identity", position = "identity",
-                       ...,
-                       na.rm = FALSE,
-                       show.legend = NA,
-                       inherit.aes = TRUE) {
-  layer(
-    data = data,
-    mapping = mapping,
-    stat = stat,
-    geom = GeomPoint,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(
-      na.rm = na.rm,
-      size=2,
-      ...
+  draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
+    coords <- coord$transform(data, panel_params)
+    ggplot2:::ggname(
+      "geom_parliament_seats",
+      grid::pointsGrob(
+        coords$x, coords$y,
+        pch = coords$shape,
+        gp = grid::gpar(
+          col = alpha(coords$colour, coords$alpha),
+          fill = alpha(coords$fill, coords$alpha),
+          fontsize = coords$size * ggplot2::.pt + coords$stroke * .stroke,
+          lwd = coords$stroke * .stroke
+        )
+      )
     )
-  )
-}
+  },
+
+  draw_key = ggplot2::draw_key_point
+)
 
 #' Highlight elected women
 #' Define the "women" variable in the function.
 #' @examples
 #' geom_women_in_parliament(female==1)
 #' @author Zoe Meers
-#' @source 
+#' @source
 #' @export
 geom_women_in_parliament <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "womenMPs")
 }
 
 ggplot_add.womenMPs <- function(object, plot, object_name) {
-  new_data <- dplyr::filter(plot$data, !(!!!object$expr))
+  new_data <- dplyr::filter(plot$data, !(!!object$expr))
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
@@ -233,7 +237,7 @@ ggplot_add.womenMPs <- function(object, plot, object_name) {
 #' @examples
 #' geom_electoral_quota(quota==1)
 #' @author Zoe Meers
-#' @source 
+#' @source
 #' @export
 geom_electoral_quota <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "quota")
