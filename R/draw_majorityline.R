@@ -32,7 +32,7 @@ draw_majoritythreshold <- function(...,
 ggplot_add.majorityLine <- function(object, plot, object_name) {
   new_dat <- plot$data %>%
     dplyr::filter(government == 1) %>%
-    dplyr::filter(dplyr::row_number() == object$n & object$n+2)
+    dplyr::filter(dplyr::row_number() == object$n)
   x_pos <- new_dat$x
   y_pos_oppbenches <- new_dat$y
 
