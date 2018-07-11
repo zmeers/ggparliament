@@ -560,7 +560,8 @@ german_parliament_labelled <- ggplot(germany, aes(x,
   geom_highlight_government(government == 1) + 
   draw_majoritythreshold(n = 355,
                          type = 'semicircle', 
-                         label = TRUE) + 
+                         label = TRUE,
+                         line_size = 0.8) + 
   draw_legislaturelabels(total_parliamentary_seats = 709,
                          type = 'semicircle') + 
   labs(title="Germany 2017 Election Results") + 
@@ -579,6 +580,9 @@ german_parliament_labelled
 
 We might need to make our own theme...
 I think theme_void() + theme(legend.postion = 'none') might work... Thoughts?
+
+## Hanging seats
+Germany and New Zealand have [hanging seats](https://www.bloomberg.com/graphics/2017-how-germany-forms-government/) where a party's share of the local-representative vote exceeds its percentage of the party vote. This results in extra seats and the folks at Bloomberg draw them as hollow seats in the link above. No reason we can't do the same - we would need to clone the original layers, then plot a hollow shape over the top, removing the bottom layers in the process (i.e. similar to `geom_electoral_quotas()` or `geom_women_in_parliament()`).
 
 ## Women in parliament
 
