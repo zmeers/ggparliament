@@ -22,8 +22,7 @@ devtools::install_github("robwhickman/ggparliament")
 ```
 
 Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
-is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a
-javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
 
 Unique parliament layouts:
 ==========================
@@ -131,7 +130,7 @@ ggplot(germany, aes(x,
        title="Germany 2017 Election Results") + 
   theme_void()+
   scale_colour_manual(values = germany$colour, 
-                      limits = germany$party_short)
+                      limits = germany$party_short) 
 ```
 
 ![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
@@ -497,7 +496,8 @@ german_parliament <- ggplot(germany, aes(x,
   geom_parliament_seats()+
   geom_highlight_government(government == 1) + 
   draw_majoritythreshold(n = 355,
-                         type = 'semicircle') +
+                         type = 'semicircle', 
+                         label = FALSE) +
   labs(colour="Party", 
        title="Germany 2017 Election Results") + 
   theme_void()+

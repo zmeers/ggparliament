@@ -9,12 +9,11 @@
 #' @param party_seats seats per party
 #' @param total_seats the total number of seats in parliament
 #' @param party_names the names of parties elected to parliament
-#' @param type type of parliament (horseshow, semicircle, circle, classroom, opposing benches)
+#' @param type type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)
 #'
 #' @examples 
-#' data <- election_data[which(election_data$year == 2017 & election_data$country == "UK"),]
-#' parl_data <- parliament_data(election_data = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
-#' ggplot(df, aes(x, y, color=party_long)) + geom_point()
+#' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$party_seats, party_names = data$party_short, parl_rows = 12)
 #'
 #' @author
 #' Zoe Meers
@@ -114,7 +113,9 @@ combine_opposingbenches <- function(left=NA, right=NA) {
 
 #' Highlight governments or parties in control of the legislature
 #' @examples
-#' geom_highlight_parliament(government==1)
+#' #' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$party_seats, party_names = data$party_short, parl_rows = 12)
+#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majorityline(n = 316, type = 'opposing_benches', label = FALSE) + geom_highlight_parliament(government==1)
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export
