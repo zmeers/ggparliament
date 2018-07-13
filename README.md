@@ -11,7 +11,7 @@ output:
 
 # Parliament plots
 
-<img src = "README_files/figure-html/HexSticker.png" align = "right"/>
+<img src = "README_files/figure-html/HexSticker.png" align = "right" width = "2" height = "2"/>
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
@@ -77,7 +77,7 @@ ggplot(us_congress1, aes(x,
                       limits = us_congress1$party_short) 
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ### Plot of US Senate
 
@@ -97,7 +97,7 @@ senate <- ggplot(us_senate, aes(x,
 senate 
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+![](README_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
 ### Plot of German Bundestag
@@ -126,7 +126,7 @@ ggplot(germany, aes(x,
                       limits = germany$party_short) 
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ## Opposing Benches Parliament
 
@@ -188,7 +188,7 @@ uk_parliament<- combine_opposingbenches(left = left,
 uk_parliament
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![](README_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 
 
@@ -229,7 +229,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![](README_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 
 
@@ -266,7 +266,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
+![](README_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ## Women in parliament
 
@@ -292,7 +292,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![](README_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 ## Electoral quotas
 
