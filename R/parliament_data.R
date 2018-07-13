@@ -16,7 +16,7 @@
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #'
 #' @author
-#' Zoe Meers
+#' Zoe Meers, Robert Hickman
 #' @export
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
@@ -36,16 +36,19 @@ parliament_data <- function(election_data = NULL,
     # calculate the layout of the final plot from supplied data
     parl_layout <- calc_coordinates(total_seats, parl_rows, c(8, 10))
     # add in a column for the party names
+    parl_layout$party <- NA
     parl_layout$party <- rep(party_names, party_seats)
   }
 
   else if (type == "semicircle") {
     parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2))
+    parl_layout$party <- NA
     parl_layout$party <- rep(party_names, party_seats)
   }
 
   else if (type == "circle") {
     parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2), segment = 1)
+    parl_layout$party <- NA
     parl_layout$party <- rep(party_names, party_seats)
   }
 
@@ -65,7 +68,7 @@ parliament_data <- function(election_data = NULL,
         tail(1:max(parl_layout$x), leftovers / 2),
         head(1:max(parl_layout$x), leftovers / 2)
       )), ]
-
+    parl_layout$party <- NA
     parl_layout$party <- rep(party_names, party_seats)
   }
 
@@ -81,7 +84,7 @@ parliament_data <- function(election_data = NULL,
         tail(1:max(parl_layout$x), leftovers / 2),
         head(1:max(parl_layout$x), leftovers / 2)
       )), ]
-
+    parl_layout$party <- NA
     parl_layout$party <- rep(party_names, party_seats)
   }
 
@@ -117,7 +120,7 @@ combine_opposingbenches <- function(left=NA, right=NA) {
 #' @examples
 #' #' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majorityline(n = 316, type = 'opposing_benches', label = FALSE) + geom_highlight_parliament(government==1)
+#' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_parliament(government == 1)
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export
@@ -210,7 +213,7 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
 #' Highlight elected women
 #' Define the "women" variable in the function.
 #' @examples
-#' geom_women_in_parliament(female==1)
+#' geom_women_in_parliament(female == 1)
 #' @author Zoe Meers
 #' @source
 #' @export
@@ -264,7 +267,7 @@ ggplot_add.quota <- function(object, plot, object_name) {
 #' Show hangins seats
 #' Define hanging seats in the function
 #' @examples
-#' geom_hanging_seats(hanging_seats==1)
+#' geom_hanging_seats(hanging_seats == 1)
 #' @author Zoe Meers
 #' @source
 #' @export

@@ -3,15 +3,18 @@ Type: Package
 Title: Parliament Plots
 Description: Simple parliament plots using 'ggplot2'.
 License: MIT + file LICENSE
-Version: 0.1.2
+Version: 1.1.2
 Date: 2017-04-07
 Authors@R: c(person("Thomas J.", "Leeper",
                     role = c("aut"), 
                     email = "thosjleeper@gmail.com",
                     comment = c(ORCID = "0000-0003-4097-6326")),
-	   c(person("Zoe", "Meers",
+	   person("Zoe", "Meers",
 		role = c("aut"),
-		email = "zoe.meers@gmail.com"))
+		email = "zoe.meers@gmail.com"),
+	   person("Robert", "Hickman",
+		role = c("aut","cre"),
+		email = "robwhickman@gmail.com"))
 URL: https://github.com/robwhickman/ggparliament
 BugReports: https://github.com/robwhickman/ggparliament/issues
 LazyData: true
@@ -21,13 +24,12 @@ Imports:
     ggplot2
 Suggests:
     knitr,
-    testthat
+    testthat,
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Collate: 
+Collate:
     'data.R'
-    'draw_majorityline.R'
-    'stat-.r'
-    'geom_majorityline_OLD.R'
+    'draw_majorityline.R'	
     'helper_funcs.R'
     'parliament_data.R'
