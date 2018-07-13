@@ -11,6 +11,8 @@ output:
 
 # Parliament plots
 
+ggparliament <img src = "figure/README/HexSticker.png" align = "right"/>
+
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
 This `R` package is a `ggplot2` extension.
@@ -82,7 +84,7 @@ ggplot(us_congress1, aes(x,
                       limits = us_congress1$party_short) 
 ```
 
-![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
 ### Plot of US Senate
 
@@ -102,7 +104,7 @@ senate <- ggplot(us_senate, aes(x,
 senate 
 ```
 
-![](README_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 
 ### Plot of German Bundestag
@@ -131,7 +133,7 @@ ggplot(germany, aes(x,
                       limits = germany$party_short) 
 ```
 
-![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
 ## Opposing Benches Parliament
 
@@ -193,7 +195,7 @@ uk_parliament<- combine_opposingbenches(left = left,
 uk_parliament
 ```
 
-![](README_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 
 
@@ -234,7 +236,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![](README_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 
 
@@ -284,7 +286,7 @@ ggplot(usa, aes(x,
   facet_grid(~year, scales = 'free') 
 ```
 
-![](README_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
 
 
 ### Facet Australian Parliament by House
@@ -319,7 +321,7 @@ ggplot(australia, aes(x,
   facet_grid(~house, scales = 'free')
 ```
 
-![](README_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
 ### Facet UK Parliament
 
@@ -382,7 +384,7 @@ uk_parliament_10_15_17 <- combine_opposingbenches(left = left_all,
 uk_parliament_10_15_17
 ```
 
-![](README_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
 
 # Majority line
 
@@ -416,7 +418,7 @@ ggplot(usa_12, aes(x,
                       limits = usa_12$party_short) 
 ```
 
-![](README_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
 
 
 ```r
@@ -440,7 +442,7 @@ uk_parliament<- combine_opposingbenches(left = left,
 uk_parliament
 ```
 
-![](README_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
 
 
 ```r
@@ -472,7 +474,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![](README_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18-1.png)
 
 
 
@@ -503,7 +505,7 @@ german_parliament <- ggplot(germany, aes(x,
 german_parliament
 ```
 
-![](README_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19-1.png)
 
 # Labels
 
@@ -528,7 +530,7 @@ ggplot(usa_12, aes(x,
                       limits = usa_12$party_short) 
 ```
 
-![](README_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20-1.png)
 
 ```r
 au <-ggplot(australia1, aes(x, 
@@ -549,7 +551,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![](README_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png)
 
 
 ```r
@@ -573,7 +575,7 @@ german_parliament_labelled <- ggplot(germany, aes(x,
 german_parliament_labelled
 ```
 
-![](README_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png)
 
 
 # TODO
@@ -608,7 +610,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![](README_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
 
 ## Women in parliament
 
@@ -634,7 +636,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![](README_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
 
 ## Electoral quotas
 
