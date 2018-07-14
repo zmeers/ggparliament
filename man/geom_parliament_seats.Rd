@@ -20,6 +20,9 @@ geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
 Parliament seats
 The parliament seats geom is used for plotting data from parliament_data().
 }
+\examples{
+geom_parliament_seats(female == 1)
+}
 \author{
 Zoe Meers
 }

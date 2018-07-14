@@ -3,7 +3,7 @@
 #' @param party_names A logical variable for labelling different parties. Defaults to TRUE.
 #' @param seats_per_party A logical variable for printing the number of seats per party next to the party name. Defaults to TRUE.
 #' @examples
-#' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
+#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_legislaturelabels(n = 435, party_names = TRUE, seats_per_party = TRUE, type = 'semicircle')
 #' @author Zoe Meers

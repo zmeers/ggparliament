@@ -12,11 +12,11 @@
 #' @param type type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)
 #'
 #' @examples
-#' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
+#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #'
 #' @author
-#' Zoe Meers, Robert Hickman
+#' Zoe Meers, Rob Hickman
 #' @export
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
@@ -118,7 +118,7 @@ combine_opposingbenches <- function(left=NA, right=NA) {
 
 #' Highlight governments or parties in control of the legislature
 #' @examples
-#' #' data <- election_data[which(election_data$year == 2016 & election_data$country == "USA" & election_data$house == "Representatives"),]
+#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
 #' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_parliament(government == 1)
 #' @author Zoe Meers
@@ -148,6 +148,8 @@ ggplot_add.highlight <- function(object, plot, object_name) {
 #' @param x the x coordinates
 #' @param y the y coordinates
 #' @param colour the colour variable
+#' @examples
+#' geom_parliament_seats(female == 1)
 #' @author Zoe Meers
 #' @export
 geom_parliament_seats <- function(mapping = NULL, data = NULL,
@@ -171,7 +173,6 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
     )
   )
 }
-
 
 #' @rdname ggplot2-ggproto
 #' @name GeomParliamentSeats
@@ -215,8 +216,8 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
 #' @examples
 #' geom_women_in_parliament(female == 1)
 #' @author Zoe Meers
-#' @source
 #' @export
+
 geom_women_in_parliament <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "womenMPs")
 }
@@ -240,10 +241,10 @@ ggplot_add.womenMPs <- function(object, plot, object_name) {
 #' Show electoral quotas
 #' Define the quota variable in the function.
 #' @examples
-#' geom_electoral_quota(quota==1)
+#' geom_electoral_quota(quota == 1)
 #' @author Zoe Meers
-#' @source
 #' @export
+
 geom_electoral_quota <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "quota")
 }
@@ -269,10 +270,8 @@ ggplot_add.quota <- function(object, plot, object_name) {
 #' @examples
 #' geom_hanging_seats(hanging_seats == 1)
 #' @author Zoe Meers
-#' @source
 #' @export
-#'  
-#' 
+
 
 
 geom_hanging_seats <- function(expr) {
