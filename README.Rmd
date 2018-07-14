@@ -71,7 +71,7 @@ us_senate <- parliament_data(
 
 ```
 
-```{r, fig.width=4, fig.height=6}
+```{r, fig.width=6, fig.height=4}
 ggplot(us_congress1, aes(x, 
                          y, 
                          colour = party_short)) +
