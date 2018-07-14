@@ -1,11 +1,9 @@
 ---
-title: "README"
-author: "Zoe Meers"
-date: "30/06/2018"
-output: 
-  html_document:
-    keep_md: true
+output: github_document
 ---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 
 
 
@@ -234,87 +232,3 @@ au
 
 
 
-
-# TODO
-## Theme 
-
-We might need to make our own theme...
-I think theme_void() + theme(legend.postion = 'none') might work... Thoughts?
-
-## Hanging seats
-Germany and New Zealand have [hanging seats](https://www.bloomberg.com/graphics/2017-how-germany-forms-government/) where a party's share of the local-representative vote exceeds its percentage of the party vote. This results in extra seats and the folks at Bloomberg draw them as hollow seats in the link above. 
-
-I've taken a quick stab at plotting a smaller white circle over the top in the function called `geom_hanging_seats()`. It will probably need cleaning up. 
-
-
-```r
-au <-ggplot(australia1, aes(x, 
-                            y, 
-                            colour = party_short)) +
-  geom_parliament_seats() + 
-  geom_highlight_government(government == 1) + 
-  geom_hanging_seats(party_short == "Lab") + # This is an example (obviously)
-  draw_majoritythreshold(n = 76,
-                         type = 'horseshoe') + 
-  draw_legislaturelabels(total_parliamentary_seats = 150,
-                         type = 'horseshoe') + 
-  theme_void() +
-  theme(legend.position = 'none') + 
-  labs(title = "Australian Parliament",
-       subtitle = "Government encircled in black.") +
-  scale_colour_manual(values = australia$colour, 
-                      limits = australia$party_short)
-au
-```
-
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
-
-## Women in parliament
-
-`geom_women_in_parliament()` now exists. When the user defines women MPs in the plot, the alpha on other MPs is set to 0.5, bringing women to the forefront.
-
-```r
-au <-ggplot(australia1, aes(x, 
-                            y, 
-                            colour = party_short)) +
-  geom_parliament_seats() + 
-  geom_highlight_government(government == 1) + 
-  geom_women_in_parliament(party_short == "Lab") + # This is an example (obviously)
-  draw_majoritythreshold(n = 76,
-                         type = 'horseshoe') + 
-  draw_legislaturelabels(total_parliamentary_seats = 150,
-                         type = 'horseshoe') + 
-  theme_void() +
-  theme(legend.position = 'none') + 
-  labs(title = "Australian Parliament",
-       subtitle = "Government encircled in black.") +
-  scale_colour_manual(values = australia$colour, 
-                      limits = australia$party_short)
-au
-```
-
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
-
-## Electoral quotas
-
-`geom_electoral_quota()` has been created. It plots an X on top of the original point. I think we can think of more creative things to do here... I wonder if there are any data that show whether someone was elected through a quota or through the "regular" process.
-
-**Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. 
-I think the best way to do that is to include aggregate data on women as well as those elected through a quota process as two new variables, and then expand that number to a long logical variable. i.e. if the Australian Labor Party has 48 female MPs in the House of Representatives in 2016, that column will expand into 48 1s and 0 for the remainder. 
-I don't think we need to find data to match election_data. We can either find a new dataset with the variables we need or we make one (but I'm sure someone has it already). Alternatively the user can add it into their data fame themselves.
-
-
-## Facets
-
-* I think we should bring in the old code that you wrote in the legacy branch. I really like the idea of shrinking the smaller house. 
-
-## Other styles
-
-* Bars -- maybe useful for plotting potential coalitions. 
-* Rose?
-* Pie?
-* Geo_facet?
-
-## Vignettes
-
-I'll work on writing up some vignettes so we can move a lot of the stuff above into separate articles. 
