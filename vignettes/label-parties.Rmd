@@ -1,0 +1,79 @@
+---
+title: "How to add party labels and extraneous information to your parliament plot"
+author: "Zoe Meers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+source("../R/parliament_data.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majorityline.R")
+source("../R/draw_legislaturelabels.R")
+library(tidyverse)
+
+```
+
+`ggparliament` has two functions for adding labels to parliament plots. The first (`draw_partylabels()`) plots the abbreviated name of parties and the total number of seats allocated to the party. The second (`draw_totalseats()`) plots the total number of parliamentarians in the center of the plot.
+**Note:** Currently, these functions only work with the semicircle and horseshoe style parliament.
+
+# Drawing party labels
+
+```{r, fig.width=6, fig.height=4}
+data <- ggparliament::election_data %>% 
+    filter(year == "2016" & 
+               country == "USA" & 
+               house == "Representatives")
+usa_data <- parliament_data(election_data = data, 
+                            type = "semicircle", 
+                            party_seats = data$seats, 
+                            party_names = data$party_short, 
+                            parl_rows = 8, 
+                            total_seats = sum(data$seats))
+ggplot(usa_data, aes(x, 
+                     y, 
+                     color=party_long)) + 
+    geom_parliament_seats() + 
+    labs(colour = NULL) +
+    draw_partylabels(type = 'semicircle', 
+                     party_names = TRUE, 
+                     party_seats = TRUE) +
+    scale_colour_manual(values = usa_data$colour, 
+                        limits = usa_data$party_long) +
+    theme_void() + 
+    theme(legend.position = "none") 
+```
+
+# Draw label noting total number of parliamentarians
+
+```{r, fig.width=6, fig.height=4}
+data <- ggparliament::election_data %>% 
+    filter(year == "2016" & 
+               country == "USA" & 
+               house == "Representatives")
+usa_data <- parliament_data(election_data = data, 
+                            type = "semicircle", 
+                            party_seats = data$seats, 
+                            party_names = data$party_short, 
+                            parl_rows = 8, 
+                            total_seats = sum(data$seats))
+ggplot(usa_data, aes(x, 
+                     y, 
+                     color=party_long)) + 
+    geom_parliament_seats() + 
+    labs(colour = NULL) +
+    draw_totalseats(type = 'semicircle', 
+                    n = 435) +
+    scale_colour_manual(values = usa_data$colour, 
+                        limits = usa_data$party_long) +
+    theme_void() + 
+    theme(legend.position = "none") 
+```
