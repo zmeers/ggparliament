@@ -273,7 +273,6 @@ ggplot_add.quota <- function(object, plot, object_name) {
 #' @export
 
 
-
 geom_hanging_seats <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "hangingseats")
 }
@@ -283,10 +282,10 @@ ggplot_add.hangingseats <- function(object, plot, object_name) {
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
-    colour = "white",
-    shape = 19,
-    show.legend = FALSE,
-    size = 1
+    fill = "white",
+    shape = 21,
+    size = 3,
+    stroke = 0.5
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
