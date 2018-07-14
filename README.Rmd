@@ -17,7 +17,7 @@ election_data <- readRDS(file="data/election_data.rda")
 library(tidyverse)
 ```
 
-# ggparliament <img src = "README_files/figure-html/HexSticker.png" align = "right" width = "200"/>
+# ggparliament <img src = "figure/HexSticker.png" align = "right" width = "200"/>
 
 # Parliament plots
 
