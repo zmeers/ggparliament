@@ -10,7 +10,6 @@
 #' @param segment the percentage of a full circle for the final plot- defaults to 0.5 (a semicircle)
 #' @author
 #' Zoe Meers, Rob Hickman
-#' @export
 
 calc_coordinates <- function(N, M, limits, segment = 0.5) {
   #controls the spread of the seats
