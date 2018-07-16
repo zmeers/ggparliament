@@ -6,6 +6,9 @@ output: html_document
 ---
 
 # TODO
+## Website
+Should we create a pkgdown website?
+
 ## Theme 
 
 We might need to make our own theme...
