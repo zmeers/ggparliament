@@ -30,26 +30,17 @@ draw_totalseats <- function(n = NULL,
 }
 
 ggplot_add.totalLabels <- function(object, plot, object_name) {
-  if (object$type == "horseshoe") {
-    plot + ggplot2::annotate("text",
-      x = 0, y = 3,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      colour = object$colour
-    )
-  }
-  if (object$type == "semicircle") {
-    plot + ggplot2::annotate("text",
-      x = 0, y = 0.2,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      colour = object$colour
-    )
-  } else{
-    warning("Warning: parliament layout is not supported.")
-  }
+  #set the y coord of the total seat label by type of plot
+  y_coord <- switch(object$type, horseshoe = 3, semicircle = 0.2)
+  
+  #add the total seat label to the plot
+  plot + ggplot2::annotate("text",
+                           x = 0, y = y_coord,
+                           label = object$n,
+                           fontface = "bold",
+                           size = object$size,
+                           colour = object$colour
+  )
 }
 
 
@@ -88,95 +79,52 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
     dplyr::filter(row == max(row)) %>%
     dplyr::group_by(party_short, seats, colour) %>%
     dplyr::summarise(mean_x = mean(x), mean_y = mean(y))
-
-  pos_movement_horseshoe <- c(new_dat$mean_x + 2)
-  pos_movement_semicircle <- c(new_dat$mean_x + 0.8)
-  neg_movement_horseshoe <- c(new_dat$mean_x - 2)
-  neg_movement_semicircle <- c(new_dat$mean_x - 0.8)
-
-
-  if (object$type == "horseshoe") {
-    if (!(object$party_names) & !(object$party_seats)) {
-      plot
-    } else if (!(object$party_names) & object$party_seats) {
-      plot + ggplot2::annotate("text",
-        x = ifelse(new_dat$mean_x > 0,
-          pos_movement_horseshoe,
-          neg_movement_horseshoe
-        ),
-        y = new_dat$mean_y,
-        label = new_dat$seats,
-        colour = new_dat$colour,
-        vjust = "outward"
+  
+  #pos_movement_horseshoe <- c(new_dat$mean_x + 2)
+  #pos_movement_semicircle <- c(new_dat$mean_x + 0.8)
+  #neg_movement_horseshoe <- c(new_dat$mean_x - 2)
+  #neg_movement_semicircle <- c(new_dat$mean_x - 0.8)
+  
+  #move the labels based on the plot type
+  positive_movement <- switch(object$type, horseshoe = new_dat$mean_x + 2, semicircle = new_dat$mean_x + 0.8)
+  negative_movement <- switch(object$type, horseshoe = new_dat$mean_x - 2, semicircle = new_dat$mean_x - 0.8)
+  
+  if (!(object$party_names) & !(object$party_seats)) {
+    plot
+  } else if (!(object$party_names) & object$party_seats) {
+    plot + ggplot2::annotate("text",
+                             x = ifelse(new_dat$mean_x > 0,
+                                        positive_movement,
+                                        negative_movement
+                             ),
+                             y = new_dat$mean_y,
+                             label = new_dat$seats,
+                             colour = new_dat$colour,
+                             vjust = "outward"
+    )
+  } else if (object$party_names & !(object$party_seats)) {
+    plot +
+      ggplot2::annotate("text",
+                        x = ifelse(new_dat$mean_x > 0,
+                                   positive_movement,
+                                   negative_movement
+                        ),
+                        y = new_dat$mean_y,
+                        label = new_dat$party_short,
+                        colour = new_dat$colour,
+                        vjust = "outward"
       )
-    } else if (object$party_names & !(object$party_seats)) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_horseshoe,
-            neg_movement_horseshoe
-          ),
-          y = new_dat$mean_y,
-          label = new_dat$party_short,
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    } else if (object$party_names & object$party_seats) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_horseshoe,
-            neg_movement_horseshoe
-          ),
-          y = new_dat$mean_y,
-          label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    }
-  }
-  if (object$type == "semicircle") {
-    if (!(object$party_names) & !(object$party_seats)) {
-      plot
-    } else if (!(object$party_names) & object$party_seats) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_semicircle,
-            neg_movement_semicircle
-          ),
-          y = new_dat$mean_y,
-          label = new_dat$seats,
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    } else if (object$party_names & !(object$party_seats)) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_semicircle,
-            neg_movement_semicircle
-          ),
-          y = new_dat$mean_y,
-          label = new_dat$party_short,
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    }
-    else if (object$party_names & object$party_seats) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_semicircle,
-            neg_movement_semicircle
-          ),
-          y = new_dat$mean_y,
-          label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    }
-  } else{
-    warning("Warning: parliament layout is not supported.")
+  } else if (object$party_names & object$party_seats) {
+    plot +
+      ggplot2::annotate("text",
+                        x = ifelse(new_dat$mean_x > 0,
+                                   positive_movement,
+                                   negative_movement
+                        ),
+                        y = new_dat$mean_y,
+                        label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
+                        colour = new_dat$colour,
+                        vjust = "outward"
+      )
   }
 }
