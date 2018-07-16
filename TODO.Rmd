@@ -41,3 +41,5 @@ I don't think we need to find data to match election_data. We can either find a 
 * Rose?
 * Pie?
 * Geo_facet?
+
+* this kind of comes under the women_in_parliament stuff- I wonder if it's best to do this as an alpha scale which could also be used for stuff like votes. Wonder if it would be possible to infer 'Brexity-ness' from https://cran.r-project.org/web/packages/hansard/index.html (/probably simpler just to take it from theyworkforyou but not as good for a Vignette) and then alpha the parties to show who would vote for e.g. the big brexit vote coming up
