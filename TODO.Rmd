@@ -9,6 +9,9 @@ output: html_document
 ## Website
 Should we create a pkgdown website?
 
+## Splitting data frame by multiple columns and then plotting different plots
+i.e. split by country AND year, then facet_wrap by country and year. Right now you can only plot one choice -- the row number or parliament style is set. 
+
 ## Theme 
 
 We might need to make our own theme...
