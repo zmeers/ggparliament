@@ -148,8 +148,11 @@ ggplot_add.highlight <- function(object, plot, object_name) {
 #' @param x the x coordinates
 #' @param y the y coordinates
 #' @param colour the colour variable
+#' @param type the type of parliament ("semicircle", "circle", "horseshoe", "opposing_benches", "classroom")
 #' @examples
-#' geom_parliament_seats(female == 1)
+#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
+#' ggplot(usa_data, aes(x, y, color = party_long, type = 'semicircle')) + geom_parliament_seats() 
 #' @author Zoe Meers
 #' @export
 geom_parliament_seats <- function(mapping = NULL, data = NULL,
@@ -180,7 +183,7 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @export
 GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
-  required_aes = c("x", "y", "colour"),
+  required_aes = c("x", "y", "colour", "type"),
   non_missing_aes = c("size", "shape"),
   default_aes = ggplot2::aes(
     shape = 19,

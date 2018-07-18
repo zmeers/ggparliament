@@ -15,13 +15,17 @@ geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
 \item{y}{the y coordinates}
 
 \item{colour}{the colour variable}
+
+\item{type}{the type of parliament ("semicircle", "circle", "horseshoe", "opposing_benches", "classroom")}
 }
 \description{
 Parliament seats
 The parliament seats geom is used for plotting data from parliament_data().
 }
 \examples{
-geom_parliament_seats(female == 1)
+data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
+ggplot(usa_data, aes(x, y, color = party_long, type = 'semicircle')) + geom_parliament_seats() 
 }
 \author{
 Zoe Meers

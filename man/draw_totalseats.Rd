@@ -4,13 +4,11 @@
 \alias{draw_totalseats}
 \title{Draw total number of seats in the middle of the parliament}
 \usage{
-draw_totalseats(n = NULL, inherit.aes = TRUE, type = c("horseshoe",
-  "semicircle"), size = 8, colour = "black", ...)
+draw_totalseats(n = NULL, inherit.aes = TRUE, size = 8,
+  colour = "black", ...)
 }
 \arguments{
 \item{n}{The number of total seats}
-
-\item{type}{Type of parliament - supports "horseshoe" or "semicircle"}
 }
 \description{
 Draw total number of seats in the middle of the parliament
@@ -18,7 +16,7 @@ Draw total number of seats in the middle of the parliament
 \examples{
 data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
 usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_totalseats(n = 435, type = 'semicircle') + theme_void()
+ggplot(usa_data, aes(x, y, color=party_long, type = 'semicircle')) + geom_parliament_seats() + draw_totalseats(n = 435) + theme_void()
 }
 \author{
 Zoe Meers
