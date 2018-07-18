@@ -28,8 +28,3 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Collate:
-    'data.R'
-    'draw_majorityline.R'	
-    'helper_funcs.R'
-    'parliament_data.R'
