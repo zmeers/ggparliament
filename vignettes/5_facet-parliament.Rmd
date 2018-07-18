@@ -20,7 +20,6 @@ source("../R/helper_funcs.R")
 source("../R/draw_majorityline.R")
 source("../R/draw_legislaturelabels.R")
 library(tidyverse)
-election_data <- readRDS(file="../data/election_data.rda")
 
 ```
 
@@ -53,9 +52,7 @@ usa <- election_data %>%
 ```
 
 ```{r, fig.width=12, fig.height=4}
-ggplot(usa, aes(x, 
-                y, 
-                colour = party_short)) +
+us <- ggplot(usa, aes(x, y, colour = party_short, type = "semicircle")) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   labs(colour = NULL, 
@@ -67,6 +64,7 @@ ggplot(usa, aes(x,
   theme(legend.position = 'bottom') + 
   facet_grid(~year, scales = 'free') 
 
+us
 ```
 
 
@@ -85,9 +83,7 @@ australia <- election_data %>%
 ```
 
 ```{r,fig.width=8, fig.height=5}
-ggplot(australia, aes(x, 
-                      y, 
-                      colour=party_short)) +
+au <- ggplot(australia, aes(x, y, colour=party_short, type = "horseshoe")) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   labs(colour = NULL, 
@@ -98,6 +94,8 @@ ggplot(australia, aes(x,
   theme_void() +
   theme(legend.position = 'bottom') + 
   facet_grid(~house, scales = 'free')
+
+au
 
 ```
 
@@ -131,9 +129,7 @@ uk_right<-election_data %>%
 
 
 ```{r, fig.height=10, fig.width=6}
-right_all <- ggplot(uk_right, aes(x, 
-                                  y, 
-                                  colour = party_short)) +
+right_all <- ggplot(uk_right, aes(x, y, colour = party_short, type = "opposing_benches")) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   theme_void() +
@@ -144,9 +140,7 @@ right_all <- ggplot(uk_right, aes(x,
   facet_wrap(~year, ncol = 1)
 
 
-left_all <- ggplot(uk_left, aes(x, 
-                                y, 
-                                colour = party_short)) +
+left_all <- ggplot(uk_left, aes(x, y, colour = party_short, type = "opposing_benches")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL, 

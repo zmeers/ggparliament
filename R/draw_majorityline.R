@@ -31,8 +31,6 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
   x_pos <- new_dat$x
   y_pos_oppbenches <- new_dat$y
 
-
-
   if (plot$mapping$type == "semicircle") {
     if (!object$label) {
       plot +
