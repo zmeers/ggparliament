@@ -19,8 +19,9 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
-library(tidyverse)
-election_data <- readRDS(file="../data/election_data.rda")
+library(ggplot2)
+library(dplyr)
+
 
 ```
 

@@ -18,8 +18,8 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
-library(tidyverse)
-
+library(ggplot2)
+library(dplyr)
 ```
 
 `ggparliament` has two functions for adding labels to parliament plots. The first (`draw_partylabels()`) plots the abbreviated name of parties and the total number of seats allocated to the party. The second (`draw_totalseats()`) plots the total number of parliamentarians in the center of the plot.

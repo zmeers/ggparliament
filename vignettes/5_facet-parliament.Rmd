@@ -19,7 +19,8 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
 
 ```
 
