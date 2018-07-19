@@ -33,3 +33,4 @@ Collate:
     'draw_majorityline.R'	
     'helper_funcs.R'
     'parliament_data.R'
+    'draw_legislaturelabels.R'

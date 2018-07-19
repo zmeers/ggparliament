@@ -56,27 +56,27 @@ head(us_congress)
 We need to unravel the results to individual seats. To do this, we run:
 
 ```{r}
-us_congress1 <- parliament_data(election_data = us_congress,
+us_congress_semicircle <- parliament_data(election_data = us_congress,
   type = "semicircle",
   total_seats = sum(us_congress$seats),
   parl_rows = 10,
   party_names = us_congress$party_short,
   party_seats = us_congress$seats)
-head(us_congress1)
+head(us_congress_semicircle)
 ```
 
 This data frame returns the x and y coordinates of each individual seat for a 10-row semicircle parliament. The user can take this data frame and plot by the x and y coordinates using `geom_parliament_seats()`. See as follows:
 
 ```{r, fig.width=6, fig.height=4}
-ggplot(us_congress1, aes(x, 
-                         y, 
-                         colour = party_short)) +
+us <- ggplot(us_congress_semicircle, aes(x, y, colour = party_short, type = "semicircle")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL, 
        title = "United States Congress") +
   scale_colour_manual(values = us_congress1$colour, 
                       limits = us_congress1$party_short) 
+
+us
 ```
 
 `election_data` also provides party colour, abbreviated and full versions of the party name, as well as data for several election cycles for each country. 
@@ -91,7 +91,7 @@ australia <- election_data %>%
     house == "Representatives" &
     year == 2016) 
 
-australia1 <- parliament_data(election_data = australia,
+australia_horseshoe <- parliament_data(election_data = australia,
   total_seats = sum(australia$seats),
   party_seats = australia$seats,
   parl_rows = 4,
@@ -99,16 +99,15 @@ australia1 <- parliament_data(election_data = australia,
 ```
 
 ```{r,fig.width=4, fig.height=4}
-au <- ggplot(australia1, aes(x, 
-                            y, 
-                            colour = party_short)) +
+au <- ggplot(australia_horseshoe, aes(x, y, colour = party_short, type = "horseshoe")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
-  theme(legend.position = 'bottom') 
+  theme(legend.position = 'bottom')
+
 au
 ```
 
@@ -118,11 +117,9 @@ We need to split the data into a left and right side for an opposing bench style
 
 
 ```{r, fig.height=6, fig.width = 6}
-#data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
            year == "2017")
-
 
 uk_17_left <- uk_17 %>% 
   filter(government == 0)
@@ -144,9 +141,7 @@ uk_17_right <- parliament_data(election_data = uk_17_right,
   parl_rows = 12,
   type = "opposing_benches")
 
-right <- ggplot(uk_17_right, aes(x, 
-                                 y, 
-                                 colour = party_short)) +
+right <- ggplot(uk_17_right, aes(x, y, colour = party_short, type = "opposing_benches")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL) +
@@ -155,9 +150,7 @@ right <- ggplot(uk_17_right, aes(x,
   theme(legend.position = 'right')
 
 
-left <- ggplot(uk_17_left, aes(x, 
-                               y, 
-                               colour = party_short)) +
+left <- ggplot(uk_17_left, aes(x, y, colour = party_short, type = "opposing_benches")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL, 
@@ -174,21 +167,19 @@ uk_parliament
 ### Classroom parliament
 
 ```{r}
-russia <- election_data %>%
+russia_classroom <- election_data %>%
   filter(country == "Russia" &
     house == "Duma" &
     year == 2016) %>% 
   parliament_data(election_data = .,
-  total_seats = sum(.$seats),
-  party_seats = .$seats,
-  parl_rows = 11,
-  type = "classroom")
+                  total_seats = sum(.$seats),
+                  party_seats = .$seats,
+                  parl_rows = 11,
+                  type = "classroom")
 ```
 
 ```{r,fig.width=4, fig.height=4}
-ggplot(russia, aes(x,
-  y,
-  colour = party_short)) +
+rus <- ggplot(russia_classroom, aes(x, y, colour = party_short, type = "classroom")) +
   geom_parliament_seats() +
   theme_void() +
   labs(
@@ -198,6 +189,8 @@ ggplot(russia, aes(x,
     values = russia$colour,
     limits = russia$party_short) +
   theme(legend.position = "bottom")
+
+rus
 ```
 
 
@@ -207,7 +200,7 @@ We have included the circle parliament as an option although we have yet to find
 To take the Russian data from above, we run:
 
 ```{r}
-russia <- election_data %>%
+russia_circle <- election_data %>%
   filter(country == "Russia" &
     house == "Duma" &
     year == 2016) %>% 
@@ -219,9 +212,7 @@ russia <- election_data %>%
 ```
 
 ```{r,fig.width=4, fig.height=4}
-ggplot(russia, aes(x,
-  y,
-  colour = party_short)) +
+rus2 <- ggplot(russia_circle, aes(x, y, colour = party_short, type = "circle")) +
   geom_parliament_seats() +
   theme_void() +
   labs(
@@ -231,6 +222,8 @@ ggplot(russia, aes(x,
     values = russia$colour,
     limits = russia$party_short) +
   theme(legend.position = "bottom")
+
+rus2
 ```
 
 
