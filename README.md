@@ -66,7 +66,8 @@ us_senate <- parliament_data(
 ```r
 ggplot(us_congress1, aes(x, 
                          y, 
-                         colour = party_short)) +
+                         colour = party_short,
+                         type = 'semicircle')) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   theme_void() +
@@ -84,7 +85,8 @@ ggplot(us_congress1, aes(x,
 ```r
 senate <- ggplot(us_senate, aes(x, 
                                 y, 
-                                colour = party_long)) +
+                                colour = party_long,
+                                type = 'semicircle')) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   theme_void() +
@@ -115,7 +117,8 @@ germany <- parliament_data(election_data = germany,
 
 ggplot(germany, aes(x,
                     y,
-                    colour = party_short))+
+                    colour = party_short,
+                    type = 'semicircle'))+
   geom_parliament_seats()+
   geom_highlight_government(government == 1) + 
   labs(colour="Party", 
@@ -150,8 +153,13 @@ uk_17_left <- parliament_data(election_data = uk_17_left,
   party_seats =  uk_17_left$seats,
   parl_rows = 12,
   type = "opposing_benches")
+```
 
+```
+## Error in 1:max(parl_layout$x): result would be too long a vector
+```
 
+```r
 uk_17_right <- parliament_data(election_data = uk_17_right,
   total_seats = sum(uk_17_right$seats),
   party_seats = uk_17_right$seats,
@@ -160,7 +168,8 @@ uk_17_right <- parliament_data(election_data = uk_17_right,
 
 right <- ggplot(uk_17_right, aes(x, 
                                  y, 
-                                 colour = party_short)) +
+                                 colour = party_short,
+                                 type = "opposing_benches")) +
   geom_parliament_seats() + 
   geom_highlight_government(government==1) + 
   theme_void() +
@@ -172,7 +181,8 @@ right <- ggplot(uk_17_right, aes(x,
 
 left <- ggplot(uk_17_left, aes(x, 
                                y, 
-                               colour = party_short)) +
+                               colour = party_short,
+                               type = "opposing_benches")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL, 
@@ -185,6 +195,10 @@ left <- ggplot(uk_17_left, aes(x,
 uk_parliament<- combine_opposingbenches(left = left, 
                                         right = right)
 uk_parliament
+```
+
+```
+## Error in FUN(X[[i]], ...): object 'x' not found
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
@@ -215,7 +229,8 @@ australia1 <- parliament_data(election_data = australia,
 ```r
 au <-ggplot(australia1, aes(x, 
                             y, 
-                            colour = party_short)) +
+                            colour = party_short,
+                            type = 'horseshoe')) +
   geom_parliament_seats() + 
   theme_void() +
   geom_highlight_government(government == 1) + 

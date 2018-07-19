@@ -89,7 +89,7 @@ parliament_data <- function(election_data = NULL,
   }
 
   else {
-    warning("parliament layout not supported")
+    warning("Warning: parliament layout not supported.")
   }
 
   # bind layout results back to expanded election_data?
@@ -181,8 +181,8 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @export
 GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
-  required_aes = c("x", "y", "colour", "type"),
-  non_missing_aes = c("size", "shape"),
+  required_aes = c("x", "y", "colour"),
+  non_missing_aes = c("size", "shape", "type"),
   default_aes = ggplot2::aes(
     shape = 19,
     colour = "black",

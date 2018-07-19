@@ -9,9 +9,10 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 source("R/parliament_data.R")
 source("R/helper_funcs.R")
-source("R/draw_majorityline.R")
+source("R/draw_majoritythreshold.R")
 source("R/draw_legislaturelabels.R")
-election_data <- readRDS(file="data/election_data.rda")
+election_data <- ggparliament::election_data
+#election_data <- readRDS(file="data/election_data.rda")
 library(tidyverse)
 ```
 
@@ -72,7 +73,8 @@ us_senate <- parliament_data(
 ```{r, fig.width=6, fig.height=4}
 ggplot(us_congress1, aes(x, 
                          y, 
-                         colour = party_short)) +
+                         colour = party_short,
+                         type = 'semicircle')) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   theme_void() +
@@ -87,7 +89,8 @@ ggplot(us_congress1, aes(x,
 ```{r, fig.width=6, fig.height=4}
 senate <- ggplot(us_senate, aes(x, 
                                 y, 
-                                colour = party_long)) +
+                                colour = party_long,
+                                type = 'semicircle')) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   theme_void() +
@@ -115,7 +118,8 @@ germany <- parliament_data(election_data = germany,
 
 ggplot(germany, aes(x,
                     y,
-                    colour = party_short))+
+                    colour = party_short,
+                    type = 'semicircle'))+
   geom_parliament_seats()+
   geom_highlight_government(government == 1) + 
   labs(colour="Party", 
@@ -157,7 +161,8 @@ uk_17_right <- parliament_data(election_data = uk_17_right,
 
 right <- ggplot(uk_17_right, aes(x, 
                                  y, 
-                                 colour = party_short)) +
+                                 colour = party_short,
+                                 type = "opposing_benches")) +
   geom_parliament_seats() + 
   geom_highlight_government(government==1) + 
   theme_void() +
@@ -169,7 +174,8 @@ right <- ggplot(uk_17_right, aes(x,
 
 left <- ggplot(uk_17_left, aes(x, 
                                y, 
-                               colour = party_short)) +
+                               colour = party_short,
+                               type = "opposing_benches")) +
   geom_parliament_seats() + 
   theme_void() +
   labs(colour = NULL, 
@@ -209,7 +215,8 @@ australia1 <- parliament_data(election_data = australia,
 ```{r,fig.width=4, fig.height=4}
 au <-ggplot(australia1, aes(x, 
                             y, 
-                            colour = party_short)) +
+                            colour = party_short,
+                            type = 'horseshoe')) +
   geom_parliament_seats() + 
   theme_void() +
   geom_highlight_government(government == 1) + 

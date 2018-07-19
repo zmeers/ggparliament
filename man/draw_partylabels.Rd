@@ -18,7 +18,7 @@ Draw labels for political parties and seats per party
 \examples{
 data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
 usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-ggplot(usa_data, aes(x, y, color=party_long, type = 'semicircle')) + geom_parliament_seats() + draw_partylabels() + scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + theme_void()
+ggplot(usa_data, aes(x, y, color=party_long, type = semicircle)) + geom_parliament_seats() + draw_partylabels() + scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + theme_void()
 }
 \author{
 Zoe Meers
