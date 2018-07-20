@@ -19,9 +19,6 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
-library(ggplot2)
-library(dplyr)
-
 ```
 
 ## Highlighting governments or parties in control of legislative chamber
