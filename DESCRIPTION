@@ -21,12 +21,13 @@ LazyData: true
 Imports:
     stats,
     utils,
-    ggplot2
+    ggplot2,
+    dplyr,
+    magrittr
 Suggests:
     knitr,
     testthat,
-    rmarkdown,
-    dplyr
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 Collate:
