@@ -1,6 +1,5 @@
 ## Functions to create parliaments for ggparliament
-## Zoe Meers
-##
+## Zoe Meers and Rob Hickman
 ##
 
 #' A function that calculates the coordinates of parliamentary seats in incomplete circular parliaments
@@ -9,10 +8,8 @@
 #' @param M the number of rows in parliament
 #' @param limits the limits to seq the radii between- controls the 'shape' of the parliament
 #' @param segment the percentage of a full circle for the final plot- defaults to 0.5 (a semicircle)
-#'
 #' @author
-#' Zoe Meers
-#' @export
+#' Zoe Meers, Rob Hickman
 
 calc_coordinates <- function(N, M, limits, segment = 0.5) {
   #controls the spread of the seats

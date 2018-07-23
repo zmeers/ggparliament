@@ -1,0 +1,52 @@
+---
+title: "TODO"
+author: "Zoe Meers"
+date: "14/07/2018"
+output: html_document
+---
+
+# TODO
+## Website
+Should we create a pkgdown website?
+
+## Splitting data frame by multiple columns and then plotting different plots
+i.e. split by country AND year, then facet_wrap by country and year. Right now you can only plot one choice -- the row number or parliament style is set. 
+
+## Theme 
+
+We might need to make our own theme...
+I think theme_void() + theme(legend.postion = 'none') might work... Thoughts?
+
+## Hanging seats
+Germany and New Zealand have [hanging seats](https://www.bloomberg.com/graphics/2017-how-germany-forms-government/) where a party's share of the local-representative vote exceeds its percentage of the party vote. This results in extra seats and the folks at Bloomberg draw them as hollow seats in the link above. 
+
+I've taken a quick stab at plotting a smaller white circle over the top in the function called `geom_hanging_seats()`. It will probably need cleaning up. 
+
+## Women in parliament
+
+`geom_women_in_parliament()` now exists. When the user defines women MPs in the plot, the alpha on other MPs is set to 0.5, bringing women to the forefront.
+
+## Electoral quotas
+
+`geom_electoral_quota()` has been created. It plots an X on top of the original point. I think we can think of more creative things to do here... I wonder if there are any data that show whether someone was elected through a quota or through the "regular" process.
+
+**Note**: `geom_women_in_parliament()` and `geom_electoral_quota()` have not yet been incorporated into `parliament_data()`. 
+
+I think the best way to do that is to include aggregate data on women as well as those elected through a quota process as two new variables, and then expand that number to a long logical variable. i.e. if the Australian Labor Party has 48 female MPs in the House of Representatives in 2016, that column will expand into 48 1s and 0 for the remainder. 
+
+I don't think we need to find data to match election_data. We can either find a new dataset with the variables we need or we make one (but I'm sure someone has it already). Alternatively the user can add it into their data fame themselves.
+
+
+## Facets
+
+* I think we should bring in the old code that you wrote in the legacy branch. I really like the idea of shrinking the smaller house. 
+
+## Other styles
+
+* Bars -- maybe useful for plotting potential coalitions. 
+* Rose?
+* Pie?
+* Geo_facet?
+
+* this kind of comes under the women_in_parliament stuff- I wonder if it's best to do this as an alpha scale which could also be used for stuff like votes. Wonder if it would be possible to infer 'Brexity-ness' from https://cran.r-project.org/web/packages/hansard/index.html (/probably simpler just to take it from theyworkforyou but not as good for a Vignette) and then alpha the parties to show who would vote for e.g. the big brexit vote coming up
+  - I like this idea! It'll be a good way to drum up more publicity for the package as well. If we can time CRAN release so that it fits in with the Brexit vote, that'd be pretty cool.

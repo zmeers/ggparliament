@@ -1,0 +1,157 @@
+---
+title: "How to draw the majority threshold"
+author: "Zoe Meers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+source("../R/parliament_data.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_legislaturelabels.R")
+
+
+```
+
+
+To draw the majority threshold on the parliament plot, the user must define the majority threshold number as well as the type of parliament. At the moment, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. By default, it also adds an annotation noting the seats required for a government to form. This can be turned off by writing `label = FALSE`.
+
+Some examples are as follows:
+
+```{r, fig.height = 4, fig.width=4}
+usa_12 <- election_data %>%
+  filter(country == "USA" &
+           house == "Representatives" & 
+           year == "2012")  %>% 
+  parliament_data(election_data = .,
+  total_seats = sum(.$seats),
+  party_seats = .$seats,
+  parl_rows = 8,
+  type = "semicircle")
+
+ggplot(usa_12, aes(x, y, colour = party_short, type = "semicircle")) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 218) + 
+  theme_void() +
+  labs(colour = NULL, 
+       title = "2012 American Congress",
+       subtitle = "Party that controls the chamber is highlighted in black.") +
+  scale_colour_manual(values = usa_12$colour, 
+                      limits = usa_12$party_short) 
+
+```
+
+```{r, fig.height = 4, fig.width=4}
+uk_17 <- election_data %>% 
+  filter(country == "UK" & 
+           year == "2017")
+
+
+uk_17_left <- uk_17 %>% 
+  filter(government == 0)
+
+uk_17_right <- uk_17 %>% 
+  filter(government == 1)
+
+
+uk_17_left <- parliament_data(election_data = uk_17_left,
+  total_seats = sum(uk_17_left$seats),
+  party_seats =  uk_17_left$seats,
+  parl_rows = 12,
+  type = "opposing_benches")
+
+
+uk_17_right <- parliament_data(election_data = uk_17_right,
+  total_seats = sum(uk_17_right$seats),
+  party_seats = uk_17_right$seats,
+  parl_rows = 12,
+  type = "opposing_benches")
+
+left <- ggplot(uk_17_left, aes(x, 
+                               y, 
+                               colour = party_short)) +
+  geom_parliament_seats() + 
+  theme_void() +
+  labs(colour = NULL, 
+       title = "UK parliament in 2017") +
+  scale_colour_manual(values = uk_17_left$colour, 
+                      limits = uk_17_left$party_short) +
+  theme(legend.position = 'left') 
+
+
+right <- ggplot(uk_17_right, aes(x, y, colour = party_short, type = "opposing_benches")) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 326) + 
+  theme_void() +
+  labs(colour = NULL) +
+  scale_colour_manual(values = uk_17_right$colour, 
+                      limits = uk_17_right$party_short) +
+  theme(legend.position = 'right')
+
+# combine
+uk_parliament<- combine_opposingbenches(left = left, 
+                                        right = right)
+uk_parliament
+```
+
+```{r,fig.width=4, fig.height=4}
+australia <- election_data %>%
+  filter(country == "Australia" &
+    house == "Representatives" &
+    year == 2016) 
+
+australia1 <- parliament_data(election_data = australia,
+  total_seats = sum(australia$seats),
+  party_seats = australia$seats,
+  parl_rows = 4,
+  type = "horseshoe")
+
+au <-ggplot(australia1, aes(x, y, colour = party_short, type = "horseshoe")) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 76) + 
+  theme_void() +
+  labs(colour = NULL, 
+       title = "Australian Parliament",
+       subtitle = "Government encircled in black.") +
+  scale_colour_manual(values = australia$colour, 
+                      limits = australia$party_short) + 
+  theme(legend.position = 'bottom') 
+au
+```
+
+
+```{r, fig.height=4, fig.width=8}
+germany <- election_data %>%
+  filter(year == 2017 & 
+           country == "Germany") 
+
+germany <- parliament_data(election_data = germany, 
+                           total_seats = sum(germany$seats), 
+                           parl_rows = 12,
+                           party_seats = germany$seats, 
+                           type = 'semicircle')
+
+german_parliament <- ggplot(germany, aes(x, y, colour = party_short, type = "semicircle"))+
+  geom_parliament_seats()+
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 355, label = FALSE) + 
+  labs(colour="Party", 
+       title="Germany 2017 Election Results") + 
+  theme_void()+
+  scale_colour_manual(values = germany$colour, 
+                      limits = germany$party_short)
+german_parliament
+```

@@ -3,3 +3,5 @@
 ^.*\.yml$
 Makefile
 ^README\.html$
+^README\.Rmd$
+^README-.*\.png$

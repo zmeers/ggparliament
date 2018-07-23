@@ -21,5 +21,5 @@ A function that calculates the coordinates of parliamentary seats in incomplete 
 E.g. The US (semicircle) and Australian (horsehoe) shaped parliaments
 }
 \author{
-Zoe Meers
+Zoe Meers, Rob Hickman
 }
