@@ -120,12 +120,11 @@ germany <- parliament_data(election_data = germany,
 
 ggplot(germany, aes(x,
                     y,
-                    colour = party_short,
-                    type = 'semicircle'))+
-  geom_parliament_seats()+
+                    colour = party_short)) +
+  geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
-  labs(colour="Party", 
-  theme_void()+
+  labs(colour="Party") +  
+  theme_void() +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
 ```
@@ -216,14 +215,12 @@ australia1 <- parliament_data(election_data = australia,
 ```{r,fig.width=4, fig.height=4}
 au <-ggplot(australia1, aes(x, 
                             y, 
-                            colour = party_short,
-                            type = 'horseshoe')) +
+                            colour = party_short)) +
   geom_parliament_seats() + 
+  geom_highlight_government(government == 1)
   theme_void() +
-  geom_highlight_government(government == 1) + 
   labs(colour = NULL, 
-       title = "Australian Parliament",
-       subtitle = "Government encircled in black.") +
+       title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
   theme(legend.position = 'bottom') 

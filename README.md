@@ -35,6 +35,7 @@ is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-sv
 
 
 ```r
+#filter the election data for the most recent US House of Representatives
 us_congress <- election_data %>%
   filter(country == "USA" &
     year == 2016 &
@@ -52,7 +53,6 @@ us_senate <- election_data %>%
     year == 2016 &
     house == "Senate")
 
-
 us_senate <- parliament_data(
   election_data = us_senate,
   type = "semicircle",
@@ -69,7 +69,9 @@ ggplot(us_congress1, aes(x,
                          colour = party_short,
                          type = 'semicircle')) +
   geom_parliament_seats() + 
+  #highlight the government with black encircling
   geom_highlight_government(government == 1) +
+  #other aesthetics
   theme_void() +
   labs(colour = NULL, 
        title = "United States Congress") +
@@ -117,13 +119,11 @@ germany <- parliament_data(election_data = germany,
 
 ggplot(germany, aes(x,
                     y,
-                    colour = party_short,
-                    type = 'semicircle'))+
-  geom_parliament_seats()+
+                    colour = party_short)) +
+  geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
-  labs(colour="Party", 
-       title="Germany 2017 Election Results") + 
-  theme_void()+
+  labs(colour="Party") +  
+  theme_void() +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
 ```
@@ -229,17 +229,22 @@ australia1 <- parliament_data(election_data = australia,
 ```r
 au <-ggplot(australia1, aes(x, 
                             y, 
-                            colour = party_short,
-                            type = 'horseshoe')) +
+                            colour = party_short)) +
   geom_parliament_seats() + 
+  geom_highlight_government(government == 1)
   theme_void() +
-  geom_highlight_government(government == 1) + 
   labs(colour = NULL, 
-       title = "Australian Parliament",
-       subtitle = "Government encircled in black.") +
+       title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
   theme(legend.position = 'bottom') 
+```
+
+```
+## Error: Don't know how to add RHS to a theme object
+```
+
+```r
 au
 ```
 
