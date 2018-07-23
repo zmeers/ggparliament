@@ -5,10 +5,9 @@
 \title{A function that prepares data for parliamentary plots}
 \usage{
 parliament_data(election_data = NULL, parl_rows = NULL,
-  government = election_data$government, party_seats = election_data$seats,
-  total_seats = sum(party_seats), party_names = election_data$party,
-  type = c("horseshoe", "semicircle", "circle", "classroom",
-  "opposing_benches"))
+  party_seats = election_data$seats, total_seats = sum(party_seats),
+  party_names = election_data$party, type = c("horseshoe", "semicircle",
+  "circle", "classroom"))
 }
 \arguments{
 \item{election_data}{aggregate election results}
@@ -21,16 +20,17 @@ parliament_data(election_data = NULL, parl_rows = NULL,
 
 \item{party_names}{the names of parties elected to parliament}
 
-\item{type}{type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)}
+\item{type}{type of parliament (horseshow, semicircle, circle, classroom, opposing benches)}
 }
 \description{
 A function that prepares data for parliamentary plots
 }
 \examples{
-data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
+data <- election_data[which(election_data$year == 2017 & election_data$country == "UK"),]
+parl_data <- parliament_data(election_data = data, type = "semicircle", data[[party_seats]] = "seats", data[[party_names]] = "party_short", parl_rows = 6)
+ggplot(df, aes(x, y, color=party_long)) + geom_point()
 
 }
 \author{
-Zoe Meers, Rob Hickman
+Zoe Meers
 }

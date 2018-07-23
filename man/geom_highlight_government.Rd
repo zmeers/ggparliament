@@ -2,7 +2,8 @@
 % Please edit documentation in R/parliament_data.R
 \name{geom_highlight_government}
 \alias{geom_highlight_government}
-\title{Highlight governments or parties in control of the legislature}
+\title{Highlight governments
+Define the government variable in the function.}
 \source{
 https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 }
@@ -10,12 +11,11 @@ https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 geom_highlight_government(expr)
 }
 \description{
-Highlight governments or parties in control of the legislature
+Highlight governments
+Define the government variable in the function.
 }
 \examples{
-data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1)
+geom_highlight_parliament(government==1)
 }
 \author{
 Zoe Meers

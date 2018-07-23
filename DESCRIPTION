@@ -3,36 +3,22 @@ Type: Package
 Title: Parliament Plots
 Description: Simple parliament plots using 'ggplot2'.
 License: MIT + file LICENSE
-Version: 1.1.2
+Version: 0.1.2
 Date: 2017-04-07
 Authors@R: c(person("Thomas J.", "Leeper",
-                    role = c("aut"), 
+                    role = c("aut", "cre"), 
                     email = "thosjleeper@gmail.com",
-                    comment = c(ORCID = "0000-0003-4097-6326")),
-	   person("Zoe", "Meers",
-		role = c("aut"),
-		email = "zoe.meers@gmail.com"),
-	   person("Robert", "Hickman",
-		role = c("aut","cre"),
-		email = "robwhickman@gmail.com"))
-URL: https://github.com/robwhickman/ggparliament
-BugReports: https://github.com/robwhickman/ggparliament/issues
+                    comment = c(ORCID = "0000-0003-4097-6326"))
+             )
+URL: https://github.com/leeper/ggparliament
+BugReports: https://github.com/leeper/ggparliament/issues
 LazyData: true
 Imports:
     stats,
     utils,
-    ggplot2,
-    dplyr,
-    magrittr
+    ggplot2
 Suggests:
     knitr,
-    testthat,
-    rmarkdown
+    testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Collate:
-    'data.R'
-    'draw_majoritythreshold.R'	
-    'helper_funcs.R'
-    'parliament_data.R'
-    'draw_legislaturelabels.R'
