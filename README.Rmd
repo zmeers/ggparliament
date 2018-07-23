@@ -1,63 +1,62 @@
 ---
-output: github_document
+title: "README"
+author: "Zoe Meers & Robert Hickman"
+date: "19/06/2018"
+output: html_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-
-```{r, include=FALSE}
+```{r}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 source("R/parliament_data.R")
 source("R/helper_funcs.R")
-source("R/draw_majoritythreshold.R")
-source("R/draw_legislaturelabels.R")
-election_data <- ggparliament::election_data
-#election_data <- readRDS(file="data/election_data.rda")
-library(tidyverse)
-```
+load("data/election_data.rda")
 
-# ggparliament <img src = "figure/HexSticker.png" align = "right" width = "200"/>
+#extra libraries for munging and plotting
+library(dplyr)
+library(ggplot2)
+```
 
 # Parliament plots
 
-
-This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
-
-This `R` package is a `ggplot2` extension.
-
-To install the package:
-```{r, eval=FALSE}
-devtools::install_github("robwhickman/ggparliament")
-```
+This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats color-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats,
+respectively.
 
 Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
-is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a
+javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+
+Unique parliament layouts:
+==========================
+
+Monkey Cage article :
+<https://www.washingtonpost.com/news/monkey-cage/wp/2017/03/04/these-5-designs-influence-every-legislature-in-the-world-and-tell-you-how-each-governs/?utm_term=.e1e1c1c3c37b>
+
 
 ## Semicircle parliament
 
 ### EU, France, United States, and so on...
 
-
-### Plot of US Congress
-
+#### Data
 
 ```{r}
 #filter the election data for the most recent US House of Representatives
 us_congress <- election_data %>%
   filter(country == "USA" &
-    year == 2016 &
+    year == "2016" &
     house == "Representatives")
 
-us_congress1 <- parliament_data(election_data = us_congress,
+#convert this into coordinates for plotting using parliament_data()
+us_congress <- parliament_data(election_data = us_congress,
   type = "semicircle",
   total_seats = sum(us_congress$seats),
   parl_rows = 10,
   party_names = us_congress$party_short,
   party_seats = us_congress$seats)
 
+#do the same for the Senate
 us_senate <- election_data %>%
   filter(country == "USA" &
-    year == 2016 &
+    year == "2016" &
     house == "Senate")
 
 us_senate <- parliament_data(
@@ -67,168 +66,100 @@ us_senate <- parliament_data(
   parl_rows = 4,
   party_names = us_senate$party_short,
   party_seats = us_senate$seats)
-
 ```
 
-```{r, fig.width=6, fig.height=4}
-ggplot(us_congress1, aes(x, 
-                         y, 
-                         colour = party_short,
-                         type = 'semicircle')) +
+#### Plot
+
+```{r}
+#plot the congress data
+ggplot(us_congress, aes(x, y, colour = party_short)) +
+  #plot the seats as dots
   geom_parliament_seats() + 
   #highlight the government with black encircling
   geom_highlight_government(government == 1) +
   #other aesthetics
   theme_void() +
-  labs(colour = NULL, 
-       title = "United States Congress") +
-  scale_colour_manual(values = us_congress1$colour, 
-                      limits = us_congress1$party_short) 
+  labs(colour = "",
+       title = "United States Congress",
+       subtitle = "Government encircled in black.") +
+  annotate("text", x=0, y=0,
+           label=paste("Total:", sum(us_congress$seats[which(!duplicated(us_congress$party_long))]), "Reps"),
+           fontface="bold", size=8) +
+  scale_colour_manual(values = us_congress$colour,
+                      limits = us_congress$party_short)
 ```
 
-### Plot of US Senate
-
-```{r, fig.width=6, fig.height=4}
-senate <- ggplot(us_senate, aes(x, 
-                                y, 
-                                colour = party_long,
-                                type = 'semicircle')) +
+```{r}
+#do the same for the Senate
+ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   theme_void() +
-  labs(colour = NULL, 
+  labs(colour = "", 
        title = "United States Senate",
-       subtitle = "The party that has control of the Senate is encircled in black.") +
-  scale_colour_manual(values = us_senate$colour,
+       subtitle = "Government encircled in black.") +
+  annotate("text", x=0, y=0,
+           label=paste("Total:", sum(us_senate$seats[which(!duplicated(us_senate$party_long))]), "Reps"),
+           fontface="bold", size=8) +
+  scale_colour_manual(values = us_senate$colour, 
                       limits = us_senate$party_long)
-senate 
 ```
 
 
-### Plot of German Bundestag
-
-```{r, fig.height=4, fig.width=8}
+```{r}
+#filter the election data for the most recent German federal election
 germany <- election_data %>%
-  filter(year == 2017 & 
-           country == "Germany") 
+  filter(year==2017 & country=="Germany") %>%
+  #arrange by government and seats for the plot
+  arrange(government, -seats)
 
 germany <- parliament_data(election_data = germany, 
                            total_seats = sum(germany$seats), 
                            parl_rows = 10,
                            party_seats = germany$seats, 
-                           type = 'semicircle')
+                           type = 'semicircle') 
 
-ggplot(germany, aes(x,
-                    y,
-                    colour = party_short,
-                    type = 'semicircle'))+
+ggplot(germany, aes(x,y,colour=party_short))+
   geom_parliament_seats()+
-  geom_highlight_government(government == 1) + 
-  labs(colour="Party", 
-  theme_void()+
-  scale_colour_manual(values = germany$colour, 
-                      limits = germany$party_short) 
-```
-
-## Opposing Benches Parliament
-
-### United Kingdom
-
-```{r, fig.height=6}
-#data preparation
-uk_17 <- election_data %>% 
-  filter(country == "UK" & 
-           year == "2017")
-
-
-uk_17_left <- uk_17 %>% 
-  filter(government == 0)
-uk_17_right <- uk_17 %>% 
-  filter(government == 1)
-
-
-uk_17_left <- parliament_data(election_data = uk_17_left,
-  total_seats = sum(uk_17_left$seats),
-  party_seats =  uk_17_left$seats,
-  parl_rows = 12,
-  type = "opposing_benches")
-
-
-uk_17_right <- parliament_data(election_data = uk_17_right,
-  total_seats = sum(uk_17_right$seats),
-  party_seats = uk_17_right$seats,
-  parl_rows = 12,
-  type = "opposing_benches")
-
-right <- ggplot(uk_17_right, aes(x, 
-                                 y, 
-                                 colour = party_short,
-                                 type = "opposing_benches")) +
-  geom_parliament_seats() + 
   geom_highlight_government(government==1) + 
-  theme_void() +
-  labs(colour = NULL) +
-  scale_colour_manual(values = uk_17_right$colour, 
-                      limits = uk_17_right$party_short) +
-  theme(legend.position = 'right')
-
-
-left <- ggplot(uk_17_left, aes(x, 
-                               y, 
-                               colour = party_short,
-                               type = "opposing_benches")) +
-  geom_parliament_seats() + 
-  theme_void() +
-  labs(colour = NULL, 
-       title = "UK parliament in 2017",
-       subtitle="Government encircled in black.") +
-  scale_colour_manual(values = uk_17_left$colour, 
-                      limits = uk_17_left$party_short) +
-  theme(legend.position = 'left') 
-
-uk_parliament<- combine_opposingbenches(left = left, 
-                                        right = right)
-uk_parliament
-
+  labs(colour="Party", title="Germany 2017 Election Results") + 
+  theme_void()+
+  scale_colour_manual(values = germany$colour, limits=germany$party_short)
 ```
-
 
 
 ## Horseshoe parliament
 
 ### Australia, New Zealand
 
+#### Data
+
 ```{r}
 australia <- election_data %>%
-  filter(country == "Australia" &
-    house == "Representatives" &
-    year == 2016) 
-
-australia1 <- parliament_data(election_data = australia,
+  filter(year == 2016 &
+           country == "Australia" &
+           house == "Representatives") %>%
+  arrange(-government, - seats)
+  
+australia <- parliament_data(election_data = australia,
   total_seats = sum(australia$seats),
   party_seats = australia$seats,
   parl_rows = 4,
   type = "horseshoe")
 ```
 
-### Plot of Australian parliament
+#### Plot
 
-```{r,fig.width=4, fig.height=4}
-au <-ggplot(australia1, aes(x, 
-                            y, 
-                            colour = party_short,
-                            type = 'horseshoe')) +
+```{r}
+ggplot(australia, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   theme_void() +
   geom_highlight_government(government == 1) + 
-  labs(colour = NULL, 
-       title = "Australian Parliament",
-       subtitle = "Government encircled in black.") +
-  scale_colour_manual(values = australia$colour, 
-                      limits = australia$party_short) + 
-  theme(legend.position = 'bottom') 
-au
+  labs(colour = "", title = "Australia House of Representatives",
+    subtitle = "Government encircled in black.") +
+  annotate("text", x = 0, y = 0, label=paste("Total: 150 MPs"), 
+           fontface="bold", size = 12) +
+  scale_colour_manual(values = aus$colour, limits = aus$party_long)
 ```
-
 
 

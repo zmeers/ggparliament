@@ -19,4 +19,4 @@
 #' @name election_data
 #' @usage data(election_data)
 #' @format A data frame with 167 rows and 8 variables
-"election_data"
+NULL
