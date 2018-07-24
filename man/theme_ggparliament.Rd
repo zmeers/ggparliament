@@ -7,7 +7,7 @@
 theme_ggparliament()
 }
 \arguments{
-\item{legend}{If legend = `TRUE`, add legend to plot. Defaults to `TRUE`. You can also write "top", "left", "right", "bottom" and the theme will plot the legend on the specified panel edge.}
+\item{legend}{If legend = `TRUE`, add legend to plot. Defaults to `TRUE`.}
 
 \item{border}{If `TRUE` add panel border. Defaults to `FALSE`.}
 

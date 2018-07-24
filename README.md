@@ -163,8 +163,7 @@ right <- ggplot(uk_17_right, aes(x,
                                  colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  theme_ggparliament(legend = 'right',
-                     background = TRUE) +
+  theme_ggparliament(background = TRUE) +
   labs(colour = NULL) +
   scale_colour_manual(values = uk_17_right$colour, 
                       limits = uk_17_right$party_short)
@@ -175,8 +174,7 @@ left <- ggplot(uk_17_left, aes(x,
                                colour = party_short,
                                type = "opposing_benches")) +
   geom_parliament_seats() + 
-  theme_ggparliament(legend = 'left',
-                     background = TRUE) +
+  theme_ggparliament(background = TRUE) +
   labs(colour = NULL, 
        title = "UK parliament in 2017",
        subtitle="Government encircled in black.") +
@@ -219,7 +217,7 @@ au <-ggplot(australia1, aes(x,
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   draw_majoritythreshold(n = 76, label = TRUE, type = 'horseshoe') + 
-  theme_ggparliament(legend = 'bottom') +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
