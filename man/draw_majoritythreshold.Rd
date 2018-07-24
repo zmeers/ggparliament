@@ -4,24 +4,25 @@
 \alias{draw_majoritythreshold}
 \title{Draw majority line}
 \usage{
-draw_majoritythreshold(..., n = NULL, label = TRUE, colour = "grey")
+draw_majoritythreshold(..., n = NULL, label = TRUE, type = NULL,
+  colour = "grey")
 }
 \arguments{
 \item{n}{The number of seats required for a majority}
 
 \item{label}{A logical variable for labelling majority threshold. Defaults to TRUE.}
 
-\item{colour}{The colour of the majority line. Defaults to grey.}
-
 \item{type}{Type of parliament (horseshoe, semicircle,opposing benches)}
+
+\item{colour}{The colour of the majority line. Defaults to grey.}
 }
 \description{
 Draw majority line
 }
 \examples{
 data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-ggplot(usa_data, aes(x, y, color=party_long, type = 'semicircle')) + geom_parliament_seats() + draw_majoritythreshold(n = 316, label = FALSE, colour = "black")
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majoritythreshold(n = 316, label = FALSE, colour = "black", type = 'semicircle')
 }
 \author{
 Zoe Meers

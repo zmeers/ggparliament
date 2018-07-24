@@ -43,7 +43,6 @@ usa <- election_data %>%
     house == "Representatives")  %>% 
   split(.$year) %>% # split
   map(~parliament_data(election_data = ., # apply
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 8,
   type = "semicircle")) %>%
@@ -51,7 +50,7 @@ usa <- election_data %>%
 ```
 
 ```{r, fig.width=12, fig.height=4}
-us <- ggplot(usa, aes(x, y, colour = party_short, type = "semicircle")) +
+us <- ggplot(usa, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   labs(colour = NULL, 
@@ -74,7 +73,6 @@ australia <- election_data %>%
     year == "2016")  %>% 
   split(.$house) %>% # split
   map(~parliament_data(election_data = ., # apply
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 4,
   type = "horseshoe")) %>%
@@ -106,7 +104,6 @@ uk_left<- election_data %>%
            government == 0)  %>%
   split(.$year) %>%
   map(~parliament_data(election_data = .,
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 12,
   type = "opposing_benches")) %>%
@@ -117,7 +114,6 @@ uk_right<-election_data %>%
            government == 1)  %>%
   split(.$year) %>%
   map(~parliament_data(election_data = .,
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 12,
   type = "opposing_benches")) %>%

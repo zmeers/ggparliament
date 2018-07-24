@@ -6,7 +6,6 @@
 \usage{
 parliament_data(election_data = NULL, parl_rows = NULL,
   government = election_data$government, party_seats = election_data$seats,
-  total_seats = sum(party_seats), party_names = election_data$party,
   type = c("horseshoe", "semicircle", "circle", "classroom",
   "opposing_benches"))
 }
@@ -17,10 +16,6 @@ parliament_data(election_data = NULL, parl_rows = NULL,
 
 \item{party_seats}{seats per party}
 
-\item{total_seats}{the total number of seats in parliament}
-
-\item{party_names}{the names of parties elected to parliament}
-
 \item{type}{type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)}
 }
 \description{
@@ -28,7 +23,7 @@ A function that prepares data for parliamentary plots
 }
 \examples{
 data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 
 }
 \author{

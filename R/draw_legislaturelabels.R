@@ -2,8 +2,8 @@
 #' @param n  The number of total seats
 #' @examples
 #' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-#' ggplot(usa_data, aes(x, y, color=party_long, type = 'semicircle')) + geom_parliament_seats() + draw_totalseats(n = 435) + theme_void()
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_totalseats(n = 435, type = 'semicircle') + theme_void()
 #' @author Zoe Meers
 #' @export
 
@@ -12,11 +12,13 @@ draw_totalseats <- function(n = NULL,
                             inherit.aes = TRUE,
                             size = 8,
                             colour = "black",
+                            type = NA,
                             ...) {
   structure(
     list(
       n = n,
       size = size,
+      type = type,
       colour = colour
     ),
     class = "totalLabels"
@@ -25,7 +27,7 @@ draw_totalseats <- function(n = NULL,
 
 ggplot_add.totalLabels <- function(object, plot, object_name) {
  
-  if (plot$mapping$type == "horseshoe") {
+  if (object$type == "horseshoe") {
     plot + ggplot2::annotate("text",
       x = 0, y = 3,
       label = object$n,
@@ -34,7 +36,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
       colour = object$colour
     )
   }
-  if (plot$mapping$type == "semicircle") {
+  if (object$type == "semicircle") {
     plot + ggplot2::annotate("text",
       x = 0, y = 0.2,
       label = object$n,
@@ -85,7 +87,7 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
   neg_movement_semicircle <- c(new_dat$mean_x - 0.8)
 
 
-  if (plot$mapping$type == "horseshoe") {
+  if (object$type == "horseshoe") {
     if (!(object$party_names) & !(object$party_seats)) {
       plot
     } else if (!(object$party_names) & object$party_seats) {
@@ -125,7 +127,7 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
         )
     }
   }
-if (plot$mapping$type == "semicircle") {
+if (object$type == "semicircle") {
     if (!(object$party_names) & !(object$party_seats)) {
       plot
     } else if (!(object$party_names) & object$party_seats) {

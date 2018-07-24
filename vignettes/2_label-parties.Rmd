@@ -36,14 +36,14 @@ usa_data <- parliament_data(election_data = data,
                             type = "semicircle", 
                             party_seats = data$seats, 
                             party_names = data$party_short, 
-                            parl_rows = 8, 
-                            total_seats = sum(data$seats))
+                            parl_rows = 8)
 
-ggplot(usa_data, aes(x, y, color=party_long, type = "semicircle")) + 
+ggplot(usa_data, aes(x, y, color=party_long)) + 
     geom_parliament_seats() + 
     labs(colour = NULL) +
     draw_partylabels(party_names = TRUE, 
-                     party_seats = TRUE) +
+                     party_seats = TRUE,
+                     type = 'semicircle') +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
     theme_void() + 
@@ -62,13 +62,13 @@ usa_data <- parliament_data(election_data = data,
                             type = "semicircle", 
                             party_seats = data$seats, 
                             party_names = data$party_short, 
-                            parl_rows = 8, 
-                            total_seats = sum(data$seats))
+                            parl_rows = 8)
 
-ggplot(usa_data, aes(x, y, color=party_long, type = "semicircle")) + 
+ggplot(usa_data, aes(x, y, color=party_long)) + 
     geom_parliament_seats() + 
     labs(colour = NULL) +
-    draw_totalseats(n = 435) +
+    draw_totalseats(n = 435,
+                    type = "semicircle") +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
     theme_void() + 
