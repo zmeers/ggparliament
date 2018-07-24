@@ -36,7 +36,7 @@ theme_ggparliament <- function(legend = TRUE,
     if (!border) {
         basic_theme <- basic_theme 
     } else {
-        basic_theme <- basic_theme + theme(panel.border  = element_rect(color = "#F5F5F5", fill = NA)) #white smoke fill
+        basic_theme <- basic_theme + theme(panel.border  = element_rect(color = "#F5F5F5", fill = NA)) #white smoke colour
     }
     
     basic_theme
