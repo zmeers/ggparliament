@@ -23,7 +23,8 @@ Imports:
     utils,
     ggplot2,
     dplyr,
-    magrittr
+    magrittr,
+    tidyr
 Suggests:
     knitr,
     testthat,
