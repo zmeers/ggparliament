@@ -24,7 +24,8 @@ Imports:
     ggplot2,
     dplyr,
     magrittr,
-    tidyr
+    tidyr,
+    patchwork
 Suggests:
     knitr,
     testthat,
