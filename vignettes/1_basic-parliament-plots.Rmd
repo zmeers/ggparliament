@@ -23,7 +23,7 @@ source("../R/theme_ggparliament.R")
 library(dplyr)
 library(magrittr)
 library(ggplot2)
-
+library(ggparliament)
 
 ```
 
