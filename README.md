@@ -89,7 +89,7 @@ senate <- ggplot(us_senate, aes(x,
                                 colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
-  theme_ggparliament() +
+  theme_ggparliament(legend = FALSE) +
   labs(colour = NULL, 
        title = "United States Senate",
        subtitle = "The party that has control of the Senate is encircled in black.") +
@@ -217,12 +217,11 @@ au <-ggplot(australia1, aes(x,
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   draw_majoritythreshold(n = 76, label = TRUE, type = 'horseshoe') + 
-  theme_ggparliament() +
+  theme_ggparliament(legend = 'bottom') +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
-                      limits = australia$party_short) + 
-  theme(legend.position = 'bottom') 
+                      limits = australia$party_short) 
 au
 ```
 
