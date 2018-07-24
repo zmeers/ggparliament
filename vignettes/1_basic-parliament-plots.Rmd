@@ -20,7 +20,9 @@ source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
 source("../R/theme_ggparliament.R")
-library(tidyverse)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
 
 
 ```
@@ -72,8 +74,8 @@ us <- ggplot(us_congress_semicircle, aes(x, y, colour = party_short)) +
   theme_ggparliament() +
   labs(colour = NULL, 
        title = "United States Congress") +
-  scale_colour_manual(values = us_congress1$colour, 
-                      limits = us_congress1$party_short) 
+  scale_colour_manual(values = us_congress_semicircle$colour, 
+                      limits = us_congress_semicircle$party_short) 
 
 us
 ```

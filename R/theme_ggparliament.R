@@ -10,8 +10,9 @@
 #' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1) + theme_ggparliament(legend = TRUE, background = TRUE, border = TRUE)
-#' @author 
-#' Zoe Meers
+#' @author Zoe Meers
+#' @export
+
 theme_ggparliament <- function(legend = TRUE, 
                                background = FALSE, 
                                border = FALSE){

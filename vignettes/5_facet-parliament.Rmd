@@ -19,6 +19,9 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
+library(dplyr)
+library(magrittr)
+library(ggplot2)
 
 ```
 
