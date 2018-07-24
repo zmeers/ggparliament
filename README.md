@@ -69,8 +69,9 @@ ggplot(us_congress1, aes(x,
   geom_parliament_seats() + 
   #highlight the government with black encircling
   geom_highlight_government(government == 1) +
+  #set theme_ggparliament
+  theme_ggparliament() +
   #other aesthetics
-  theme_void() +
   labs(colour = NULL, 
        title = "United States Congress") +
   scale_colour_manual(values = us_congress1$colour, 
@@ -88,7 +89,7 @@ senate <- ggplot(us_senate, aes(x,
                                 colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "United States Senate",
        subtitle = "The party that has control of the Senate is encircled in black.") +
@@ -119,7 +120,7 @@ ggplot(germany, aes(x,
   geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
   labs(colour="Party") +  
-  theme_void() +
+  theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
 ```
@@ -162,11 +163,10 @@ right <- ggplot(uk_17_right, aes(x,
                                  colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  theme_void() +
+  theme_ggparliament(legend = 'right') +
   labs(colour = NULL) +
   scale_colour_manual(values = uk_17_right$colour, 
-                      limits = uk_17_right$party_short) +
-  theme(legend.position = 'right')
+                      limits = uk_17_right$party_short)
 
 
 left <- ggplot(uk_17_left, aes(x, 
@@ -174,13 +174,12 @@ left <- ggplot(uk_17_left, aes(x,
                                colour = party_short,
                                type = "opposing_benches")) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament(legend = 'left') +
   labs(colour = NULL, 
        title = "UK parliament in 2017",
        subtitle="Government encircled in black.") +
   scale_colour_manual(values = uk_17_left$colour, 
-                      limits = uk_17_left$party_short) +
-  theme(legend.position = 'left') 
+                      limits = uk_17_left$party_short)
 
 uk_parliament<- combine_opposingbenches(left = left, 
                                         right = right)
@@ -218,7 +217,7 @@ au <-ggplot(australia1, aes(x,
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   draw_majoritythreshold(n = 76, label = TRUE, type = 'horseshoe') + 
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 

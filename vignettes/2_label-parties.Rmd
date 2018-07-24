@@ -14,10 +14,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
+source("../R/theme_ggparliament.R")
+library(tidyverse)
+
 
 ```
 
@@ -35,20 +39,43 @@ data <- ggparliament::election_data %>%
 usa_data <- parliament_data(election_data = data, 
                             type = "semicircle", 
                             party_seats = data$seats, 
-                            party_names = data$party_short, 
                             parl_rows = 8)
 
 ggplot(usa_data, aes(x, y, color=party_long)) + 
     geom_parliament_seats() + 
     labs(colour = NULL) +
-    draw_partylabels(party_names = TRUE, 
+    draw_partylabels(party_names = TRUE,
                      party_seats = TRUE,
-                     type = 'semicircle') +
+                     type = "semicircle") +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
-    theme_void() + 
-    theme(legend.position = "none") 
+    theme_ggparliament(legend = FALSE) 
 ```
+
+```{r,fig.width=4, fig.height=4}
+australia <- election_data %>%
+  filter(country == "Australia" &
+    house == "Representatives" &
+    year == 2016) 
+
+australia_horseshoe <- parliament_data(election_data = australia,
+  party_seats = australia$seats,
+  parl_rows = 4,
+  type = "horseshoe")
+
+au <- ggplot(australia_horseshoe, aes(x, y, colour = party_short)) +
+  geom_parliament_seats() + 
+  theme_ggparliament(legend = FALSE) +
+  labs(colour = NULL, 
+       title = "Australian Parliament") +
+  draw_partylabels(type = "horseshoe") + 
+  scale_colour_manual(values = australia$colour, 
+                      limits = australia$party_short) 
+
+au
+```
+
+
 
 # Draw label noting total number of parliamentarians
 
@@ -61,7 +88,6 @@ data <- ggparliament::election_data %>%
 usa_data <- parliament_data(election_data = data, 
                             type = "semicircle", 
                             party_seats = data$seats, 
-                            party_names = data$party_short, 
                             parl_rows = 8)
 
 ggplot(usa_data, aes(x, y, color=party_long)) + 
@@ -71,6 +97,7 @@ ggplot(usa_data, aes(x, y, color=party_long)) +
                     type = "semicircle") +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
-    theme_void() + 
-    theme(legend.position = "none") 
+    theme_ggparliament(legend = FALSE) 
 ```
+
+

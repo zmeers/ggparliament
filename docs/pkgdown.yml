@@ -1,0 +1,10 @@
+pandoc: 2.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  1_basic-parliament-plots: 1_basic-parliament-plots.html
+  2_label-parties: 2_label-parties.html
+  3_draw-majority-threshold: 3_draw-majority-threshold.html
+  4_highlight-government: 4_highlight-government.html
+  5_facet-parliament: 5_facet-parliament.html
+

@@ -56,7 +56,7 @@ us <- ggplot(usa, aes(x, y, colour = party_short)) +
   labs(colour = NULL, 
        title = "American Congress",
        subtitle = "The party that has control of US Congress is encircled in black.") +
-  theme_void() +
+  theme_ggparliament() +
   scale_colour_manual(values = usa$colour, 
                       limits = usa$party_short) + 
   theme(legend.position = 'bottom') + 
@@ -88,7 +88,7 @@ au <- ggplot(australia, aes(x, y, colour=party_short, type = "horseshoe")) +
        subtitle = "Government encircled in black.") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
-  theme_void() +
+  theme_ggparliament() +
   theme(legend.position = 'bottom') + 
   facet_grid(~house, scales = 'free')
 
@@ -124,26 +124,24 @@ uk_right<-election_data %>%
 
 
 ```{r, fig.height=10, fig.width=6}
-right_all <- ggplot(uk_right, aes(x, y, colour = party_short, type = "opposing_benches")) +
+right_all <- ggplot(uk_right, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  theme_void() +
+  theme_ggparliament(legend = "right") +
   labs(colour = NULL) +
   scale_colour_manual(values = uk_right$colour, 
                       limits = uk_right$party_short) +
-  theme(legend.position = 'right')+
   facet_wrap(~year, ncol = 1)
 
 
-left_all <- ggplot(uk_left, aes(x, y, colour = party_short, type = "opposing_benches")) +
+left_all <- ggplot(uk_left, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament(legend = "left") +
   labs(colour = NULL, 
        title = "UK parliament",
        subtitle="Government encircled in black.") +
   scale_colour_manual(values = uk_left$colour, 
                       limits = uk_left$party_short) +
-  theme(legend.position = 'left') +
   facet_wrap(~year, ncol = 1)
 
 uk_parliament_10_15_17 <- combine_opposingbenches(left = left_all, 

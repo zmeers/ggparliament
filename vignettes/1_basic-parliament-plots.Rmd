@@ -19,7 +19,8 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
-
+source("../R/theme_ggparliament.R")
+library(tidyverse)
 
 
 ```
@@ -59,7 +60,6 @@ We need to unravel the results to individual seats. To do this, we run:
 us_congress_semicircle <- parliament_data(election_data = us_congress,
   type = "semicircle",
   parl_rows = 10,
-  party_names = us_congress$party_short,
   party_seats = us_congress$seats)
 head(us_congress_semicircle)
 ```
@@ -69,7 +69,7 @@ This data frame returns the x and y coordinates of each individual seat for a 10
 ```{r, fig.width=6, fig.height=4}
 us <- ggplot(us_congress_semicircle, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "United States Congress") +
   scale_colour_manual(values = us_congress1$colour, 
@@ -99,7 +99,7 @@ australia_horseshoe <- parliament_data(election_data = australia,
 ```{r,fig.width=4, fig.height=4}
 au <- ggplot(australia_horseshoe, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
@@ -139,7 +139,7 @@ uk_17_right <- parliament_data(election_data = uk_17_right,
 
 right <- ggplot(uk_17_right, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL) +
   scale_colour_manual(values = uk_17_right$colour, 
                       limits = uk_17_right$party_short) +
@@ -148,7 +148,7 @@ right <- ggplot(uk_17_right, aes(x, y, colour = party_short)) +
 
 left <- ggplot(uk_17_left, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "UK parliament in 2017") +
   scale_colour_manual(values = uk_17_left$colour, 
@@ -176,13 +176,13 @@ russia_classroom <- election_data %>%
 ```{r,fig.width=4, fig.height=4}
 rus <- ggplot(russia_classroom, aes(x, y, colour = party_short)) +
   geom_parliament_seats() +
-  theme_void() +
+  theme_ggparliament() +
   labs(
     colour = NULL,
     title = "Russian Duma") +
   scale_colour_manual(
-    values = russia$colour,
-    limits = russia$party_short) +
+    values = russia_classroom$colour,
+    limits = russia_classroom$party_short) +
   theme(legend.position = "bottom")
 
 rus
@@ -208,13 +208,13 @@ russia_circle <- election_data %>%
 ```{r,fig.width=4, fig.height=4}
 rus2 <- ggplot(russia_circle, aes(x, y, colour = party_short)) +
   geom_parliament_seats() +
-  theme_void() +
+  theme_ggparliament() +
   labs(
     colour = NULL,
     title = "Russian Duma") +
   scale_colour_manual(
-    values = russia$colour,
-    limits = russia$party_short) +
+    values = russia_circle$colour,
+    limits = russia_circle$party_short) +
   theme(legend.position = "bottom")
 
 rus2

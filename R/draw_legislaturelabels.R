@@ -3,7 +3,7 @@
 #' @examples
 #' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
-#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_totalseats(n = 435, type = 'semicircle') + theme_void()
+#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_totalseats(n = 435, type = 'semicircle') + theme_ggparliament()
 #' @author Zoe Meers
 #' @export
 
@@ -12,7 +12,7 @@ draw_totalseats <- function(n = NULL,
                             inherit.aes = TRUE,
                             size = 8,
                             colour = "black",
-                            type = NA,
+                            type = c("horseshoe", "semicircle"),
                             ...) {
   structure(
     list(
@@ -53,20 +53,23 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
 #' Draw labels for political parties and seats per party
 #' @param party_names  If TRUE, finds party_names from data. Default is set on TRUE.
 #' @param party_seats If TRUE, finds party_seats from data. Default is set on TRUE.
+#' @param type Define type. Currently only supports semicircle and horseshoe style parliaments.
 #' @examples
 #' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-#' ggplot(usa_data, aes(x, y, color=party_long, type = semicircle)) + geom_parliament_seats() + draw_partylabels() + scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + theme_void()
+#' ggplot(usa_data, aes(x, y, color=party_long, type = semicircle)) + geom_parliament_seats() + draw_partylabels(type = "semicircle") + scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + theme_ggparliament()
 #' @author Zoe Meers
 #' @export
 
 
-draw_partylabels <- function(party_names = TRUE,
+draw_partylabels <- function(type = NULL,
+                             party_names = TRUE,
                              party_seats = TRUE,
                              inherit.aes = TRUE,
                              ...) {
   structure(
     list(
+      type = type,
       party_names = party_names,
       party_seats = party_seats
     ),
@@ -87,7 +90,7 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
   neg_movement_semicircle <- c(new_dat$mean_x - 0.8)
 
 
-  if (object$type == "horseshoe") {
+  if (object$type == "horseshoe"){
     if (!(object$party_names) & !(object$party_seats)) {
       plot
     } else if (!(object$party_names) & object$party_seats) {
@@ -126,50 +129,50 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
           vjust = "outward"
         )
     }
+  } else if (object$type == "semicircle") {
+      if (!(object$party_names) & !(object$party_seats)) {
+        plot
+      } else if (!(object$party_names) & object$party_seats) {
+        plot +
+          ggplot2::annotate("text",
+            x = ifelse(new_dat$mean_x > 0,
+              pos_movement_semicircle,
+              neg_movement_semicircle
+            ),
+            y = new_dat$mean_y,
+            label = new_dat$seats,
+            colour = new_dat$colour,
+            vjust = "outward"
+          )
+      } else if (object$party_names & !(object$party_seats)) {
+        plot +
+          ggplot2::annotate("text",
+            x = ifelse(new_dat$mean_x > 0,
+              pos_movement_semicircle,
+              neg_movement_semicircle
+            ),
+            y = new_dat$mean_y,
+            label = new_dat$party_short,
+            colour = new_dat$colour,
+            vjust = "outward"
+          )
+      }
+      else if (object$party_names & object$party_seats) {
+        plot +
+          ggplot2::annotate("text",
+            x = ifelse(new_dat$mean_x > 0,
+              pos_movement_semicircle,
+              neg_movement_semicircle
+            ),
+            y = new_dat$mean_y,
+            label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
+            colour = new_dat$colour,
+            vjust = "outward"
+          )
+      }
   }
-if (object$type == "semicircle") {
-    if (!(object$party_names) & !(object$party_seats)) {
-      plot
-    } else if (!(object$party_names) & object$party_seats) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_semicircle,
-            neg_movement_semicircle
-          ),
-          y = new_dat$mean_y,
-          label = new_dat$seats,
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    } else if (object$party_names & !(object$party_seats)) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_semicircle,
-            neg_movement_semicircle
-          ),
-          y = new_dat$mean_y,
-          label = new_dat$party_short,
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    }
-    else if (object$party_names & object$party_seats) {
-      plot +
-        ggplot2::annotate("text",
-          x = ifelse(new_dat$mean_x > 0,
-            pos_movement_semicircle,
-            neg_movement_semicircle
-          ),
-          y = new_dat$mean_y,
-          label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
-          colour = new_dat$colour,
-          vjust = "outward"
-        )
-    }
-  } 
-  else{
+  
+  else {
     warning("Warning: parliament layout is not supported.")
   }
 }

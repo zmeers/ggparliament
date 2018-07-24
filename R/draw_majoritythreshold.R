@@ -6,7 +6,7 @@
 #' @examples
 #' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
-#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majoritythreshold(n = 316, label = FALSE, colour = "black", type = 'semicircle')
+#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majoritythreshold(n = 316, label = FALSE, colour = "black", type = 'semicircle') + theme_ggparliament()
 #' @author Zoe Meers
 #' @export
 

@@ -19,6 +19,9 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
+source("../R/theme_ggparliament.R")
+library(tidyverse)
+
 ```
 
 ## Highlighting governments or parties in control of legislative chamber
@@ -52,7 +55,7 @@ head(us_congress)
 us <- ggplot(us_congress, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + #specify the variable you want to highlight here!
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "United States Congress") +
   scale_colour_manual(values = us_congress$colour, 
@@ -80,7 +83,7 @@ australia <- parliament_data(election_data = australia,
 au <- ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(c(row == 1 & government == 1)) + # this highlights the front bench.
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
