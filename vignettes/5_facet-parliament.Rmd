@@ -128,6 +128,7 @@ right_all <- ggplot(uk_right, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   theme_ggparliament() +
+  theme(legend.position = 'right') + 
   labs(colour = NULL) +
   scale_colour_manual(values = uk_right$colour, 
                       limits = uk_right$party_short) +
@@ -137,6 +138,7 @@ right_all <- ggplot(uk_right, aes(x, y, colour = party_short)) +
 left_all <- ggplot(uk_left, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   theme_ggparliament() +
+  theme(legend.position = 'left') + 
   labs(colour = NULL, 
        title = "UK parliament",
        subtitle="Government encircled in black.") +
