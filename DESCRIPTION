@@ -36,3 +36,4 @@ Collate:
     'helper_funcs.R'
     'parliament_data.R'
     'draw_legislaturelabels.R'
+    'theme_ggparliament.R'
