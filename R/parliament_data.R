@@ -10,15 +10,13 @@
 #' @param type type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)
 #'
 #' @examples
-#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
+#' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
-#'
 #' @author
 #' Zoe Meers, Rob Hickman
 #' @export
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
-                            government = election_data$government,
                             party_seats = election_data$seats,
                             type = c(
                               "horseshoe",
@@ -102,7 +100,7 @@ combine_opposingbenches <- function(left=NA, right=NA) {
 
 #' Highlight governments or parties in control of the legislature
 #' @examples
-#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
+#' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1) + theme_ggparliament()
 #' @author Zoe Meers
@@ -134,7 +132,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
 #' @param colour the colour variable
 #' @param type the type of parliament ("semicircle", "circle", "horseshoe", "opposing_benches", "classroom")
 #' @examples
-#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
+#' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + theme_ggparliament()
 #' @author Zoe Meers

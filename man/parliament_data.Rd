@@ -5,9 +5,8 @@
 \title{A function that prepares data for parliamentary plots}
 \usage{
 parliament_data(election_data = NULL, parl_rows = NULL,
-  government = election_data$government, party_seats = election_data$seats,
-  type = c("horseshoe", "semicircle", "circle", "classroom",
-  "opposing_benches"))
+  party_seats = election_data$seats, type = c("horseshoe", "semicircle",
+  "circle", "classroom", "opposing_benches"))
 }
 \arguments{
 \item{election_data}{aggregate election results}
@@ -22,9 +21,8 @@ parliament_data(election_data = NULL, parl_rows = NULL,
 A function that prepares data for parliamentary plots
 }
 \examples{
-data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
+data <- ggparliament::election_data magrittr::`\%>\%` filter(year == "2016" & country == "USA" & house == "Representatives")
 usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
-
 }
 \author{
 Zoe Meers, Rob Hickman
