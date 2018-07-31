@@ -20,10 +20,12 @@ source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
 source("../R/theme_ggparliament.R")
+library(ggparliament)
 library(dplyr)
+library(tidyr)
 library(magrittr)
 library(ggplot2)
-library(ggparliament)
+library(patchwork)
 
 
 ```
