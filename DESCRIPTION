@@ -24,12 +24,12 @@ Imports:
     ggplot2,
     dplyr,
     magrittr,
-    tidyr,
-    patchwork
+    tidyr
 Suggests:
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    patchwork
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 Collate:

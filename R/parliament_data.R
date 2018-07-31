@@ -95,6 +95,11 @@ parliament_data <- function(election_data = NULL,
 #' @author Zoe Meers
 #' @export
 combine_opposingbenches <- function(left=NA, right=NA) {
+  if (!requireNamespace("patchwork", quietly = TRUE)) {
+    stop("Package \"patchwork\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  
   left + patchwork::plot_spacer() + right
 }
 
