@@ -19,6 +19,14 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
+source("../R/theme_ggparliament.R")
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
 ```
 
 ## Highlighting governments or parties in control of legislative chamber
@@ -43,18 +51,16 @@ head(us_congress)
 ```{r}
 us_congress <- parliament_data(election_data = us_congress,
   type = "semicircle",
-  total_seats = sum(us_congress$seats),
   parl_rows = 10,
-  party_names = us_congress$party_short,
   party_seats = us_congress$seats)
 head(us_congress)
 ```
 
 ```{r, fig.width=6, fig.height=4}
-us <- ggplot(us_congress, aes(x, y, colour = party_short, type = "semicircle")) +
+us <- ggplot(us_congress, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + #specify the variable you want to highlight here!
-  theme_void() +
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "United States Congress") +
   scale_colour_manual(values = us_congress$colour, 
@@ -73,17 +79,16 @@ australia <- election_data %>%
     year == 2016) 
 
 australia <- parliament_data(election_data = australia,
-  total_seats = sum(australia$seats),
   party_seats = australia$seats,
   parl_rows = 4,
   type = "horseshoe")
 ```
 
 ```{r,fig.width=4, fig.height=4}
-au <- ggplot(australia, aes(x, y, colour = party_short, type = "horseshoe")) +
+au <- ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  geom_highlight_government(c(row == 1 & government ==1)) + # this highlights the front bench.
-  theme_void() +
+  geom_highlight_government(c(row == 1 & government == 1)) + # this highlights the front bench.
+  theme_ggparliament() +
   labs(colour = NULL, 
        title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 

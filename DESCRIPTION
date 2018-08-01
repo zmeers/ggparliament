@@ -23,11 +23,13 @@ Imports:
     utils,
     ggplot2,
     dplyr,
-    magrittr
+    magrittr,
+    tidyr
 Suggests:
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    patchwork
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 Collate:
@@ -36,3 +38,4 @@ Collate:
     'helper_funcs.R'
     'parliament_data.R'
     'draw_legislaturelabels.R'
+    'theme_ggparliament.R'

@@ -13,9 +13,9 @@ geom_highlight_government(expr)
 Highlight governments or parties in control of the legislature
 }
 \examples{
-data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1)
+data <- ggparliament::election_data magrittr::`\%>\%` filter(year == "2016" & country == "USA" & house == "Representatives")
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1) + theme_ggparliament()
 }
 \author{
 Zoe Meers

@@ -23,9 +23,9 @@ Parliament seats
 The parliament seats geom is used for plotting data from parliament_data().
 }
 \examples{
-data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-ggplot(usa_data, aes(x, y, color = party_long, type = 'semicircle')) + geom_parliament_seats() 
+data <- ggparliament::election_data magrittr::`\%>\%` filter(year == "2016" & country == "USA" & house == "Representatives")
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + theme_ggparliament()
 }
 \author{
 Zoe Meers

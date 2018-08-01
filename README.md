@@ -14,7 +14,7 @@ output: github_document
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
-This `R` package is a `ggplot2` extension.
+This `R` package is an opinionated `ggplot2` extension.
 
 To install the package:
 
@@ -24,6 +24,9 @@ devtools::install_github("robwhickman/ggparliament")
 
 Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
 is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+
+
+If you have any issues, please note the problem and inform us!
 
 ## Semicircle parliament
 
@@ -35,6 +38,7 @@ is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-sv
 
 
 ```r
+#filter the election data for the most recent US House of Representatives
 us_congress <- election_data %>%
   filter(country == "USA" &
     year == 2016 &
@@ -42,9 +46,7 @@ us_congress <- election_data %>%
 
 us_congress1 <- parliament_data(election_data = us_congress,
   type = "semicircle",
-  total_seats = sum(us_congress$seats),
   parl_rows = 10,
-  party_names = us_congress$party_short,
   party_seats = us_congress$seats)
 
 us_senate <- election_data %>%
@@ -52,13 +54,10 @@ us_senate <- election_data %>%
     year == 2016 &
     house == "Senate")
 
-
 us_senate <- parliament_data(
   election_data = us_senate,
   type = "semicircle",
-  total_seats = sum(us_senate$seats),
   parl_rows = 4,
-  party_names = us_senate$party_short,
   party_seats = us_senate$seats)
 ```
 
@@ -66,11 +65,13 @@ us_senate <- parliament_data(
 ```r
 ggplot(us_congress1, aes(x, 
                          y, 
-                         colour = party_short,
-                         type = 'semicircle')) +
+                         colour = party_short)) +
   geom_parliament_seats() + 
+  #highlight the government with black encircling
   geom_highlight_government(government == 1) +
-  theme_void() +
+  #set theme_ggparliament
+  theme_ggparliament() +
+  #other aesthetics
   labs(colour = NULL, 
        title = "United States Congress") +
   scale_colour_manual(values = us_congress1$colour, 
@@ -85,11 +86,10 @@ ggplot(us_congress1, aes(x,
 ```r
 senate <- ggplot(us_senate, aes(x, 
                                 y, 
-                                colour = party_long,
-                                type = 'semicircle')) +
+                                colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
-  theme_void() +
+  theme_ggparliament(legend = FALSE) +
   labs(colour = NULL, 
        title = "United States Senate",
        subtitle = "The party that has control of the Senate is encircled in black.") +
@@ -110,20 +110,17 @@ germany <- election_data %>%
            country == "Germany") 
 
 germany <- parliament_data(election_data = germany, 
-                           total_seats = sum(germany$seats), 
                            parl_rows = 10,
-                           party_seats = germany$seats, 
-                           type = 'semicircle')
+                           type = 'semicircle',
+                           party_seats = germany$seats)
 
 ggplot(germany, aes(x,
                     y,
-                    colour = party_short,
-                    type = 'semicircle'))+
-  geom_parliament_seats()+
+                    colour = party_short)) +
+  geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
-  labs(colour="Party", 
-       title="Germany 2017 Election Results") + 
-  theme_void()+
+  labs(colour="Party") +  
+  theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
 ```
@@ -148,35 +145,29 @@ uk_17_right <- uk_17 %>%
   filter(government == 1)
 
 
-uk_17_left <- parliament_data(election_data = uk_17_left,
-  total_seats = sum(uk_17_left$seats),
+uk_17_left <- parliament_data(
+  election_data = uk_17_left,
   party_seats =  uk_17_left$seats,
-  parl_rows = 12,
+  parl_rows = 9,
   type = "opposing_benches")
-```
 
-```
-## Error in 1:max(parl_layout$x): result would be too long a vector
-```
 
-```r
-uk_17_right <- parliament_data(election_data = uk_17_right,
-  total_seats = sum(uk_17_right$seats),
+uk_17_right <- parliament_data(
+  election_data = uk_17_right,
   party_seats = uk_17_right$seats,
   parl_rows = 12,
   type = "opposing_benches")
 
 right <- ggplot(uk_17_right, aes(x, 
                                  y, 
-                                 colour = party_short,
-                                 type = "opposing_benches")) +
+                                 colour = party_short)) +
   geom_parliament_seats() + 
-  geom_highlight_government(government==1) + 
-  theme_void() +
+  geom_highlight_government(government == 1) + 
+  theme(legend.position = 'right') + 
+  theme_ggparliament(background = TRUE) +
   labs(colour = NULL) +
   scale_colour_manual(values = uk_17_right$colour, 
-                      limits = uk_17_right$party_short) +
-  theme(legend.position = 'right')
+                      limits = uk_17_right$party_short)
 
 
 left <- ggplot(uk_17_left, aes(x, 
@@ -184,21 +175,17 @@ left <- ggplot(uk_17_left, aes(x,
                                colour = party_short,
                                type = "opposing_benches")) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme(legend.position = 'right') + 
+  theme_ggparliament(background = TRUE) +
   labs(colour = NULL, 
        title = "UK parliament in 2017",
        subtitle="Government encircled in black.") +
   scale_colour_manual(values = uk_17_left$colour, 
-                      limits = uk_17_left$party_short) +
-  theme(legend.position = 'left') 
+                      limits = uk_17_left$party_short)
 
 uk_parliament<- combine_opposingbenches(left = left, 
                                         right = right)
 uk_parliament
-```
-
-```
-## Error in FUN(X[[i]], ...): object 'x' not found
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
@@ -217,7 +204,6 @@ australia <- election_data %>%
     year == 2016) 
 
 australia1 <- parliament_data(election_data = australia,
-  total_seats = sum(australia$seats),
   party_seats = australia$seats,
   parl_rows = 4,
   type = "horseshoe")
@@ -229,17 +215,16 @@ australia1 <- parliament_data(election_data = australia,
 ```r
 au <-ggplot(australia1, aes(x, 
                             y, 
-                            colour = party_short,
-                            type = 'horseshoe')) +
+                            colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
   geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 76, label = TRUE, type = 'horseshoe') + 
+  theme_ggparliament() +
+  theme(legend.position = 'bottom') + 
   labs(colour = NULL, 
-       title = "Australian Parliament",
-       subtitle = "Government encircled in black.") +
+       title = "Australian Parliament") +
   scale_colour_manual(values = australia$colour, 
-                      limits = australia$party_short) + 
-  theme(legend.position = 'bottom') 
+                      limits = australia$party_short) 
 au
 ```
 

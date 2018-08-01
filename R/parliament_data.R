@@ -7,23 +7,17 @@
 #' @param election_data aggregate election results
 #' @param parl_rows number of rows in parliament
 #' @param party_seats seats per party
-#' @param total_seats the total number of seats in parliament
-#' @param party_names the names of parties elected to parliament
 #' @param type type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)
 #'
 #' @examples
-#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-#'
+#' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 #' @author
 #' Zoe Meers, Rob Hickman
 #' @export
 parliament_data <- function(election_data = NULL,
                             parl_rows = NULL,
-                            government = election_data$government,
                             party_seats = election_data$seats,
-                            total_seats = sum(party_seats),
-                            party_names = election_data$party,
                             type = c(
                               "horseshoe",
                               "semicircle",
@@ -34,22 +28,16 @@ parliament_data <- function(election_data = NULL,
   # for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
     # calculate the layout of the final plot from supplied data
-    parl_layout <- calc_coordinates(total_seats, parl_rows, c(8, 10))
+    parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(8, 10))
     # add in a column for the party names
-    parl_layout$party <- NA
-    parl_layout$party <- rep(party_names, party_seats)
   }
 
   else if (type == "semicircle") {
-    parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2))
-    parl_layout$party <- NA
-    parl_layout$party <- rep(party_names, party_seats)
+    parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2))
   }
 
   else if (type == "circle") {
-    parl_layout <- calc_coordinates(total_seats, parl_rows, c(1, 2), segment = 1)
-    parl_layout$party <- NA
-    parl_layout$party <- rep(party_names, party_seats)
+    parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2), segment = 1)
   }
 
   else if (type == "classroom") {
@@ -62,14 +50,12 @@ parliament_data <- function(election_data = NULL,
     # remove the extra seats that are added by expanding a grid
     # removes from either end of back row
     ### ROB - Clean up/ find better way // and also make work for odd numbers left over? ###
-    leftovers <- nrow(parl_layout) - total_seats
+    leftovers <- nrow(parl_layout) - sum(party_seats)
     parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
       parl_layout$x %in% c(
         tail(1:max(parl_layout$x), leftovers / 2),
         head(1:max(parl_layout$x), leftovers / 2)
       )), ]
-    parl_layout$party <- NA
-    parl_layout$party <- rep(party_names, party_seats)
   }
 
   else if (type == "opposing_benches") {
@@ -78,17 +64,15 @@ parliament_data <- function(election_data = NULL,
       y = seq_len(ceiling(sum(party_seats) / parl_rows))
     )
 
-    leftovers <- nrow(parl_layout) - total_seats
+    leftovers <- nrow(parl_layout) - sum(party_seats)
     parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
       parl_layout$x %in% c(
         tail(1:max(parl_layout$x), leftovers / 2),
         head(1:max(parl_layout$x), leftovers / 2)
       )), ]
-    parl_layout$party <- NA
-    parl_layout$party <- rep(party_names, party_seats)
   }
 
-  else {
+  else if (type == NULL) {
     warning("Warning: parliament layout not supported.")
   }
 
@@ -111,14 +95,19 @@ parliament_data <- function(election_data = NULL,
 #' @author Zoe Meers
 #' @export
 combine_opposingbenches <- function(left=NA, right=NA) {
+  if (!requireNamespace("patchwork", quietly = TRUE)) {
+    stop("Package \"patchwork\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  
   left + patchwork::plot_spacer() + right
 }
 
 #' Highlight governments or parties in control of the legislature
 #' @examples
-#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-#' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1)
+#' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+#' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + geom_highlight_government(government == 1) + theme_ggparliament()
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export
@@ -148,9 +137,9 @@ ggplot_add.highlight <- function(object, plot, object_name) {
 #' @param colour the colour variable
 #' @param type the type of parliament ("semicircle", "circle", "horseshoe", "opposing_benches", "classroom")
 #' @examples
-#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, party_names = data$party_short, parl_rows = 8, total_seats = sum(data$seats))
-#' ggplot(usa_data, aes(x, y, color = party_long, type = 'semicircle')) + geom_parliament_seats() 
+#' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+#' ggplot(usa_data, aes(x, y, color = party_long)) + geom_parliament_seats() + theme_ggparliament()
 #' @author Zoe Meers
 #' @export
 geom_parliament_seats <- function(mapping = NULL, data = NULL,
@@ -182,7 +171,7 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
 #' @export
 GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
   required_aes = c("x", "y", "colour"),
-  non_missing_aes = c("size", "shape", "type"),
+  non_missing_aes = c("size", "shape"),
   default_aes = ggplot2::aes(
     shape = 19,
     colour = "black",
@@ -215,15 +204,15 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
 #' Highlight elected women
 #' Define the "women" variable in the function.
 #' @examples
-#' geom_women_in_parliament(female == 1)
+#' geom_emphasize_parliamentarians(female == 1)
 #' @author Zoe Meers
 #' @export
 
-geom_women_in_parliament <- function(expr) {
-  structure(list(expr = rlang::enquo(expr)), class = "womenMPs")
+geom_emphasize_parliamentarians <- function(expr) {
+  structure(list(expr = rlang::enquo(expr)), class = "emphMPs")
 }
 
-ggplot_add.womenMPs <- function(object, plot, object_name) {
+ggplot_add.emphMPs <- function(object, plot, object_name) {
   new_data <- dplyr::filter(plot$data, !(!!object$expr))
   new_layer <- geom_point(
     data = new_data,
@@ -231,7 +220,7 @@ ggplot_add.womenMPs <- function(object, plot, object_name) {
     colour = alpha(0.4),
     alpha = 0.4,
     show.legend = FALSE,
-    size = 4
+    size = 5
   )
   plot$layers <- append(plot$layers, new_layer)
   plot

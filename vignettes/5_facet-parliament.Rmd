@@ -19,6 +19,12 @@ source("../R/parliament_data.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
 source("../R/draw_legislaturelabels.R")
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
 
 ```
 
@@ -43,7 +49,6 @@ usa <- election_data %>%
     house == "Representatives")  %>% 
   split(.$year) %>% # split
   map(~parliament_data(election_data = ., # apply
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 8,
   type = "semicircle")) %>%
@@ -51,13 +56,13 @@ usa <- election_data %>%
 ```
 
 ```{r, fig.width=12, fig.height=4}
-us <- ggplot(usa, aes(x, y, colour = party_short, type = "semicircle")) +
+us <- ggplot(usa, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
   labs(colour = NULL, 
        title = "American Congress",
        subtitle = "The party that has control of US Congress is encircled in black.") +
-  theme_void() +
+  theme_ggparliament() +
   scale_colour_manual(values = usa$colour, 
                       limits = usa$party_short) + 
   theme(legend.position = 'bottom') + 
@@ -74,7 +79,6 @@ australia <- election_data %>%
     year == "2016")  %>% 
   split(.$house) %>% # split
   map(~parliament_data(election_data = ., # apply
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 4,
   type = "horseshoe")) %>%
@@ -90,7 +94,7 @@ au <- ggplot(australia, aes(x, y, colour=party_short, type = "horseshoe")) +
        subtitle = "Government encircled in black.") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) + 
-  theme_void() +
+  theme_ggparliament() +
   theme(legend.position = 'bottom') + 
   facet_grid(~house, scales = 'free')
 
@@ -106,7 +110,6 @@ uk_left<- election_data %>%
            government == 0)  %>%
   split(.$year) %>%
   map(~parliament_data(election_data = .,
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 12,
   type = "opposing_benches")) %>%
@@ -117,7 +120,6 @@ uk_right<-election_data %>%
            government == 1)  %>%
   split(.$year) %>%
   map(~parliament_data(election_data = .,
-  total_seats = sum(.$seats),
   party_seats = .$seats,
   parl_rows = 12,
   type = "opposing_benches")) %>%
@@ -128,26 +130,26 @@ uk_right<-election_data %>%
 
 
 ```{r, fig.height=10, fig.width=6}
-right_all <- ggplot(uk_right, aes(x, y, colour = party_short, type = "opposing_benches")) +
+right_all <- ggplot(uk_right, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  theme_void() +
+  theme_ggparliament() +
+  theme(legend.position = 'right') + 
   labs(colour = NULL) +
   scale_colour_manual(values = uk_right$colour, 
                       limits = uk_right$party_short) +
-  theme(legend.position = 'right')+
   facet_wrap(~year, ncol = 1)
 
 
-left_all <- ggplot(uk_left, aes(x, y, colour = party_short, type = "opposing_benches")) +
+left_all <- ggplot(uk_left, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  theme_void() +
+  theme_ggparliament() +
+  theme(legend.position = 'left') + 
   labs(colour = NULL, 
        title = "UK parliament",
        subtitle="Government encircled in black.") +
   scale_colour_manual(values = uk_left$colour, 
                       limits = uk_left$party_short) +
-  theme(legend.position = 'left') +
   facet_wrap(~year, ncol = 1)
 
 uk_parliament_10_15_17 <- combine_opposingbenches(left = left_all, 
