@@ -16,7 +16,7 @@ draw_majoritythreshold <- function(...,
                                    label = TRUE,
                                    type = NULL,
                                    colour = "grey"
-                                   ) {
+) {
   structure(
     list(
       n = n,
@@ -35,7 +35,7 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
     dplyr::filter(dplyr::row_number() == object$n)
   x_pos <- new_dat$x
   y_pos_oppbenches <- new_dat$y
-
+  
   if (object$type == "semicircle") {
     if (!object$label) {
       plot +
