@@ -33,6 +33,15 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
     tidyr::fill(grouped_rows) %>% 
     dplyr::filter(government == 1) %>% 
     dplyr::filter(dplyr::row_number() == object$n)
+  
+  #in base
+#  new_dat <- plot$data
+#  row_names <- as.numeric(row.names(new_dat)[which(new_dat$row == max(new_dat$row))])
+#  row_gaps <- append(row_names[2:length(row_names)], nrow(new_dat) + 1)
+  
+#  new_dat$grouped_rows <- rep(row_names, row_gaps - row_names)
+#  new_dat <- new_dat[which(government == 1),]
+  
   # X position
   x_pos <- new_dat$x
   # Y position
