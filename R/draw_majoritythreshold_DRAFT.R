@@ -7,10 +7,9 @@
 #' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majoritythreshold(n = 316, label = FALSE, colour = "black", type = 'semicircle') + theme_ggparliament()
 #' @author Zoe Meers
-#' @export
 
 
-draw_majoritythreshold <- function(...,
+draw_majoritythreshold2 <- function(...,
                                    n = NULL,
                                    label = TRUE,
                                    colour = "grey"
@@ -21,12 +20,12 @@ draw_majoritythreshold <- function(...,
       label = label,
       colour = colour
     ),
-    class = "majorityLine"
+    class = "majorityLine2"
   )
 }
 
 
-ggplot_add.majorityLine <- function(object, plot, object_name) {
+ggplot_add.majorityLine2 <- function(object, plot, object_name) {
   # group each sequence of rows to find minimum and maximum value of each row.
   new_dat <- plot$data %>% 
     dplyr::mutate(grouped_rows = if_else(row == max(row), row_number(), NA_integer_))%>%
