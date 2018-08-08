@@ -10,7 +10,7 @@
 #' @export
 
 
-draw_majoritythreshold <- function(...,
+draw_majoritythreshold2 <- function(...,
                                    n = NULL,
                                    label = TRUE,
                                    colour = "grey"
@@ -26,7 +26,7 @@ draw_majoritythreshold <- function(...,
 }
 
 
-ggplot_add.majorityLine <- function(object, plot, object_name) {
+ggplot_add.majorityLine2 <- function(object, plot, object_name) {
   # group each sequence of rows to find minimum and maximum value of each row.
   new_dat <- plot$data %>% 
     dplyr::mutate(grouped_rows = if_else(row == max(row), row_number(), NA_integer_))%>%
