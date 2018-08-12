@@ -1,0 +1,87 @@
+---
+title: "How to draw overhang seats in a legislature"
+author: "Zoe Meers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+source("../R/parliament_data.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_legislaturelabels.R")
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+```
+
+## First of all, what are "overhang seats" and why do they matter?
+
+Various democratic countries use different processes to elect politicians. A few places use Mixed-member proportional (MMP) representation (Germany, New Zealand, Lesotho and Bolivia). In a MMP electoral system, voters have two votes: one for a representative for their electoral consituency and the other for a nation-wide political party. Seats are filled first by the constituency votes and then by political party. A party wins a certain number of seats based on the total vote percentage (a combination of both constituenct votes and party votes). Sometimes a party does not win the number of constituencies needed to fill the total number of seats (i.e., they win 6 seats in total but are only elected to 4 constituencies). The remainder seats are known as **overhang seats**. 
+
+
+## Germany 2013 election
+
+In 2017, the Bloomberg visual graphics team created [an excellent data visualization](https://www.bloomberg.com/graphics/2017-how-germany-forms-government/) of the German Bundestag prior to the German election. They represented the overhang seats by adding hollow seats to each party. We have decided to recreate the following in `ggparliament` using `geom_overhang_seats()`.
+
+```{r}
+data <- ggparliament::election_data %>%
+  filter(country == "Germany" & year == "2013") %>% # on the federal level, CSU is a part of CDU
+  mutate(party_long = gsub("Christian Social Union in Bavaria", "Christian Democratic Union", party_long)) %>%
+  mutate(party_short = gsub("CSU", "CDU", party_short)) %>%
+  mutate(colour = gsub("#008AC5", "#000000", colour)) %>%
+  mutate(seats = gsub("255", "311", seats)) %>%
+  mutate(seats = as.numeric(as.character(seats))) %>%
+  slice(1:4)
+# binary variable for overhang seat
+overhangseats <- c(1, 0, 1, 0, 1, 0, 1, 0)
+# number of overhang seats and remainder for each party
+number_overhangseats <- c(16, 295, 11, 182, 3, 61, 3, 60)
+# expand data
+german_data <- parliament_data(
+  election_data = data,
+  parl_rows = 11,
+  party_seats = data$seats,
+  type = "semicircle"
+)
+german_data <- german_data %>% mutate(overhang_seats = rep(overhangseats, number_overhangseats))
+german_parliament <- ggplot(german_data, aes(x,
+  y,
+  colour = party_short
+)) +
+  geom_parliament_seats() +
+  # Hollow the overhang seats as follows:
+  geom_overhang_seats(overhang_seats == 1) +
+  labs(
+    colour = "Party",
+    title = "German Bundestag - 2013 election",
+    subtitle = "Overhang seats are hollow."
+  ) +
+  theme_void() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    legend.position = "none"
+  ) +
+  draw_partylabels(type = "semicircle") +
+  scale_colour_manual(
+    values = german_data$colour,
+    limits = german_data$party_short
+  )
+german_parliament
+```
+
+
+

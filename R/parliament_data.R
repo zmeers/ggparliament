@@ -158,7 +158,7 @@ geom_parliament_seats <- function(mapping = NULL, data = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      size = 1,
+      size = 2,
       ...
     )
   )
@@ -175,7 +175,7 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
   default_aes = ggplot2::aes(
     shape = 19,
     colour = "black",
-    size = 1,
+    size = 2,
     fill = NA,
     alpha = NA,
     stroke = 0.5
@@ -204,6 +204,12 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
 #' Highlight elected women
 #' Define the "women" variable in the function.
 #' @examples
+#' data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
+#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+#' women_in_congress <- c(1, 0, 0, 1)
+#' number_of_women <- c(23, 218, 133, 61)
+#' usa_data <- usa_data %>% mutate(women = rep(women_in_congress, number_of_women))
+#' ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + geom_emphasize_parliamentarians(women == 1) + theme_ggparliament(legend = FALSE) + scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long) + labs(title = "Women in Congress")
 #' geom_emphasize_parliamentarians(female == 1)
 #' @author Zoe Meers
 #' @export
@@ -217,10 +223,10 @@ ggplot_add.emphMPs <- function(object, plot, object_name) {
   new_layer <- geom_point(
     data = new_data,
     mapping = plot$mapping,
-    colour = alpha(0.4),
-    alpha = 0.4,
+    colour = alpha(0.6),
+    alpha = 0.6,
     show.legend = FALSE,
-    size = 5
+    size = 3.5
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
@@ -247,7 +253,7 @@ ggplot_add.quota <- function(object, plot, object_name) {
     colour = "black",
     shape = 13,
     show.legend = FALSE,
-    size = 3
+    size = 2
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
@@ -258,12 +264,12 @@ ggplot_add.quota <- function(object, plot, object_name) {
 #' Show hangins seats
 #' Define hanging seats in the function
 #' @examples
-#' geom_hanging_seats(hanging_seats == 1)
+#' geom_overhang_seats(hanging_seats == 1)
 #' @author Zoe Meers
 #' @export
 
 
-geom_hanging_seats <- function(expr) {
+geom_overhang_seats <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "hangingseats")
 }
 
@@ -274,7 +280,7 @@ ggplot_add.hangingseats <- function(object, plot, object_name) {
     mapping = plot$mapping,
     fill = "white",
     shape = 21,
-    size = 3,
+    size = 2,
     stroke = 0.5
   )
   plot$layers <- append(plot$layers, new_layer)
