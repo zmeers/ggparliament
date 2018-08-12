@@ -12,6 +12,12 @@ Highlight elected women
 Define the "women" variable in the function.
 }
 \examples{
+data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+women_in_congress <- c(1, 0, 0, 1)
+number_of_women <- c(23, 218, 133, 61)
+usa_data <- usa_data \%>\% mutate(women = rep(women_in_congress, number_of_women))
+ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + geom_emphasize_parliamentarians(women == 1) + theme_ggparliament(legend = FALSE) + scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long) + labs(title = "Women in Congress")
 geom_emphasize_parliamentarians(female == 1)
 }
 \author{
