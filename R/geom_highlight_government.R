@@ -29,7 +29,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     show.legend = FALSE,
     size = 2,
     shape = 21,
-    stroke = 2
+    stroke = 2.3
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
