@@ -1,10 +1,16 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-ggparliament <img src = "figure/HexSticker.png" align = "right" width = "200"/>
-===============================================================================
 
-Parliament plots
-================
+
+
+
+# ggparliament <img src = "figure/HexSticker.png" align = "right" width = "200"/>
+
+# Parliament plots
+
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
@@ -12,22 +18,26 @@ This `R` package is an opinionated `ggplot2` extension.
 
 To install the package:
 
-``` r
+```r
 devtools::install_github("robwhickman/ggparliament")
 ```
 
-Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
+is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+
 
 If you have any issues, please note the problem and inform us!
 
-Semicircle parliament
----------------------
+## Semicircle parliament
 
 ### EU, France, United States, and so on...
 
+
 ### Plot of US Congress
 
-``` r
+
+
+```r
 #filter the election data for the most recent US House of Representatives
 us_congress <- election_data %>%
   filter(country == "USA" &
@@ -51,7 +61,8 @@ us_senate <- parliament_data(
   party_seats = us_senate$seats)
 ```
 
-``` r
+
+```r
 ggplot(us_congress1, aes(x, 
                          y, 
                          colour = party_short)) +
@@ -67,11 +78,12 @@ ggplot(us_congress1, aes(x,
                       limits = us_congress1$party_short) 
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
 ### Plot of US Senate
 
-``` r
+
+```r
 senate <- ggplot(us_senate, aes(x, 
                                 y, 
                                 colour = party_long)) +
@@ -86,11 +98,13 @@ senate <- ggplot(us_senate, aes(x,
 senate 
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+
 
 ### Plot of German Bundestag
 
-``` r
+
+```r
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -111,14 +125,14 @@ ggplot(germany, aes(x,
                       limits = germany$party_short) 
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
-Opposing Benches Parliament
----------------------------
+## Opposing Benches Parliament
 
 ### United Kingdom
 
-``` r
+
+```r
 #data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
@@ -174,14 +188,16 @@ uk_parliament<- combine_opposingbenches(left = left,
 uk_parliament
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
-Horseshoe parliament
---------------------
+
+
+## Horseshoe parliament
 
 ### Australia, New Zealand
 
-``` r
+
+```r
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
@@ -195,7 +211,8 @@ australia1 <- parliament_data(election_data = australia,
 
 ### Plot of Australian parliament
 
-``` r
+
+```r
 au <-ggplot(australia1, aes(x, 
                             y, 
                             colour = party_short)) +
@@ -211,4 +228,7 @@ au <-ggplot(australia1, aes(x,
 au
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+
+
+
