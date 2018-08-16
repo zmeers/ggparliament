@@ -34,13 +34,12 @@ geom_parliament_seats <- function(mapping = NULL,
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = GeomParliamentSeats,
+    geom = GeomPoint,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
-      na.rm = na.rm,
-      size = 1
+      na.rm = na.rm
     )
   )
 }
@@ -57,10 +56,10 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
   default_aes = ggplot2::aes(
     shape = 19,
     colour = "black",
-    size = 1,
+    size = 2,
     fill = NA,
     alpha = NA,
-    stroke = 0.5
+    stroke = 1
   ),
 
   draw_panel = function(data, panel_params, coord, na.rm = FALSE) {

@@ -27,9 +27,9 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = "black",
     show.legend = FALSE,
-    size = 1,
-    shape = 21,
-    stroke = 2
+    size = 2,
+    stroke = 1.5,
+    shape = 19
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
