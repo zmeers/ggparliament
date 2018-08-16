@@ -57,7 +57,7 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
   default_aes = ggplot2::aes(
     shape = 19,
     colour = "black",
-    size = 2,
+    size = 1,
     fill = NA,
     alpha = NA,
     stroke = 0.5
