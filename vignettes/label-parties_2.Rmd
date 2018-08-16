@@ -15,18 +15,23 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+
 source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
-source("../R/draw_legislaturelabels.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
 source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
 library(ggparliament)
 library(dplyr)
 library(tidyr)
 library(magrittr)
 library(ggplot2)
 library(patchwork)
-
 
 ```
 
@@ -36,7 +41,7 @@ library(patchwork)
 # Drawing party labels
 
 ```{r, fig.width=6, fig.height=4}
-data <- ggparliament::election_data %>% 
+data <- election_data %>% 
     filter(year == "2016" & 
              country == "USA" & 
              house == "Representatives")
@@ -49,8 +54,8 @@ usa_data <- parliament_data(election_data = data,
 ggplot(usa_data, aes(x, y, color=party_long)) + 
     geom_parliament_seats() + 
     labs(colour = NULL) +
-    draw_partylabels(party_names = TRUE,
-                     party_seats = TRUE,
+    draw_partylabels(names = TRUE,
+                     seats = TRUE,
                      type = "semicircle") +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
@@ -85,7 +90,7 @@ au
 # Draw label noting total number of parliamentarians
 
 ```{r, fig.width=6, fig.height=4}
-data <- ggparliament::election_data %>% 
+data <- election_data %>% 
     filter(year == "2016" & 
              country == "USA" & 
              house == "Representatives")
@@ -99,7 +104,8 @@ ggplot(usa_data, aes(x, y, color=party_long)) +
     geom_parliament_seats() + 
     labs(colour = NULL) +
     draw_totalseats(n = 435,
-                    type = "semicircle") +
+                    type = "semicircle", 
+                    size = 14) +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
     theme_ggparliament(legend = FALSE) 

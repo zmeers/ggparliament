@@ -15,17 +15,24 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+
 source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
-source("../R/draw_legislaturelabels.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
 source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
 library(ggparliament)
 library(dplyr)
 library(tidyr)
 library(magrittr)
 library(ggplot2)
 library(patchwork)
+
 
 
 ```
@@ -35,7 +42,7 @@ To draw the majority threshold on the parliament plot, the user must define the 
 
 Some examples are as follows:
 
-```{r, fig.height = 4, fig.width=4}
+```{r, fig.height = 4, fig.width=6}
 usa_12 <- election_data %>%
   filter(country == "USA" &
            house == "Representatives" & 

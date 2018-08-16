@@ -7,14 +7,26 @@ output: github_document
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+
 source("R/parliament_data.R")
+source("R/geom_parliament_seats.R")
+source("R/geom_highlight_government.R")
+source("R/geom_emphasize_parliamentarians.R")
 source("R/helper_funcs.R")
 source("R/draw_majoritythreshold.R")
-source("R/draw_legislaturelabels.R")
+source("R/draw_partylabels.R")
+source("R/draw_majoritythreshold.R")
+source("R/draw_totalseats.R")
 source("R/theme_ggparliament.R")
-load("data/election_data.Rda")
-#election_data <- ggparliament::election_data
-library(tidyverse)
+load("R/sysdata.rda")
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
 ```
 
 # ggparliament <img src = "figure/HexSticker.png" align = "right" width = "200"/>

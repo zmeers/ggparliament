@@ -15,16 +15,25 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+
 source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
+source("../R/geom_emphasize_parliamentarians.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
-source("../R/draw_legislaturelabels.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
+source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
 library(ggparliament)
 library(dplyr)
 library(tidyr)
 library(magrittr)
 library(ggplot2)
 library(patchwork)
+
 
 ```
 
@@ -36,7 +45,8 @@ An example is as follows:
 ### Women in the 115th American Congress
 ```{r}
 # Take preliminary data as provided in ggparliament
-data <- ggparliament::election_data %>% filter(year == "2016" & country == "USA" & house == "Representatives")
+data <- election_data %>% 
+  filter(year == "2016" & country == "USA" & house == "Representatives")
 usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 
 # The Center for American Women and Politics provides statistics concerning women in U.S. politics
@@ -52,7 +62,7 @@ ggplot(usa_data, aes(x, y, color=party_long)) +
     geom_parliament_seats() + 
     # emphasize the women in each political party -- this must be specified in order for it to work!
     geom_emphasize_parliamentarians(women == 1) +  
-    draw_majoritythreshold(n = 316, label = FALSE, colour = "black", type = 'semicircle') + 
+    draw_majoritythreshold(n = 218, label = FALSE, linecolour = "black", type = 'semicircle') + 
     draw_partylabels(type = 'semicircle') + 
     theme_void() + 
     theme(plot.title = element_text(hjust = 0.5),

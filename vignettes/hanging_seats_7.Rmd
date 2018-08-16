@@ -15,16 +15,25 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+
 source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
+source("../R/geom_overhang_seats.R")
 source("../R/helper_funcs.R")
 source("../R/draw_majoritythreshold.R")
-source("../R/draw_legislaturelabels.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
+source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
 library(ggparliament)
 library(dplyr)
 library(tidyr)
 library(magrittr)
 library(ggplot2)
 library(patchwork)
+
 ```
 
 ## First of all, what are "overhang seats" and why do they matter?
@@ -37,18 +46,15 @@ Various democratic countries use different processes to elect politicians. A few
 In 2017, the Bloomberg visual graphics team created [an excellent data visualization](https://www.bloomberg.com/graphics/2017-how-germany-forms-government/) of the German Bundestag prior to the German election. They represented the overhang seats by adding hollow seats to each party. We have decided to recreate the following in `ggparliament` using `geom_overhang_seats()`.
 
 ```{r}
-data <- ggparliament::election_data %>%
+data <- election_data %>%
   filter(country == "Germany" & year == "2013") %>% # on the federal level, CSU is a part of CDU
-  mutate(party_long = gsub("Christian Social Union in Bavaria", "Christian Democratic Union", party_long)) %>%
-  mutate(party_short = gsub("CSU", "CDU", party_short)) %>%
-  mutate(colour = gsub("#008AC5", "#000000", colour)) %>%
-  mutate(seats = gsub("255", "311", seats)) %>%
+  mutate(seats = gsub("255", "311", seats)) %>% # Add the 56 CSU seats to CDU
   mutate(seats = as.numeric(as.character(seats))) %>%
-  slice(1:4)
+  filter_all(all_vars(!grepl('Christian Social Union in Bavaria',.)))
 # binary variable for overhang seat
 overhangseats <- c(1, 0, 1, 0, 1, 0, 1, 0)
 # number of overhang seats and remainder for each party
-number_overhangseats <- c(16, 295, 11, 182, 3, 61, 3, 60)
+number_overhangseats <- c(3, 61, 3, 60,16, 295, 11, 182)
 # expand data
 german_data <- parliament_data(
   election_data = data,
