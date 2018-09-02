@@ -14,20 +14,26 @@ library(tidyr)
 ```
 
 ```{r}
+rm(list=ls())
 #get the data for the last election
 uk <- election_data %>%
   filter(country == "UK") %>%
-  filter(year == 2017) %>%
+  filter(year == 2017)
+
+uk$seats[which(uk$party_short == "Con")] <- uk$seats[which(uk$party_short == "Con")] + 100
+uk$seats[which(uk$party_short == "DUP")] <- uk$seats[which(uk$party_short == "DUP")] + 50
+
+uk <- uk %>%
   #parl_data it out
   parliament_data(election_data = .,
                   party_seats = .$seats,
-                  parl_rows = 12,
-                  #can't think of a way to do this without grouping by (e.g.) government
                   group = .$government,
+                  parl_rows = 12,
                   type = "opposing_benches")
 
 #plot it
 plot <- ggplot(uk, aes(x, y, colour = party_short)) +
-  geom_parliament_seats()
+  geom_parliament_seats() +
+  theme_ggparliament()
 
 ```

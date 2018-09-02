@@ -71,11 +71,15 @@ parliament_data <- function(election_data = NULL,
       parl_layout <- expand.grid(x = 1:rows, y = seq_len(ceiling(seats / rows)))
       leftovers <- nrow(parl_layout) - seats
       
-      parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
-                                          parl_layout$x %in% c(
-                                            tail(1:max(parl_layout$x), leftovers / 2),
-                                            head(1:max(parl_layout$x), leftovers / 2)
-                                          )), ]
+     # parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
+     #                                     parl_layout$x %in% c(
+     #                                       tail(1:max(parl_layout$x), leftovers / 2),
+     #                                       head(1:max(parl_layout$x), leftovers / 2)
+      #                                      )), ]
+      
+      parl_layout <- parl_layout[-((nrow(parl_layout) - leftovers)+1:nrow(parl_layout)),]
+      
+      return(parl_layout)
     }, rows = 12)
     
     #the x axis space between the two benches
@@ -89,7 +93,7 @@ parliament_data <- function(election_data = NULL,
     #can probably be parsed out to later if we include grouping in other geoms
     election_data <- election_data[order(-group, -party_seats),]
     parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-group, -party_seats)]),])
-    parl_data <- cbind(parl_data, parl_layout)
+    parl_layout <- cbind(parl_data, parl_layout)
   }
 
   else if (type == NULL) {
@@ -97,7 +101,7 @@ parliament_data <- function(election_data = NULL,
   }
 
   # bind layout results back to expanded election_data?
-  if (!is.null(election_data) | type != "opposing_benches") {
+  if (!is.null(election_data) & type != "opposing_benches") {
     # bind the coordinates to the uncounted original data
     parl_data <- tidyr::uncount(election_data, party_seats)
     parl_data <- dplyr::bind_cols(parl_data, parl_layout)
