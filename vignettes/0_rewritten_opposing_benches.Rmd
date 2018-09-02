@@ -38,3 +38,10 @@ plot <- ggplot(uk, aes(x, y, colour = party_short)) +
   theme_ggparliament()
 
 ```
+
+```{r}
+#HANSARD PACKAGE INTEGRATION
+
+
+```
+
