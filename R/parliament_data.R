@@ -66,11 +66,25 @@ parliament_data <- function(election_data = NULL,
     
     bench_seats <- c(gov_seats,opp_seats)
     
+    threshold = ceiling(sum(gov_seats, opp_seats) / 2)
+    
+    #if there is a nice divisor for the majority threshold use this
+    #else use 12
+    nrows <- which(threshold %% seq_len(threshold) == 0)
+    
+    if(any(nrows > 10 & nrows < 15)) {
+      nrows <- nrows[first(which(nrows > 10))]
+    } else {
+      nrows <- 12
+    }
+    
     #lapply expanding the group
     parl_layout <- lapply(bench_seats, function(seats, rows) {
       parl_layout <- expand.grid(x = 1:rows, y = seq_len(ceiling(seats / rows)))
       leftovers <- nrow(parl_layout) - seats
       
+      #legacy code for taking leftovers from both sides
+      #decided to do it from right side only
      # parl_layout <- parl_layout[-which(parl_layout$y == max(parl_layout$y) &
      #                                     parl_layout$x %in% c(
      #                                       tail(1:max(parl_layout$x), leftovers / 2),
@@ -80,7 +94,7 @@ parliament_data <- function(election_data = NULL,
       parl_layout <- parl_layout[-((nrow(parl_layout) - leftovers)+1:nrow(parl_layout)),]
       
       return(parl_layout)
-    }, rows = 12)
+    }, rows = nrows)
     
     #the x axis space between the two benches
     spacer <- 5

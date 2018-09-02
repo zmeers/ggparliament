@@ -14,16 +14,10 @@ library(tidyr)
 ```
 
 ```{r}
-rm(list=ls())
 #get the data for the last election
 uk <- election_data %>%
   filter(country == "UK") %>%
-  filter(year == 2017)
-
-uk$seats[which(uk$party_short == "Con")] <- uk$seats[which(uk$party_short == "Con")] + 100
-uk$seats[which(uk$party_short == "DUP")] <- uk$seats[which(uk$party_short == "DUP")] + 50
-
-uk <- uk %>%
+  filter(year == 2017) %>%
   #parl_data it out
   parliament_data(election_data = .,
                   party_seats = .$seats,
@@ -34,6 +28,10 @@ uk <- uk %>%
 #plot it
 plot <- ggplot(uk, aes(x, y, colour = party_short)) +
   geom_parliament_seats() +
+  geom_highlight_government(government == 1) +
+  scale_colour_manual(values = uk$colour, 
+                      limits = uk$party_short) + 
+  geom_hline(yintercept = 25.5, linetype = "dashed") +
   theme_ggparliament()
 
 ```
