@@ -7,7 +7,7 @@
 https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 }
 \usage{
-geom_highlight_government(expr)
+geom_highlight_government(expr, colour, size, shape, stroke)
 }
 \arguments{
 \item{expr}{Expr refers to the observation that you wish to highlight.}

@@ -16,10 +16,6 @@ draw_totalseats(n = NULL, size = 12, colour = "black",
 \item{colour}{Colour of label}
 
 \item{type}{Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)}
-
-\item{inherit.aes}{Inherits aes}
-
-\item{angle}{Angle of text (to flip text when flipping the chart sideways)}
 }
 \description{
 Draw total number of seats in the middle of the parliament
