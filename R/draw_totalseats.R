@@ -25,7 +25,7 @@ draw_totalseats <- function(n = NULL,
                             inherit.aes = TRUE,
                             size = 8,
                             colour = "black",
-                            type = c("horseshoe", "semicircle")) {
+                            type = c("horseshoe", "semicircle", "opposing_benches")) {
   structure(
     list(
       n = n,
@@ -51,6 +51,15 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
   if (object$type == "semicircle") {
     plot + ggplot2::annotate("text",
       x = 0, y = 0.2,
+      label = object$n,
+      fontface = "bold",
+      size = object$size,
+      colour = object$colour
+    )
+  } 
+  if (object$type == "opposing_benches") {
+    plot + ggplot2::annotate("text",
+      x = 15, y = 15,
       label = object$n,
       fontface = "bold",
       size = object$size,
