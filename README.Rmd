@@ -33,7 +33,7 @@ load("R/sysdata.rda")
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
-This `R` package is an opinionated `ggplot2` extension.
+This `R` package is a `ggplot2` extension.
 
 To install the package:
 ```{r, eval=FALSE}
@@ -51,7 +51,7 @@ If you have any issues, please note the problem and inform us!
 ### EU, France, United States, and so on...
 
 
-### Plot of US Congress
+### Plot of US House of Representatives
 
 
 ```{r}
@@ -90,7 +90,7 @@ ggplot(us_congress1, aes(x,
   theme_ggparliament() +
   #other aesthetics
   labs(colour = NULL, 
-       title = "United States Congress") +
+       title = "United States House of Representatives") +
   scale_colour_manual(values = us_congress1$colour, 
                       limits = us_congress1$party_short) 
 ```

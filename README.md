@@ -73,7 +73,7 @@ ggplot(us_congress1, aes(x,
   theme_ggparliament() +
   #other aesthetics
   labs(colour = NULL, 
-       title = "United States Congress") +
+       title = "United States House of Representatives") +
   scale_colour_manual(values = us_congress1$colour, 
                       limits = us_congress1$party_short) 
 ```
