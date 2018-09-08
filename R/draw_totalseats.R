@@ -23,7 +23,7 @@
 
 draw_totalseats <- function(n = NULL,
                             inherit.aes = TRUE,
-                            size = 8,
+                            size = 12,
                             colour = "black",
                             angle = 0,
                             type = c("horseshoe", "semicircle", "opposing_benches")) {
