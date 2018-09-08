@@ -3,8 +3,8 @@
 #' @param inherit.aes Inherits aes
 #' @param size Size of font
 #' @param colour Colour of label
-#' @param type Type of parliament (horseshoe, semicircle)
-#' @description This function currently supports the semicircle and horseshoe parliament layouts.
+#' @param angle Angle of text (to flip text when flipping the chart sideways)
+#' @param type Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)
 #' @examples
 #' data <- election_data[election_data$country == "USA" & 
 #' election_data$house == "Representatives" & 
@@ -26,7 +26,7 @@ draw_totalseats <- function(n = NULL,
                             size = 12,
                             colour = "black",
                             angle = 0,
-                            type = c("horseshoe", "semicircle", "opposing_benches")) {
+                            type = c("horseshoe", "semicircle", "opposing_benches", "circle", "classroom")) {
   structure(
     list(
       n = n,
@@ -70,7 +70,25 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
       angle = object$angle,
       colour = object$colour
     )
-  } else {
-    warning("Warning: parliament layout is not supported.")
-  }
+  } 
+  if (object$type == "circle") {
+    plot + ggplot2::annotate("text",
+      x = 0, y = 0,
+      label = object$n,
+      fontface = "bold",
+      size = object$size,
+      angle = object$angle,
+      colour = object$colour
+    )
+  } 
+  if (object$type == "classroom") {
+    plot + ggplot2::annotate("text",
+      x = 30, y = max(plot$data$y)+0.5,
+      label = object$n,
+      fontface = "bold",
+      size = object$size,
+      angle = object$angle,
+      colour = object$colour
+    )
+  } 
 }
