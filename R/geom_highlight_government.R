@@ -1,5 +1,9 @@
 #' Highlight governments or parties in control of the legislature by encircling the points.
-#' @param expr Exp refers to the observation that you wish to highlight.
+#' @param expr Expr refers to the observation that you wish to highlight.
+#' @param colour Colour of the highlight
+#' @param size Size of highlighter
+#' @param shape Shape of highlight
+#' @param stroke Size of stroke shape
 #' @examples
 #' data <- election_data[election_data$country == "USA" & 
 #' election_data$house == "Representatives" & 
@@ -16,8 +20,12 @@
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export
-geom_highlight_government <- function(expr, colour = NA) {
-  structure(list(expr = rlang::enquo(expr)), class = "highlight")
+geom_highlight_government <- function(expr, colour = "black", size = 2, shape = 19, stroke = 1.5) {
+  structure(list(expr = rlang::enquo(expr),
+                 colour = colour,
+                 size = size,
+                 shape = shape,
+                 stroke = stroke), class = "highlight")
 }
 
 ggplot_add.highlight <- function(object, plot, object_name) {
@@ -25,11 +33,11 @@ ggplot_add.highlight <- function(object, plot, object_name) {
   new_layer <- ggplot2::geom_point(
     data = new_data,
     mapping = plot$mapping,
-    colour = "black",
+    colour = object$colour,
     show.legend = FALSE,
-    size = 2,
-    stroke = 1.5,
-    shape = 19
+    size = object$size,
+    stroke = object$stroke
+    shape = object$shape
   )
   plot$layers <- append(new_layer, plot$layers)
   plot
