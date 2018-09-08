@@ -37,6 +37,7 @@ ggplot_add.hangingseats <- function(object, plot, object_name) {
     data = new_data,
     mapping = plot$mapping,
     fill = "white",
+    show.legend = FALSE,
     shape = 21,
     size = 2,
     stroke = 0.5
