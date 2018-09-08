@@ -192,7 +192,10 @@ au <-ggplot(australia, aes(x,
                             colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  draw_majoritythreshold(n = 76, label = TRUE, type = 'horseshoe') + 
+  draw_majoritythreshold(n = 76, 
+                         label = TRUE, 
+                         linesize = 0.5,
+                         type = 'horseshoe') + 
   theme_ggparliament() +
   theme(legend.position = 'bottom') + 
   labs(colour = NULL, 

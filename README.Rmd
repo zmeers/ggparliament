@@ -8,7 +8,7 @@ output: github_document
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
-
+library(ggparliament)
 source("R/parliament_data.R")
 source("R/geom_parliament_seats.R")
 source("R/geom_highlight_government.R")
@@ -20,7 +20,6 @@ source("R/draw_majoritythreshold.R")
 source("R/draw_totalseats.R")
 source("R/theme_ggparliament.R")
 source("R/geom_parliament_bar.R")
-library(ggparliament)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -198,7 +197,10 @@ au <-ggplot(australia, aes(x,
                             colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + 
-  draw_majoritythreshold(n = 76, label = TRUE, type = 'horseshoe') + 
+  draw_majoritythreshold(n = 76, 
+                         label = TRUE, 
+                         linesize = 0.5,
+                         type = 'horseshoe') + 
   theme_ggparliament() +
   theme(legend.position = 'bottom') + 
   labs(colour = NULL, 
