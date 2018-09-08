@@ -10,7 +10,15 @@ https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 geom_highlight_government(expr)
 }
 \arguments{
-\item{expr}{Exp refers to the observation that you wish to highlight.}
+\item{expr}{Expr refers to the observation that you wish to highlight.}
+
+\item{colour}{Colour of the highlight}
+
+\item{size}{Size of highlighter}
+
+\item{shape}{Shape of highlight}
+
+\item{stroke}{Size of stroke shape}
 }
 \description{
 Highlight governments or parties in control of the legislature by encircling the points.

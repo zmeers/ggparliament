@@ -5,14 +5,21 @@
 \title{Draw labels for political parties and seats per party}
 \usage{
 draw_partylabels(type = c("semicircle", "horseshoe"), names = TRUE,
-  seats = TRUE)
+  seats = TRUE, party_names = party_names, party_colours = party_colours,
+  party_seats = party_seats)
 }
 \arguments{
 \item{type}{Define type. Currently only supports semicircle and horseshoe style parliaments.}
 
 \item{names}{If TRUE, finds party names from data. Defaults to TRUE.}
 
-\item{seats}{If TRUE, finds party seats from data. Defaults to TRUE. .}
+\item{seats}{If TRUE, finds party seats from data. Defaults to TRUE.}
+
+\item{party_names}{A column containing party names.}
+
+\item{party_seats}{A column containing party seats.}
+
+\item{party_names}{A column containing party colours.}
 }
 \description{
 Draw labels for political parties and seats per party
@@ -27,7 +34,8 @@ seats = data$seats,
 parl_rows = 8)
 ggplot(usa_data, aes(x, y, color=party_long)) + 
 geom_parliament_seats() + 
-draw_partylabels(type = "semicircle") + 
+draw_partylabels(type = "semicircle", party_names = party_long, 
+party_seats = seats, party_colours = colour) + 
 scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + 
 theme_ggparliament()
 }

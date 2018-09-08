@@ -7,31 +7,31 @@
 geom_overhang_seats(expr)
 }
 \arguments{
-\item{expr}{Exp refers to the designated overhang seats.}
+\item{expr}{Expr refers to the designated overhang seats.}
 }
 \description{
 Draw overhang seats in MMP electoral systems
 }
 \examples{
-data <- ggparliament::election_data \%>\%
- filter(country == "Germany" 
- & year == "2013") \%>\% 
- mutate(seats = gsub("255", "311", seats)) \%>\%
- mutate(seats = as.numeric(as.character(seats))) \%>\%
- filter_all(all_vars(!grepl('Christian Social Union in Bavaria',.)))
-overhangseats <- c(1, 0, 1, 0, 1, 0, 1, 0)
-number_overhangseats <- c(16, 295, 11, 182, 3, 61, 3, 60)
-german_data <- parliament_data(
- election_data = data,
- parl_rows = 11,
- party_seats = data$seats,
- type = "semicircle"
+germany <- data.frame(
+   year = 2013,
+   seats = c(64, 63, 311, 193),
+   government = c(0, 0, 1, 1),
+   color = c("#BE3075", "#64A12D", "#000000", "#EB001F"),
+   party = c("The Left", "Alliance 90/The Greens","Christian Democratic Union", "Social Democratic Party")
 )
-german_data$overhang_seats <- rep(overhangseats, number_overhangseats)
+german_data <- parliament_data(
+election_data = germany,
+parl_rows = 11,
+party_seats = germany$seats,
+type = "semicircle"
+)
+german_data$overhang_seats <- rep(c(1, 0, 1, 0, 1, 0, 1, 0), c(16, 295, 11, 182, 3, 61, 3, 60))
 ggplot(german_data, aes(x,y,colour = party_short)) +
  geom_parliament_seats() +
  geom_overhang_seats(overhang_seats == 1) +
- theme_ggparliament
+ theme_ggparliament +
+ scale_color_manual(values = as.character(german_data$color), limits = as.character(german_data$party))
 }
 \author{
 Zoe Meers

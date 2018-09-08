@@ -4,22 +4,25 @@
 \alias{draw_totalseats}
 \title{Draw total number of seats in the middle of the parliament}
 \usage{
-draw_totalseats(n = NULL, inherit.aes = TRUE, size = 8,
-  colour = "black", type = c("horseshoe", "semicircle"))
+draw_totalseats(n = NULL, size = 12, colour = "black",
+  type = c("horseshoe", "semicircle", "opposing_benches", "circle",
+  "classroom"))
 }
 \arguments{
 \item{n}{The number of total seats in the legislature.}
-
-\item{inherit.aes}{Inherits aes}
 
 \item{size}{Size of font}
 
 \item{colour}{Colour of label}
 
-\item{type}{Type of parliament (horseshoe, semicircle)}
+\item{type}{Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)}
+
+\item{inherit.aes}{Inherits aes}
+
+\item{angle}{Angle of text (to flip text when flipping the chart sideways)}
 }
 \description{
-This function currently supports the semicircle and horseshoe parliament layouts.
+Draw total number of seats in the middle of the parliament
 }
 \examples{
 data <- election_data[election_data$country == "USA" & 

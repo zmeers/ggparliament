@@ -89,6 +89,8 @@ senate <- ggplot(us_senate, aes(x,
                                 colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
+  # add bar showing proportion of seats by party in legislature
+  geom_parliament_bar(colour = colour, party = party_long) + 
   theme_ggparliament(legend = FALSE) +
   labs(colour = NULL, 
        title = "United States Senate",
@@ -119,6 +121,7 @@ ggplot(germany, aes(x,
                     colour = party_short)) +
   geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
+  geom_parliament_bar(colour = colour, party = party_short) +
   labs(colour="Party") +  
   theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
@@ -136,56 +139,28 @@ ggplot(germany, aes(x,
 #data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
-           year == "2017")
+           year == "2017") %>% 
+  parliament_data(election_data = .,
+                  party_seats = .$seats,
+                  parl_rows = 12,
+                  type = "opposing_benches",
+                  group = .$government)
 
 
-uk_17_left <- uk_17 %>% 
-  filter(government == 0)
-uk_17_right <- uk_17 %>% 
-  filter(government == 1)
-
-
-uk_17_left <- parliament_data(
-  election_data = uk_17_left,
-  party_seats =  uk_17_left$seats,
-  parl_rows = 9,
-  type = "opposing_benches")
-
-
-uk_17_right <- parliament_data(
-  election_data = uk_17_right,
-  party_seats = uk_17_right$seats,
-  parl_rows = 12,
-  type = "opposing_benches")
-
-right <- ggplot(uk_17_right, aes(x, 
-                                 y, 
-                                 colour = party_short)) +
+uk_gov <- ggplot(uk_17, aes(x, 
+                            y, 
+                            colour = party_short)) +
   geom_parliament_seats() + 
-  geom_highlight_government(government == 1) + 
-  theme(legend.position = 'right') + 
-  theme_ggparliament(background = TRUE) +
-  labs(colour = NULL) +
-  scale_colour_manual(values = uk_17_right$colour, 
-                      limits = uk_17_right$party_short)
-
-
-left <- ggplot(uk_17_left, aes(x, 
-                               y, 
-                               colour = party_short,
-                               type = "opposing_benches")) +
-  geom_parliament_seats() + 
-  theme(legend.position = 'right') + 
-  theme_ggparliament(background = TRUE) +
+  draw_totalseats(n = 650, type = "opposing_benches") +
+  theme_ggparliament(background_colour = TRUE) + 
+  coord_flip() + 
   labs(colour = NULL, 
        title = "UK parliament in 2017",
        subtitle="Government encircled in black.") +
-  scale_colour_manual(values = uk_17_left$colour, 
-                      limits = uk_17_left$party_short)
+  scale_colour_manual(values = uk_17$colour, 
+                      limits = uk_17$party_short)
 
-uk_parliament<- combine_opposingbenches(left = left, 
-                                        right = right)
-uk_parliament
+uk_gov
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
@@ -201,19 +176,18 @@ uk_parliament
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
-    year == 2016) 
-
-australia1 <- parliament_data(election_data = australia,
-  party_seats = australia$seats,
-  parl_rows = 4,
-  type = "horseshoe")
+    year == 2016) %>% 
+  parliament_data(election_data = .,
+    party_seats = .$seats,
+    parl_rows = 4,
+    type = "horseshoe")
 ```
 
 ### Plot of Australian parliament
 
 
 ```r
-au <-ggplot(australia1, aes(x, 
+au <-ggplot(australia, aes(x, 
                             y, 
                             colour = party_short)) +
   geom_parliament_seats() + 
@@ -229,6 +203,8 @@ au
 ```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+
+
 
 
 

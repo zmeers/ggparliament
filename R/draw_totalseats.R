@@ -22,73 +22,81 @@
 
 
 draw_totalseats <- function(n = NULL,
-                            inherit.aes = TRUE,
                             size = 12,
                             colour = "black",
-                            angle = 0,
-                            type = c("horseshoe", "semicircle", "opposing_benches", "circle", "classroom")) {
+                            type = c("horseshoe", 
+                                     "semicircle", 
+                                     "opposing_benches", 
+                                     "circle",
+                                     "classroom")
+                            ) {
   structure(
     list(
       n = n,
-      inherit.aes = inherit.aes,
       size = size,
       type = type,
-      colour = colour,
-      angle = angle
+      colour = colour
     ),
     class = "totalLabels"
   )
 }
 
 ggplot_add.totalLabels <- function(object, plot, object_name) {
+  
   if (object$type == "horseshoe") {
-    plot + ggplot2::annotate("text",
+    plot + 
+      ggplot2::annotate("text",
       x = 0, y = 3,
       label = object$n,
       fontface = "bold",
-      size = object$size,
-      angle = object$angle,                       
+      size = object$size,             
       colour = object$colour
     )
   }
+  if (object$type == "classroom" ) {
+    plot + 
+      ggplot2::annotate("text",
+                        x = max(plot$data$x)/2, 
+                        y = max(plot$data$y)+0.2,
+                        label = object$n,
+                        fontface = "bold",
+                        size = object$size,
+                        colour = object$colour
+      )
+  } 
   if (object$type == "semicircle") {
-    plot + ggplot2::annotate("text",
+    plot + 
+      ggplot2::annotate("text",
       x = 0, y = 0.2,
       label = object$n,
       fontface = "bold",
-      angle = object$angle,
       size = object$size,
       colour = object$colour
     )
   } 
-  if (object$type == "opposing_benches") {
-    plot + ggplot2::annotate("text",
-      x = 15, y = 15,
+  if (object$type == "opposing_benches" | object$type == "cirlce" ) {
+    plot + 
+      ggplot2::annotate("text",
+      x = max(plot$data$x)/2, 
+      y = max(plot$data$y)/2,
       label = object$n,
       fontface = "bold",
       size = object$size,
-      angle = object$angle,
       colour = object$colour
     )
   } 
-  if (object$type == "circle") {
-    plot + ggplot2::annotate("text",
-      x = 0, y = 0,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      angle = object$angle,
-      colour = object$colour
-    )
-  } 
-  if (object$type == "classroom") {
-    plot + ggplot2::annotate("text",
-      x = 30, y = max(plot$data$y)+0.5,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      angle = object$angle,
-      colour = object$colour
-    )
-  } 
+  
+  
+  # if(object$type == "classroom"){
+  #   plot +
+  #     ggplot2::annotate("text",
+  #                       x = max(plot$data$x)/2, 
+  #                       y = max(plot$data$y),
+  #                       label = object$n,
+  #                       fontface = "bold",
+  #                       size = object$size,
+  #                       colour = object$colour
+  #   )
+  # }
+  
 }

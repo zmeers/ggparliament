@@ -5,8 +5,8 @@
 \title{A function that prepares data for parliamentary plots}
 \usage{
 parliament_data(election_data = NULL, parl_rows = NULL,
-  party_seats = election_data$seats, type = c("horseshoe", "semicircle",
-  "circle", "opposing_benches", "classroom"))
+  party_seats = election_data$seats, group = NULL, type = c("horseshoe",
+  "semicircle", "circle", "classroom", "opposing_benches"))
 }
 \arguments{
 \item{election_data}{aggregate election results}
@@ -14,6 +14,8 @@ parliament_data(election_data = NULL, parl_rows = NULL,
 \item{parl_rows}{number of rows in parliament}
 
 \item{party_seats}{seats per party}
+
+\item{group}{grouping variable for separate chunks. e.g. opposing benches in UK parliament}
 
 \item{type}{type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)}
 }
@@ -24,10 +26,7 @@ A function that prepares data for parliamentary plots
 data <- election_data[election_data$country == "USA" & 
 election_data$house == "Representatives" & 
 election_data$year == "2016",]
-usa_data <- parliament_data(election_data = data, 
-type = "semicircle", 
-party_seats = data$seats, 
-parl_rows = 8)
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
 }
 \author{
 Zoe Meers, Rob Hickman
