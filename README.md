@@ -39,15 +39,15 @@ If you have any issues, please note the problem and inform us!
 
 ```r
 #filter the election data for the most recent US House of Representatives
-us_congress <- election_data %>%
+us_house <- election_data %>%
   filter(country == "USA" &
     year == 2016 &
     house == "Representatives")
 
-us_congress1 <- parliament_data(election_data = us_congress,
+us_house <- parliament_data(election_data = us_house,
   type = "semicircle",
   parl_rows = 10,
-  party_seats = us_congress$seats)
+  party_seats = us_house$seats)
 
 us_senate <- election_data %>%
   filter(country == "USA" &
@@ -63,19 +63,21 @@ us_senate <- parliament_data(
 
 
 ```r
-ggplot(us_congress1, aes(x, 
+ggplot(us_house, aes(x, 
                          y, 
                          colour = party_short)) +
   geom_parliament_seats() + 
-  #highlight the government with black encircling
+  #highlight the party in control of the House with a black line
   geom_highlight_government(government == 1) +
+  #draw majority threshold
+  draw_majoritythreshold(n = 218, label = TRUE, type = 'semicircle')+
   #set theme_ggparliament
   theme_ggparliament() +
   #other aesthetics
   labs(colour = NULL, 
        title = "United States House of Representatives") +
-  scale_colour_manual(values = us_congress1$colour, 
-                      limits = us_congress1$party_short) 
+  scale_colour_manual(values = us_house$colour, 
+                      limits = us_house$party_short) 
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
