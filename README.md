@@ -116,7 +116,7 @@ germany <- parliament_data(election_data = germany,
                            type = 'semicircle',
                            party_seats = germany$seats)
 
-a <- ggplot(germany, aes(x,
+ggplot(germany, aes(x,
                     y,
                     colour = party_short)) +
   geom_parliament_seats() +
@@ -127,6 +127,8 @@ a <- ggplot(germany, aes(x,
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
 ```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
 ## Opposing Benches Parliament
 

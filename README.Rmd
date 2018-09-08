@@ -117,7 +117,7 @@ senate
 
 ### Plot of German Bundestag
 
-```{r, fig.width = 4, fig.height = 2}
+```{r, fig.width = 8, fig.height = 4}
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -127,7 +127,7 @@ germany <- parliament_data(election_data = germany,
                            type = 'semicircle',
                            party_seats = germany$seats)
 
-a <- ggplot(germany, aes(x,
+ggplot(germany, aes(x,
                     y,
                     colour = party_short)) +
   geom_parliament_seats() +
