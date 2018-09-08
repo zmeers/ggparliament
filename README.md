@@ -75,7 +75,8 @@ ggplot(us_house, aes(x,
   theme_ggparliament() +
   #other aesthetics
   labs(colour = NULL, 
-       title = "United States House of Representatives") +
+       title = "United States House of Representatives",
+       subtitle = "Party that controls the House highlighted.") +
   scale_colour_manual(values = us_house$colour, 
                       limits = us_house$party_short) 
 ```
@@ -123,7 +124,8 @@ ggplot(germany, aes(x,
                     colour = party_short)) +
   geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
-  labs(colour="Party") +  
+  labs(colour="Party",
+       subtitle = "Government circled in black.") +  
   theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
@@ -156,8 +158,7 @@ uk_gov <- ggplot(uk_17, aes(x,
   theme_ggparliament(background_colour = TRUE) + 
   coord_flip() + 
   labs(colour = NULL, 
-       title = "UK parliament in 2017",
-       subtitle="Government encircled in black.") +
+       title = "UK parliament in 2017") +
   scale_colour_manual(values = uk_17$colour, 
                       limits = uk_17$party_short)
 
@@ -192,15 +193,16 @@ au <-ggplot(australia, aes(x,
                             y, 
                             colour = party_short)) +
   geom_parliament_seats() + 
-  geom_highlight_government(government == 1) + 
+  geom_highlight_government(government == 1, colour = "pink") + 
   draw_majoritythreshold(n = 76, 
                          label = TRUE, 
                          linesize = 0.5,
                          type = 'horseshoe') + 
   theme_ggparliament() +
   theme(legend.position = 'bottom') + 
-  labs(colour = NULL, 
-       title = "Australian Parliament") +
+  labs(colour = NULL,
+       title = "Australian Parliament",
+       subtitle = "Government circled in pink.") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) 
 au
