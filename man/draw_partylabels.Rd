@@ -17,9 +17,9 @@ draw_partylabels(type = c("semicircle", "horseshoe"), names = TRUE,
 
 \item{party_names}{A column containing party names.}
 
-\item{party_seats}{A column containing party seats.}
+\item{party_colours}{A column containing party colours.}
 
-\item{party_names}{A column containing party colours.}
+\item{party_seats}{A column containing party seats.}
 }
 \description{
 Draw labels for political parties and seats per party

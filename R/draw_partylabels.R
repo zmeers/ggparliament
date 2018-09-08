@@ -1,7 +1,7 @@
 #' Draw labels for political parties and seats per party
 #' @param party_names A column containing party names.
 #' @param party_seats A column containing party seats.
-#' @param party_names A column containing party colours.
+#' @param party_colours A column containing party colours.
 #' @param names  If TRUE, finds party names from data. Defaults to TRUE.
 #' @param seats If TRUE, finds party seats from data. Defaults to TRUE. 
 #' @param type Define type. Currently only supports semicircle and horseshoe style parliaments.
@@ -46,6 +46,8 @@ draw_partylabels <- function(type = c('semicircle','horseshoe'),
 }
 
 ggplot_add.partyLabels <- function(object, plot, object_name) {
+  
+  x <- y <- NULL
   
   new_dat <- plot$data %>%
     dplyr::filter(row == max(row)) %>%
