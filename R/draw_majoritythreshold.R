@@ -24,6 +24,7 @@
 #' @export
 
 
+
 draw_majoritythreshold <- function(n = NULL,
                                    label = TRUE,
                                    type = c('horseshoe', 'semicircle', 'opposing_benches'),
