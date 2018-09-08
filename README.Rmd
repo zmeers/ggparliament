@@ -79,7 +79,7 @@ us_senate <- parliament_data(
 
 ```
 
-```{r}
+```{r, fig.width = 5, fig.height = 2}
 ggplot(us_congress1, aes(x, 
                          y, 
                          colour = party_short)) +
@@ -97,7 +97,7 @@ ggplot(us_congress1, aes(x,
 
 ### Plot of US Senate
 
-```{r}
+```{r, fig.width = 3, fig.height = 2}
 senate <- ggplot(us_senate, aes(x, 
                                 y, 
                                 colour = party_long)) +
@@ -117,7 +117,7 @@ senate
 
 ### Plot of German Bundestag
 
-```{r}
+```{r, fig.width = 4, fig.height = 2}
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -127,7 +127,7 @@ germany <- parliament_data(election_data = germany,
                            type = 'semicircle',
                            party_seats = germany$seats)
 
-ggplot(germany, aes(x,
+a <- ggplot(germany, aes(x,
                     y,
                     colour = party_short)) +
   geom_parliament_seats() +
@@ -143,7 +143,7 @@ ggplot(germany, aes(x,
 
 ### United Kingdom
 
-```{r}
+```{r, fig.height = 4}
 #data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 

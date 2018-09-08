@@ -40,9 +40,10 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
   x_max <- max_x
   x_min <- min_x
   
+  plot_data <- plot$data
   
   new_data1 <- plot$data %>% 
-    count(c = !!object$colour, p = !!object$party) %>% 
+    count(p = !!object$party, c = !!object$colour) %>% 
     mutate(proportion = n/sum(n)) %>% 
     mutate(proportion1 = proportion * difference) %>% 
     mutate(start = cumsum(proportion1) - x_max)
