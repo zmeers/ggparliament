@@ -34,7 +34,6 @@ Collate:
     'draw_partylabels.R'
     'draw_totalseats.R'
     'geom_parliament_seats.R'
-    'geom_electoral_quota.R'
     'geom_emphasize_parliamentarians.R'
     'geom_parliament_bar.R'
     'geom_highlight_government.R'
