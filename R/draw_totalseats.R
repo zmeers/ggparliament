@@ -25,6 +25,7 @@ draw_totalseats <- function(n = NULL,
                             inherit.aes = TRUE,
                             size = 8,
                             colour = "black",
+                            angle = 0,
                             type = c("horseshoe", "semicircle", "opposing_benches")) {
   structure(
     list(
@@ -32,7 +33,8 @@ draw_totalseats <- function(n = NULL,
       inherit.aes = inherit.aes,
       size = size,
       type = type,
-      colour = colour
+      colour = colour,
+      angle = angle
     ),
     class = "totalLabels"
   )
@@ -45,6 +47,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
       label = object$n,
       fontface = "bold",
       size = object$size,
+      angle = object$angle,                       
       colour = object$colour
     )
   }
@@ -53,6 +56,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
       x = 0, y = 0.2,
       label = object$n,
       fontface = "bold",
+      angle = object$angle,
       size = object$size,
       colour = object$colour
     )
@@ -63,6 +67,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
       label = object$n,
       fontface = "bold",
       size = object$size,
+      angle = object$angle,
       colour = object$colour
     )
   } else {
