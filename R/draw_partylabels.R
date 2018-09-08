@@ -1,6 +1,9 @@
 #' Draw labels for political parties and seats per party
+#' @param party_names A column containing party names.
+#' @param party_seats A column containing party seats.
+#' @param party_names A column containing party colours.
 #' @param names  If TRUE, finds party names from data. Defaults to TRUE.
-#' @param seats If TRUE, finds party seats from data. Defaults to TRUE. .
+#' @param seats If TRUE, finds party seats from data. Defaults to TRUE. 
 #' @param type Define type. Currently only supports semicircle and horseshoe style parliaments.
 #' @examples
 #' data <- election_data[election_data$country == "USA" & 
@@ -12,7 +15,8 @@
 #' parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color=party_long)) + 
 #' geom_parliament_seats() + 
-#' draw_partylabels(type = "semicircle") + 
+#' draw_partylabels(type = "semicircle", party_names = party_long, 
+#' party_seats = seats, party_colours = colour) + 
 #' scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + 
 #' theme_ggparliament()
 #' @author Zoe Meers
@@ -21,12 +25,18 @@
 
 draw_partylabels <- function(type = c('semicircle','horseshoe'),
                              names = TRUE,
-                             seats = TRUE) {
+                             seats = TRUE,
+                             party_names = party_names,
+                             party_colours = party_colours,
+                             party_seats = party_seats) {
   structure(
     list(
       type = type,
       names = names,
       seats = seats
+      party_names = rlang::enquo(party_names),
+      party_seats = rlang::enquo(party_seats),
+      party_colours = rlang::enquo(party_colours)
     ),
     class = "partyLabels"
   )
@@ -36,7 +46,7 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
   party_short <- seats <- colour <- x <- y <- NULL
   new_dat <- plot$data %>%
     dplyr::filter(row == max(row)) %>%
-    dplyr::group_by(party_short, seats, colour) %>%
+    dplyr::group_by(pn = !!party_names, ps = !!party_seats, pc = !!party_colours) %>%
     dplyr::summarise(mean_x = mean(x), mean_y = mean(y))
 
   pos_movement_horseshoe <- c(new_dat$mean_x + 2)
@@ -55,8 +65,8 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
           neg_movement_horseshoe
         ),
         y = new_dat$mean_y,
-        label = new_dat$seats,
-        colour = new_dat$colour,
+        label = new_dat$ps,
+        colour = new_dat$pc,
         vjust = "outward"
       )
     } else if (object$names & !(object$seats)) {
@@ -67,8 +77,8 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
             neg_movement_horseshoe
           ),
           y = new_dat$mean_y,
-          label = new_dat$party_short,
-          colour = new_dat$colour,
+          label = new_dat$pn
+          colour = new_dat$pc,
           vjust = "outward"
         )
     } else if (object$names & object$seats) {
@@ -79,8 +89,8 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
             neg_movement_horseshoe
           ),
           y = new_dat$mean_y,
-          label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
-          colour = new_dat$colour,
+          label = paste0(new_dat$pn, "\n(", new_dat$ps, ")"),
+          colour = new_dat$pc,
           vjust = "outward"
         )
     }
@@ -95,8 +105,8 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
             neg_movement_semicircle
           ),
           y = new_dat$mean_y,
-          label = new_dat$seats,
-          colour = new_dat$colour,
+          label = new_dat$ps,
+          colour = new_dat$pc,
           vjust = "outward"
         )
     } else if (object$names & !(object$seats)) {
@@ -107,8 +117,8 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
             neg_movement_semicircle
           ),
           y = new_dat$mean_y,
-          label = new_dat$party_short,
-          colour = new_dat$colour,
+          label = new_dat$pn,
+          colour = new_dat$pc,
           vjust = "outward"
         )
     }
@@ -120,8 +130,8 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
             neg_movement_semicircle
           ),
           y = new_dat$mean_y,
-          label = paste0(new_dat$party_short, "\n(", new_dat$seats, ")"),
-          colour = new_dat$colour,
+          label = paste0(new_dat$pn, "\n(", new_dat$ps, ")"),
+          colour = new_dat$pc,
           vjust = "outward"
         )
     }
