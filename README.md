@@ -14,7 +14,7 @@ output: github_document
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
-This `R` package is an opinionated `ggplot2` extension.
+This `R` package is a `ggplot2` extension.
 
 To install the package:
 
