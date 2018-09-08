@@ -33,7 +33,7 @@ draw_partylabels <- function(type = c('semicircle','horseshoe'),
     list(
       type = type,
       names = names,
-      seats = seats
+      seats = seats,
       party_names = rlang::enquo(party_names),
       party_seats = rlang::enquo(party_seats),
       party_colours = rlang::enquo(party_colours)
