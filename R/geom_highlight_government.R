@@ -36,7 +36,7 @@ ggplot_add.highlight <- function(object, plot, object_name) {
     colour = object$colour,
     show.legend = FALSE,
     size = object$size,
-    stroke = object$stroke
+    stroke = object$stroke,
     shape = object$shape
   )
   plot$layers <- append(new_layer, plot$layers)
