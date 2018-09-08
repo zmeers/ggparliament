@@ -77,7 +77,7 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
             neg_movement_horseshoe
           ),
           y = new_dat$mean_y,
-          label = new_dat$pn
+          label = new_dat$pn,
           colour = new_dat$pc,
           vjust = "outward"
         )
