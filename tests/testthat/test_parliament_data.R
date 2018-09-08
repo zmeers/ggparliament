@@ -1,5 +1,6 @@
 library(ggparliament)
 library(testthat)
+library(ggplot2)
 library(dplyr)
 
 test_data <- readRDS("../testdata/usa_data.rda")
