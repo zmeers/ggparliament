@@ -19,7 +19,8 @@
 #' ggplot(german_data, aes(x,y,colour = party_short)) +
 #'  geom_parliament_seats() +
 #'  geom_overhang_seats(overhang_seats == 1) +
-#'  theme_ggparliament
+#'  theme_ggparliament +
+#'  scale_color_manual(values = as.character(german_data$color), limits = as.character(german_data$party))
 #' @usage 
 #' geom_overhang_seats(expr)
 #' @author Zoe Meers
