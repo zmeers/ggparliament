@@ -28,8 +28,9 @@ geom_parliament_bar <- function(colour = colour, party = party) {
 
 ggplot_add.parliamentBar <- function(object, plot, object_name) {
   
-  count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- NULL
+  count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- group_no <- NULL
   
+
   max_y <- max(plot$data$y, na.rm = TRUE)
   min_y <- min(plot$data$y, na.rm = TRUE)
   max_x <- max(plot$data$x, na.rm = TRUE)
@@ -48,7 +49,7 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
     dplyr::count(p = !!object$party, c = !!object$colour) %>% 
     dplyr::mutate(proportion = n/sum(n)) %>% 
     dplyr::mutate(proportion1 = proportion * difference) %>% 
-    dplyr::mutate(start = cumsum(proportion1) - x_max)
+    dplyr::mutate(start = cumsum(proportion1) - x_max) 
   new_data1$end <- c(x_min, (cumsum(new_data1$proportion1)[-nrow(new_data1)] - x_max))
   
   plot + 
