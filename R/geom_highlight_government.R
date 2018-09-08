@@ -16,7 +16,7 @@
 #' geom_parliament_seats() + 
 #' geom_highlight_government(government == 1) + 
 #' theme_ggparliament()
-#' @usage geom_highlight_government(expr)
+#' @usage geom_highlight_government(expr, colour, size, shape, stroke)
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export

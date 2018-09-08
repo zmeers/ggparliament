@@ -9,7 +9,10 @@
 #' data <- election_data[election_data$country == "USA" & 
 #' election_data$house == "Representatives" & 
 #' election_data$year == "2016",]
-#' usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+#' usa_data <- parliament_data(election_data = data, 
+#' type = "semicircle", 
+#' party_seats = data$seats, 
+#' parl_rows = 8)
 #' @author
 #' Zoe Meers, Rob Hickman
 #' @export
@@ -24,6 +27,8 @@ parliament_data <- function(election_data = NULL,
                               "classroom",
                               "opposing_benches"
                             )) {
+  
+  tail <- head <- first <- NULL
   # for horseshoe shaped parliaments- e.g. Australia
   if (type == "horseshoe") {
     # calculate the layout of the final plot from supplied data

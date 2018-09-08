@@ -15,9 +15,12 @@
 #' parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color=party_long)) + 
 #' geom_parliament_seats() + 
-#' draw_partylabels(type = "semicircle", party_names = party_long, 
-#' party_seats = seats, party_colours = colour) + 
-#' scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  + 
+#' draw_partylabels(type = "semicircle", 
+#' party_names = party_long, 
+#' party_seats = seats, 
+#' party_colours = colour) + 
+#' scale_colour_manual(values = usa_data$colour, 
+#' limits = usa_data$party_long)  + 
 #' theme_ggparliament()
 #' @author Zoe Meers
 #' @export

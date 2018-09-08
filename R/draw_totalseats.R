@@ -1,9 +1,7 @@
 #' Draw total number of seats in the middle of the parliament
 #' @param n  The number of total seats in the legislature.
-#' @param inherit.aes Inherits aes
 #' @param size Size of font
 #' @param colour Colour of label
-#' @param angle Angle of text (to flip text when flipping the chart sideways)
 #' @param type Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)
 #' @examples
 #' data <- election_data[election_data$country == "USA" & 
