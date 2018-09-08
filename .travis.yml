@@ -1,8 +1,14 @@
 language: r
-sudo: false
-cache: packages
-warnings_are_errors: false
+sudo: required
+warnings_are_errors: true
+
 r_packages:
-- covr
-after_success:
-  - Rscript -e 'library("covr");codecov()'
+ - ggplot2
+ - devtools
+ - RcppArmadillo
+ - knitr
+ - gridExtra
+ - grid
+
+r_build_args: "--no-build-vignettes"
+r_check_args: "--no-build-vignettes --as-cran"
