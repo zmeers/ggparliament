@@ -11,7 +11,7 @@
 #' election_data$year == "2016",]
 #' usa_data <- parliament_data(election_data = data, 
 #' type = "semicircle", 
-#' seats = data$seats,  
+#' party_seats = data$seats,  
 #' parl_rows = 8)
 #' ggplot(usa_data, aes(x, y, color=party_long)) + 
 #' geom_parliament_seats() + 
@@ -43,10 +43,10 @@ draw_partylabels <- function(type = c('semicircle','horseshoe'),
 }
 
 ggplot_add.partyLabels <- function(object, plot, object_name) {
-  party_short <- seats <- colour <- x <- y <- NULL
+  
   new_dat <- plot$data %>%
     dplyr::filter(row == max(row)) %>%
-    dplyr::group_by(pn = !!party_names, ps = !!party_seats, pc = !!party_colours) %>%
+    dplyr::group_by(pn = !!object$party_names, ps = !!object$party_seats, pc = !!object$party_colours) %>%
     dplyr::summarise(mean_x = mean(x), mean_y = mean(y))
 
   pos_movement_horseshoe <- c(new_dat$mean_x + 2)

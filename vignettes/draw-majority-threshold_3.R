@@ -1,15 +1,4 @@
----
-title: "How to draw the majority threshold"
-author: "Zoe Meers"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -34,14 +23,8 @@ source("../R/theme_ggparliament.R")
 load("../R/sysdata.rda")
 
 
-```
 
-
-To draw the majority threshold on the parliament plot, the user must define the majority threshold number as well as the type of parliament. At the moment, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. By default, it also adds an annotation noting the seats required for a government to form. This can be turned off by writing `label = FALSE`.
-
-Some examples are as follows:
-
-```{r, fig.height = 4, fig.width=6}
+## ---- fig.height = 4, fig.width=6----------------------------------------
 usa_12 <- election_data %>%
   filter(country == "USA" &
            house == "Representatives" & 
@@ -63,9 +46,8 @@ ggplot(usa_12, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = usa_12$colour, 
                       limits = usa_12$party_short) 
 
-```
 
-```{r, fig.height = 4, fig.width=4}
+## ---- fig.height = 4, fig.width=4----------------------------------------
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
            year == "2017")
@@ -85,9 +67,8 @@ uk <- ggplot(uk_17, aes(x, y, colour = party_short)) +
                       limits = uk_17$party_short) +
   theme(legend.position = 'right')
 uk
-```
 
-```{r,fig.width=4, fig.height=4}
+## ----fig.width=4, fig.height=4-------------------------------------------
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
@@ -111,10 +92,8 @@ au <-ggplot(australia1, aes(x, y, colour = party_short)) +
                       limits = australia$party_short) + 
   theme(legend.position = 'bottom') 
 au
-```
 
-
-```{r, fig.height=4, fig.width=8}
+## ---- fig.height=4, fig.width=8------------------------------------------
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -134,4 +113,4 @@ german_parliament <- ggplot(germany, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short)
 german_parliament
-```
+

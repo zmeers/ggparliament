@@ -30,7 +30,7 @@ election_data$house == "Representatives" &
 election_data$year == "2016",]
 usa_data <- parliament_data(election_data = data, 
 type = "semicircle", 
-seats = data$seats,  
+party_seats = data$seats,  
 parl_rows = 8)
 ggplot(usa_data, aes(x, y, color=party_long)) + 
 geom_parliament_seats() + 

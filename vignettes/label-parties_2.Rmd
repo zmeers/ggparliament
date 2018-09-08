@@ -15,6 +15,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
 
 source("../R/parliament_data.R")
 source("../R/geom_parliament_seats.R")
@@ -26,17 +31,10 @@ source("../R/draw_majoritythreshold.R")
 source("../R/draw_totalseats.R")
 source("../R/theme_ggparliament.R")
 load("../R/sysdata.rda")
-library(ggparliament)
-library(dplyr)
-library(tidyr)
-library(magrittr)
-library(ggplot2)
-library(patchwork)
 
 ```
 
 `ggparliament` has two functions for adding labels to parliament plots. The first (`draw_partylabels()`) plots the abbreviated name of parties and the total number of seats allocated to the party. The second (`draw_totalseats()`) plots the total number of parliamentarians in the center of the plot.
-**Note:** Currently, these functions only work with the semicircle and horseshoe style parliament.
 
 # Drawing party labels
 
@@ -54,9 +52,8 @@ usa_data <- parliament_data(election_data = data,
 ggplot(usa_data, aes(x, y, color=party_long)) + 
     geom_parliament_seats() + 
     labs(colour = NULL) +
-    draw_partylabels(names = TRUE,
-                     seats = TRUE,
-                     type = "semicircle") +
+    draw_partylabels(type = "semicircle", party_names = party_short, 
+    party_seats = seats, party_colours = colour) +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
     theme_ggparliament(legend = FALSE) 
@@ -78,7 +75,8 @@ au <- ggplot(australia_horseshoe, aes(x, y, colour = party_short)) +
   theme_ggparliament(legend = FALSE) +
   labs(colour = NULL, 
        title = "Australian Parliament") +
-  draw_partylabels(type = "horseshoe") + 
+  draw_partylabels(type = "horseshoe", party_names = party_short, 
+    party_seats = seats, party_colours = colour) + 
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) 
 
@@ -104,8 +102,7 @@ ggplot(usa_data, aes(x, y, color=party_long)) +
     geom_parliament_seats() + 
     labs(colour = NULL) +
     draw_totalseats(n = 435,
-                    type = "semicircle", 
-                    size = 14) +
+                    type = "semicircle") +
     scale_colour_manual(values = usa_data$colour, 
                         limits = usa_data$party_long) +
     theme_ggparliament(legend = FALSE) 

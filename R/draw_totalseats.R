@@ -44,26 +44,37 @@ draw_totalseats <- function(n = NULL,
 ggplot_add.totalLabels <- function(object, plot, object_name) {
   
   if (object$type == "horseshoe") {
-    plot + 
+    plot +
       ggplot2::annotate("text",
       x = 0, y = 3,
       label = object$n,
       fontface = "bold",
-      size = object$size,             
+      size = object$size,
       colour = object$colour
     )
   }
   if (object$type == "classroom" ) {
-    plot + 
+    plot +
       ggplot2::annotate("text",
-                        x = max(plot$data$x)/2, 
+                        x = max(plot$data$x)/2,
                         y = max(plot$data$y)+0.2,
                         label = object$n,
                         fontface = "bold",
                         size = object$size,
                         colour = object$colour
       )
-  } 
+  }
+  if (object$type == "opposing_benches" | object$type == "cirlce" ) {
+    plot +
+      ggplot2::annotate("text",
+                        x = max(plot$data$x)/2,
+                        y = max(plot$data$y)/2,
+                        label = object$n,
+                        fontface = "bold",
+                        size = object$size,
+                        colour = object$colour
+      )
+  }
   if (object$type == "semicircle") {
     plot + 
       ggplot2::annotate("text",
@@ -74,29 +85,8 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
       colour = object$colour
     )
   } 
-  if (object$type == "opposing_benches" | object$type == "cirlce" ) {
-    plot + 
-      ggplot2::annotate("text",
-      x = max(plot$data$x)/2, 
-      y = max(plot$data$y)/2,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      colour = object$colour
-    )
-  } 
   
-  
-  # if(object$type == "classroom"){
-  #   plot +
-  #     ggplot2::annotate("text",
-  #                       x = max(plot$data$x)/2, 
-  #                       y = max(plot$data$y),
-  #                       label = object$n,
-  #                       fontface = "bold",
-  #                       size = object$size,
-  #                       colour = object$colour
-  #   )
-  # }
+
+
   
 }

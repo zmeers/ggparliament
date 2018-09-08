@@ -1,15 +1,4 @@
----
-title: "How to emphasize parliamentarians"
-author: "Zoe Meers"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -34,15 +23,8 @@ source("../R/theme_ggparliament.R")
 load("../R/sysdata.rda")
 
 
-```
 
-
-To emphasize certain parliamentarians, you can add `geom_emphasize_parliamentarians()` to your `ggplot2` plot, specifying the variable you want to emphasize. 
-
-An example is as follows:
-
-### Women in the 115th American Congress
-```{r}
+## ------------------------------------------------------------------------
 # Take preliminary data as provided in ggparliament
 data <- election_data %>% 
   filter(year == "2016" & country == "USA" & house == "Representatives")
@@ -69,4 +51,4 @@ ggplot(usa_data, aes(x, y, color=party_long)) +
     scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long) + 
     annotate(geom = "text", x = 0, y = 0.2, label = "61 Democrats in Congress\n are women. Only 23\nelected Republicans are women.") + 
     labs(title = "Women in 115th U.S. Congress") 
-```
+

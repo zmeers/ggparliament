@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 )
 
 
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
 source("../R/parliament_data.R")
 source("../R/geom_parliament_seats.R")
 source("../R/geom_highlight_government.R")
@@ -27,12 +32,6 @@ source("../R/draw_majoritythreshold.R")
 source("../R/draw_totalseats.R")
 source("../R/theme_ggparliament.R")
 load("../R/sysdata.rda")
-library(ggparliament)
-library(dplyr)
-library(tidyr)
-library(magrittr)
-library(ggplot2)
-library(patchwork)
 
 ```
 
@@ -81,7 +80,10 @@ german_parliament <- ggplot(german_data, aes(x,
     plot.subtitle = element_text(hjust = 0.5),
     legend.position = "none"
   ) +
-  draw_partylabels(type = "semicircle") +
+  draw_partylabels(type = "semicircle",
+                   party_colours = colour,
+                   party_names = party_short,
+                   party_seats = seats) +
   scale_colour_manual(
     values = german_data$colour,
     limits = german_data$party_short
