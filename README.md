@@ -121,7 +121,6 @@ ggplot(germany, aes(x,
                     colour = party_short)) +
   geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
-  geom_parliament_bar(colour = colour, party = party_short) +
   labs(colour="Party") +  
   theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
