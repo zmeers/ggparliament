@@ -17,13 +17,13 @@ Imports:
     dplyr,
     magrittr,
     tidyr,
-    scales,
     rlang
 Suggests:
     knitr,
     testthat,
     rmarkdown,
-    purrr
+    purrr,
+    ggrepel
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 Collate:
