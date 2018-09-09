@@ -30,7 +30,7 @@ geom_parliament_bar <- function(colour = colour, party = party, label = TRUE) {
 
 ggplot_add.parliamentBar <- function(object, plot, object_name) {
   
-  count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- group_no <- NULL
+  count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- group_no <- label <- NULL
   
 
   max_y <- max(plot$data$y, na.rm = TRUE)

@@ -17,6 +17,7 @@ Imports:
     dplyr,
     magrittr,
     tidyr,
+    scales,
     rlang
 Suggests:
     knitr,
