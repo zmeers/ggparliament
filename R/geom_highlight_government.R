@@ -20,7 +20,7 @@
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export
-geom_highlight_government <- function(expr, colour = "black", size = 2, shape = 19, stroke = 1.5) {
+geom_highlight_government <- function(expr, colour = "black", size = 3, shape = 19, stroke = 1.8) {
   structure(list(expr = rlang::enquo(expr),
                  colour = colour,
                  size = size,
