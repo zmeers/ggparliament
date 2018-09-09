@@ -61,7 +61,7 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
                 aes(xmin = start, xmax = end, fill = p, 
                     ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
                 inherit.aes = FALSE, show.legend = FALSE) + 
-      ggrepel::geom_text_repel(aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.55, label = scales::percent(proportion)), vjust = 0, segment.size = 0.02, nudge_y = 0.05, direction    = "x", data = new_data1, inherit.aes = FALSE) +
+      ggrepel::geom_text_repel(aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.55, label = scales::percent(proportion)), vjust = 0, segment.size = 0.02, nudge_y = 0.05, direction = "x", data = new_data1, inherit.aes = FALSE) +
       scale_fill_manual(values = new_data1$c, limits = new_data1$p)
   } else{
     plot + 
