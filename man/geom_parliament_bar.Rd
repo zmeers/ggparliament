@@ -4,12 +4,14 @@
 \alias{geom_parliament_bar}
 \title{Add a bar showing proportion of seats by party in parliament}
 \usage{
-geom_parliament_bar(colour = colour, party = party)
+geom_parliament_bar(colour = colour, party = party, label = TRUE)
 }
 \arguments{
 \item{colour}{The colours associated with each political party.}
 
 \item{party}{The party name variable in your data frame.}
+
+\item{label}{If label = TRUE, print the percentage above the bar.}
 }
 \description{
 Add a bar showing proportion of seats by party in parliament
