@@ -1,6 +1,7 @@
 #' Add a bar showing proportion of seats by party in parliament
 #' @param party The party name variable in your data frame.
 #' @param colour The colours associated with each political party.
+#' @param label If label = TRUE, print the percentage above the bar.
 #' @examples
 #' data <- election_data[election_data$country == "USA" & 
 #' election_data$house == "Representatives" & 
@@ -18,9 +19,10 @@
 #' @export
 
 
-geom_parliament_bar <- function(colour = colour, party = party) {
+geom_parliament_bar <- function(colour = colour, party = party, label = TRUE) {
   structure(
     list(colour = enquo(colour),
+         label = label,
          party  = enquo(party)),
     class = "parliamentBar"
   )
@@ -53,11 +55,21 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
     dplyr::mutate(start = cumsum(proportion1) - x_max) 
   new_data1$end <- c(x_min, (cumsum(new_data1$proportion1)[-nrow(new_data1)] - x_max))
   
-  plot + 
-    geom_rect(data = new_data1, 
-              aes(xmin = start, xmax = end, fill = p, 
-              ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
-              inherit.aes = FALSE, show.legend = FALSE) + 
-    scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+  if(object$label == TRUE){
+    plot + 
+      geom_rect(data = new_data1, 
+                aes(xmin = start, xmax = end, fill = p, 
+                    ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
+                inherit.aes = FALSE, show.legend = FALSE) + 
+      geom_text(aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.6, label = scales::percent(proportion)), data = new_data1, inherit.aes = FALSE) +
+      scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+  } else{
+    plot + 
+      geom_rect(data = new_data1, 
+                aes(xmin = start, xmax = end, fill = p, 
+                    ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
+                inherit.aes = FALSE, show.legend = FALSE) +
+      scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+  }
   
 }
