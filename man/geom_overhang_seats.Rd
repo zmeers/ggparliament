@@ -13,6 +13,7 @@ geom_overhang_seats(expr)
 Draw overhang seats in MMP electoral systems
 }
 \examples{
+\donttest{
 germany <- data.frame(
    year = 2013,
    seats = c(64, 63, 311, 193),
@@ -33,12 +34,13 @@ type = "semicircle"
 )
 german_data$overhang_seats <- rep(c(1, 0, 1, 0, 1, 0, 1, 0), 
 c(16, 295, 11, 182, 3, 61, 3, 60))
-ggplot(german_data, aes(x,y,colour = party_short)) +
+ggplot2::ggplot(german_data, ggplot2::aes(x,y,colour = party_short)) +
  geom_parliament_seats() +
  geom_overhang_seats(overhang_seats == 1) +
  theme_ggparliament +
- scale_color_manual(values = as.character(german_data$color), 
+ ggplot2::scale_color_manual(values = as.character(german_data$color), 
  limits = as.character(german_data$party))
+ }
 }
 \author{
 Zoe Meers

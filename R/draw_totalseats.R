@@ -4,6 +4,7 @@
 #' @param colour Colour of label
 #' @param type Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)
 #' @examples
+#' \donttest{
 #' data <- election_data[election_data$country == "USA" & 
 #' election_data$house == "Representatives" & 
 #' election_data$year == "2016",]
@@ -11,10 +12,11 @@
 #' type = "semicircle", 
 #' party_seats = data$seats, 
 #' parl_rows = 8)
-#' ggplot(usa_data, aes(x, y, color=party_long)) + 
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color=party_long)) + 
 #' geom_parliament_seats() + 
 #' draw_totalseats(n = 435, type = 'semicircle') + 
 #' theme_ggparliament()
+#' }
 #' @author Zoe Meers
 #' @export
 

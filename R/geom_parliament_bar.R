@@ -3,6 +3,7 @@
 #' @param colour The colours associated with each political party.
 #' @param label If label = TRUE, print the percentage above the bar.
 #' @examples
+#' \donttest{
 #' data <- election_data[election_data$country == "USA" & 
 #' election_data$house == "Representatives" & 
 #' election_data$year == "2016",]
@@ -10,11 +11,12 @@
 #' type = "semicircle", 
 #' party_seats = data$seats,  
 #' parl_rows = 8)
-#' ggplot(usa_data, aes(x, y, color = party_long)) + 
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color = party_long)) + 
 #' geom_parliament_seats() + 
 #' geom_parliament_bar(colour, party_long) + 
-#' scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +
+#' ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +
 #' theme_ggparliament()
+#' }
 #' @author Zoe Meers
 #' @export
 
@@ -58,18 +60,18 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
   if(object$label == TRUE){
     plot + 
       geom_rect(data = new_data1, 
-                aes(xmin = start, xmax = end, fill = p, 
+                ggplot2::aes(xmin = start, xmax = end, fill = p, 
                     ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
                 inherit.aes = FALSE, show.legend = FALSE) + 
-      ggrepel::geom_text_repel(aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.55, label = scales::percent(proportion)), vjust = 0, segment.size = 0.02, nudge_y = 0.05, direction = "x", data = new_data1, inherit.aes = FALSE) +
-      scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+      ggrepel::geom_text_repel(ggplot2::aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.55, label = scales::percent(proportion)), vjust = 0, segment.size = 0.02, nudge_y = 0.05, direction = "x", data = new_data1, inherit.aes = FALSE) +
+      ggplot2::scale_fill_manual(values = new_data1$c, limits = new_data1$p)
   } else{
     plot + 
       geom_rect(data = new_data1, 
-                aes(xmin = start, xmax = end, fill = p, 
+                ggplot2::aes(xmin = start, xmax = end, fill = p, 
                     ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
                 inherit.aes = FALSE, show.legend = FALSE) +
-      scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+      ggplot2::scale_fill_manual(values = new_data1$c, limits = new_data1$p)
   }
   
 }

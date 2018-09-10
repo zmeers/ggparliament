@@ -17,6 +17,7 @@ geom_parliament_bar(colour = colour, party = party, label = TRUE)
 Add a bar showing proportion of seats by party in parliament
 }
 \examples{
+\donttest{
 data <- election_data[election_data$country == "USA" & 
 election_data$house == "Representatives" & 
 election_data$year == "2016",]
@@ -24,11 +25,12 @@ usa_data <- parliament_data(election_data = data,
 type = "semicircle", 
 party_seats = data$seats,  
 parl_rows = 8)
-ggplot(usa_data, aes(x, y, color = party_long)) + 
+ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color = party_long)) + 
 geom_parliament_seats() + 
 geom_parliament_bar(colour, party_long) + 
-scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +
+ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +
 theme_ggparliament()
+}
 }
 \author{
 Zoe Meers
