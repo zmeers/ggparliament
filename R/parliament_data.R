@@ -127,20 +127,6 @@ parliament_data <- function(election_data = NULL,
   return(parl_data)
 }
 
-#' Combine left and right bench for opposing bench-style parliaments
-#' @param left left hand side
-#' @param right right hand side
-#' @author Zoe Meers
-#' @export
-combine_opposingbenches <- function(left=NA, right=NA) {
-  if (!requireNamespace("patchwork", quietly = TRUE)) {
-    stop("Package \"patchwork\" needed for this function to work. Please install it.",
-         call. = FALSE)
-  }
-  
-  left + patchwork::plot_spacer() + right
-}
-
 #' Highlight governments or parties in control of the legislature
 #' @examples
 #' data <- ggparliament::election_data magrittr::`%>%` filter(year == "2016" & country == "USA" & house == "Representatives")
