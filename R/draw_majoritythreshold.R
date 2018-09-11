@@ -16,7 +16,7 @@ draw_majoritythreshold <- function(...,
                                    label = TRUE,
                                    type = NULL,
                                    colour = "grey"
-                                   ) {
+) {
   structure(
     list(
       n = n,
@@ -35,7 +35,7 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
     dplyr::filter(dplyr::row_number() == object$n)
   x_pos <- new_dat$x
   y_pos_oppbenches <- new_dat$y
-
+  
   if (object$type == "semicircle") {
     if (!object$label) {
       plot +
@@ -59,10 +59,10 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
       if (object$type == "opposing_benches") {
         if (!object$label) {
           plot +
-            ggplot2::geom_segment(aes(y = y_pos_oppbenches, yend = y_pos_oppbenches, x = min(plot$data$x), xend = max(plot$data$x)), colour = object$colour, size = 0.8, linetype = 2, alpha = 1)
+            ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x)), colour = object$colour, size = 0.8, linetype = 2, alpha = 1)
         } else {
           plot +
-            ggplot2::geom_segment(aes(y = y_pos_oppbenches, yend = y_pos_oppbenches, x = min(plot$data$x), xend = max(plot$data$x)), colour = object$colour, size = 0.8, linetype = 2, alpha = 1) +
+            ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x)), colour = object$colour, size = 0.8, linetype = 2, alpha = 1) +
             ggplot2::annotate("text", x = 0.1, y = y_pos_oppbenches - 5, label = paste0(object$n, " seats needed for a majority."), angle = 90)
         }
       } else {

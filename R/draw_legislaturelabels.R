@@ -78,7 +78,7 @@ draw_partylabels <- function(type = NULL,
 }
 
 ggplot_add.partyLabels <- function(object, plot, object_name) {
- 
+  
   new_dat <- plot$data %>%
     dplyr::filter(row == max(row)) %>%
     dplyr::group_by(party_short, seats, colour) %>%
