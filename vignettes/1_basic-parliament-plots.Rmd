@@ -119,49 +119,26 @@ We need to split the data into a left and right side for an opposing bench style
 
 
 ```{r, fig.height=6, fig.width = 6}
-uk_17 <- election_data %>% 
-  filter(country == "UK" & 
-           year == "2017")
+#get the data for the last election
+uk_data <- election_data %>%
+  filter(country == "UK") %>%
+  filter(year == 2017) %>%
+  #parl_data it out
+  parliament_data(election_data = .,
+                  party_seats = .$seats,
+                  #need to include grouping for opposing benches by definition
+                  group = .$government,
+                  parl_rows = 12,
+                  type = "opposing_benches")
 
-uk_17_left <- uk_17 %>% 
-  filter(government == 0)
+#plot it
+uk <- ggplot(uk_data, aes(x, y, colour = party_short)) +
+  scale_colour_manual(values = unique(uk_data$colour)) +
+  geom_parliament_seats() +
+  theme_ggparliament()
 
-uk_17_right <- uk_17 %>% 
-  filter(government == 1)
+uk
 
-
-uk_17_left <- parliament_data(election_data = uk_17_left,
-  party_seats =  uk_17_left$seats,
-  parl_rows = 12,
-  type = "opposing_benches")
-
-
-uk_17_right <- parliament_data(election_data = uk_17_right,
-  party_seats = uk_17_right$seats,
-  parl_rows = 12,
-  type = "opposing_benches")
-
-right <- ggplot(uk_17_right, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() + 
-  theme_ggparliament() +
-  labs(colour = NULL) +
-  scale_colour_manual(values = uk_17_right$colour, 
-                      limits = uk_17_right$party_short) +
-  theme(legend.position = 'right')
-
-
-left <- ggplot(uk_17_left, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() + 
-  theme_ggparliament() +
-  labs(colour = NULL, 
-       title = "UK parliament in 2017") +
-  scale_colour_manual(values = uk_17_left$colour, 
-                      limits = uk_17_left$party_short) +
-  theme(legend.position = 'left') 
-
-uk_parliament<- combine_opposingbenches(left = left, 
-                                        right = right)
-uk_parliament
 ```
 
 ### Classroom parliament
