@@ -25,16 +25,11 @@ uk <- election_data %>%
                   parl_rows = 12,
                   type = "opposing_benches")
 
-#add to function to calculate thresholds for opposing benches
-maj_threshold <- (ceiling(nrow(plot$data) / 2) / (length(unique(plot$data$x)) / 2)) + 0.5
-
 #plot it
 plot <- ggplot(uk, aes(x, y, colour = party_short)) +
   geom_parliament_seats() +
   geom_highlight_government(government == 1) +
-  scale_colour_manual(values = uk$colour, 
-                      limits = uk$party_short) + 
-  geom_hline(yintercept = maj_threshold, linetype = "dashed") +
+  draw_majoritythreshold(n = 325, type = "opposing_benches") +
   theme_ggparliament()
 
 ```
