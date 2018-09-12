@@ -121,8 +121,8 @@ parliament_data <- function(election_data = NULL,
     parl_layout <- cbind(parl_data, parl_layout)
   }
 
-  else if (is.null(type)) {
-    warning("Warning: parliament layout not supported.")
+  else if (is.null(type) | !type %in% c("horseshoe","semicircle","circle","classroom","opposing_benches")) {
+    warning("Warning: parliament layout 'type' not supported.")
   }
 
   return(parl_layout)
