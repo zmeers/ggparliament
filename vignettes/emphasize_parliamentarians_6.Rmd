@@ -37,9 +37,7 @@ load("../R/sysdata.rda")
 ```
 
 
-To emphasize certain parliamentarians, you can add `geom_emphasize_parliamentarians()` to your `ggplot2` plot, specifying the variable you want to emphasize. 
-
-An example is as follows:
+To emphasize certain parliamentarians, add `geom_emphasize_parliamentarians()` to your `ggplot2` plot, specifying the variable you want to emphasize. This will set the alpha on the remaining seats to 0.6.
 
 ### Women in the 115th American Congress
 ```{r}

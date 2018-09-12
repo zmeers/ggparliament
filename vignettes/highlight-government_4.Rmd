@@ -37,12 +37,7 @@ load("../R/sysdata.rda")
 
 ## Highlighting governments or parties in control of legislative chamber
 
-
-`election_data` has a dummy variable for government -- i.e. 1 for the party is part of the government, 0 otherwise.
-
-This means we can specify whether a party is a part of the government (or otherwise has control of the legislature if they have a majority) in our visualization by using  `geom_highlight_government()`.
-
-`geom_highlight_government()` surrounds the circle with a black outline. An example is as follows:
+We can specify whether a party is a part of the government (or otherwise has control of the legislature if they hold a majority of seats) in our visualization by using  `geom_highlight_government()`. `geom_highlight_government()` surrounds the circle with an outline. 
 
 ### 115th Congress
 
@@ -75,9 +70,7 @@ us <- ggplot(us_congress, aes(x, y, colour = party_short)) +
 us
 ```
 
-**Note:** the United States Congress is currently controlled by the GOP but note that it can be be controlled by an opposing party if the opposing party has a majority in Congress. In the data for the US, the 'government' dummy variable shows the party that has control over the legislative chamber, not necessarily the government as a whole.
-
-Additionally, this function is *not* limited to highlighting governments. If you want to highlight the front bench in Austrlia, for example, you can write
+Although the primary purpose is to highlight members of a governing coalition, this function is *not* limited to highlighting governments. If, for example, you wish to highlight the Australian government's front branch, write
 ```{r}
 australia <- election_data %>%
   filter(country == "Australia" &
@@ -93,7 +86,7 @@ australia <- parliament_data(election_data = australia,
 ```{r,fig.width=4, fig.height=4}
 au <- ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  geom_highlight_government(c(row == 1 & government == 1)) + # this highlights the front bench.
+  geom_highlight_government(row == 1 & government == 1) + # this highlights the front bench.
   theme_ggparliament() +
   labs(colour = NULL, 
        title = "Australian Parliament") +

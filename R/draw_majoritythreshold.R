@@ -3,23 +3,23 @@
 #' @param label A logical variable for labelling majority threshold. Defaults to TRUE.
 #' @param type Type of parliament (horseshoe, semicircle,opposing benches)
 #' @param linecolour The colour of the majority line. Defaults to grey.
-#' @param linesize The size of the line. Defaults to 1. 
+#' @param linesize The size of the line. Defaults to 1.
 #' @param linetype The style of the line. Defaults to 2, or a dashed line.
 #' @param linealpha Set the transparency of the line. Defaults to 1.
 #' @examples
 #' \donttest{
-#' data <- election_data[election_data$country == "USA" & 
-#' election_data$house == "Representatives" & 
+#' data <- election_data[election_data$country == "USA" &
+#' election_data$house == "Representatives" &
 #' election_data$year == "2016",]
-#' usa_data <- parliament_data(election_data = data, 
-#' type = "semicircle", 
-#' party_seats = data$seats, 
+#' usa_data <- parliament_data(election_data = data,
+#' type = "semicircle",
+#' party_seats = data$seats,
 #' parl_rows = 8)
-#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color=party_long)) + 
-#' geom_parliament_seats() + 
-#' draw_majoritythreshold(n = 218, 
-#' label = TRUE, 
-#' type = 'semicircle') + 
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color=party_long)) +
+#' geom_parliament_seats() +
+#' draw_majoritythreshold(n = 218,
+#' label = TRUE,
+#' type = 'semicircle') +
 #' theme_ggparliament()
 #' }
 #' @author Zoe Meers
@@ -29,7 +29,7 @@
 
 draw_majoritythreshold <- function(n = NULL,
                                    label = TRUE,
-                                   type = c('horseshoe', 'semicircle', 'opposing_benches'),
+                                   type = c("horseshoe", "semicircle", "opposing_benches"),
                                    linecolour = "black",
                                    linesize = 1,
                                    linetype = 2,
@@ -78,13 +78,15 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
       if (object$type == "opposing_benches") {
         if (!object$label) {
           plot +
-            ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x)),
-                                  colour = object$linecolour, size = object$linesize, linetype = object$linetype, alpha = object$linealpha)
+            ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x) / 2),
+              colour = object$linecolour, size = object$linesize, linetype = object$linetype, alpha = object$linealpha
+            )
         } else {
           plot +
-            ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x)), 
-                                  colour = object$linecolour, size = object$linesize, linetype = object$linetype, alpha = object$linealpha) +
-            ggplot2::annotate("text", x = 0.1, y = y_pos_oppbenches - 5, label = paste0(object$n, " seats needed for a majority."), angle = 90)
+            ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x) / 2),
+              colour = object$linecolour, size = object$linesize, linetype = object$linetype, alpha = object$linealpha
+            ) +
+            ggplot2::annotate("text", x = max(plot$data$x) / 1.9, y = y_pos_oppbenches - 0.5, label = paste0(object$n, " seats needed\nfor a majority."))
         }
       } else {
         warning("Warning: parliament layout not supported.")

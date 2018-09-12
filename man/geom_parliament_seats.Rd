@@ -13,7 +13,7 @@ geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
 \item{mapping}{Mapping the aesthetics (the x and y coordinates, 
 as well as the colour of each political party).}
 
-\item{data}{The outputted parliament_data data frame.}
+\item{data}{The parliament_data data frame.}
 
 \item{stat}{"identity"}
 
