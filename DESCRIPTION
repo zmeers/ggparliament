@@ -24,7 +24,7 @@ Suggests:
     ggrepel,
     scales
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Collate:
     'ggparliament_package.R'
     'data.R'
