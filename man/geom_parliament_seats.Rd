@@ -10,7 +10,7 @@ geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
   inherit.aes = TRUE)
 }
 \arguments{
-\item{mapping}{Mapping the aesthetics (the x and y coordinates, 
+\item{mapping}{Mapping the aesthetics (the x and y coordinates,
 as well as the colour of each political party).}
 
 \item{data}{The parliament_data data frame.}
@@ -19,11 +19,11 @@ as well as the colour of each political party).}
 
 \item{position}{"identity"}
 
-\item{na.rm}{If `FALSE`, the default, missing values are 
-removed with a warning. 
+\item{na.rm}{If `FALSE`, the default, missing values are
+removed with a warning.
 If `TRUE`, missing values are silently removed.}
 
-\item{show.legend}{If `TRUE`, print legend. 
+\item{show.legend}{If `TRUE`, print legend.
 If `FALSE` do not print legend.}
 
 \item{inherit.aes}{Inherit aes from other ggplot2 functions.}
@@ -34,14 +34,14 @@ The parliament seats geom is used for plotting data from parliament_data()
 }
 \examples{
 \donttest{
-data <- election_data[election_data$country == "USA" & 
-election_data$house == "Representatives" & 
+data <- election_data[election_data$country == "USA" &
+election_data$house == "Representatives" &
 election_data$year == "2016",]
-usa_data <- parliament_data(election_data = data, 
+usa_data <- parliament_data(election_data = data,
 type = "semicircle", party_seats = data$seats,
 parl_rows = 8)
-ggplot2::ggplot(usa_data, ggplot2::aes(x = x, y = y, color = party_long)) + 
-geom_parliament_seats() + 
+ggplot2::ggplot(usa_data, ggplot2::aes(x = x, y = y, color = party_long)) +
+geom_parliament_seats() +
 theme_ggparliament()
 }
 }

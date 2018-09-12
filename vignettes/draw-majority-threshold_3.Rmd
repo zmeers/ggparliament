@@ -99,8 +99,6 @@ australia <- election_data %>%
 australia1 <- parliament_data(election_data = australia,
   party_seats = australia$seats,
   parl_rows = 4,
-  #as we want to show the government, plot in order of governing party and by seat number
-  plot_order = australia$government,
   type = "horseshoe")
 
 au <-ggplot(australia1, aes(x, y, colour = party_short)) +
