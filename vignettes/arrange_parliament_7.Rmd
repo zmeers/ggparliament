@@ -1,0 +1,99 @@
+---
+title: "Arranging Parliament Plots"
+author: "Robert Hickman"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
+source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
+source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
+```
+## Improving Information Converyance via Plot Order
+The provided example data for elections is in order of country, year, winning power, and then seats. However, this need not be so. It's easy to imagine downloading data in (e.g.) alphabetical order
+```{r}
+unformatted_data <- election_data %>%
+  filter(country == "Germany" & year == "2017") %>%
+  arrange(party_long)
+head(unformatted_data)
+```
+One simple way to deal with this is to arrange the data before piping it through ggparliament. For instance, in the order I prefer (government on the left, starting with the largest party):
+```{r, fig.width=6, fig.height=4}
+formatted_data <- unformatted_data %>%
+  arrange(-government, -seats)
+formatted_parl_data <- formatted_data %>%
+  parliament_data(.,
+                  parl_rows = 12,
+                  party_seats = .$seats,
+                  type = "semicircle")
+german_parliament <- ggplot(formatted_parl_data, aes(x, y, colour = party_short)) +
+  geom_parliament_seats() +
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 355, label = FALSE, type = "semicircle") + 
+  labs(colour="Party", 
+       title="Germany 2017 Election Results") + 
+  theme_ggparliament() +
+  scale_colour_manual(values = formatted_parl_data$colour, 
+                      limits = formatted_parl_data$party_short)
+german_parliament
+```
+However, for whatever reason this might not be possible, or just undesirable. To deal with this, parliament_data also includes the ability to order the data for plotting using plot_order. If this is left as NULL, no ordering takes place.
+```{r, fig.width=6, fig.height=4}
+german_parliament <- unformatted_data %>%
+  parliament_data(.,
+                  parl_rows = 12,
+                  party_seats = .$seats,
+                  plot_order = .$seats,
+                  type = "semicircle") %>%
+  ggplot(., aes(x, y, colour = party_short)) +
+  geom_parliament_seats() +
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 355, label = FALSE, type = "semicircle") + 
+  labs(colour="Party", 
+       title="Germany 2017 Election Results Arranged by Seats per Party") + 
+  theme_ggparliament() +
+  scale_colour_manual(values = unformatted_data$colour, 
+                      limits = unformatted_data$party_short)
+german_parliament
+  
+```
+Given that government is a binary variable, the simplest way to order as in the first plot is to multiple this by the number of seats, i.e.:
+```{r, fig.width=6, fig.height=4}
+german_parliament <- unformatted_data %>%
+  parliament_data(.,
+                  parl_rows = 12,
+                  party_seats = .$seats,
+                  plot_order = .$seats * .$government,
+                  type = "semicircle") %>%
+  ggplot(., aes(x, y, colour = party_short)) +
+  geom_parliament_seats() +
+  geom_highlight_government(government == 1) + 
+  draw_majoritythreshold(n = 355, label = FALSE, type = "semicircle") + 
+  labs(colour="Party", 
+       title="Germany 2017 Election Results Arranged by Seats per Party") + 
+  theme_ggparliament() +
+  scale_colour_manual(values = unformatted_data$colour, 
+                      limits = unformatted_data$party_short)
+german_parliament
+  
+```
