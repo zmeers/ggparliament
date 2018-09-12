@@ -2,10 +2,11 @@
 % Please edit documentation in R/draw_majoritythreshold.R
 \name{draw_majoritythreshold}
 \alias{draw_majoritythreshold}
-\title{Draw majority line}
+\title{Draw majority threshold}
 \usage{
-draw_majoritythreshold(..., n = NULL, label = TRUE, type = NULL,
-  colour = "grey")
+draw_majoritythreshold(n = NULL, label = TRUE, type = c("horseshoe",
+  "semicircle", "opposing_benches"), linecolour = "black", linesize = 1,
+  linetype = 2, linealpha = 1)
 }
 \arguments{
 \item{n}{The number of seats required for a majority}
@@ -14,15 +15,33 @@ draw_majoritythreshold(..., n = NULL, label = TRUE, type = NULL,
 
 \item{type}{Type of parliament (horseshoe, semicircle,opposing benches)}
 
-\item{colour}{The colour of the majority line. Defaults to grey.}
+\item{linecolour}{The colour of the majority line. Defaults to grey.}
+
+\item{linesize}{The size of the line. Defaults to 1.}
+
+\item{linetype}{The style of the line. Defaults to 2, or a dashed line.}
+
+\item{linealpha}{Set the transparency of the line. Defaults to 1.}
 }
 \description{
-Draw majority line
+Draw majority threshold
 }
 \examples{
-data <- ggparliament::election_data \%>\% filter(year == "2016" & country == "USA" & house == "Representatives")
-usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
-ggplot(usa_data, aes(x, y, color=party_long)) + geom_parliament_seats() + draw_majoritythreshold(n = 316, label = FALSE, colour = "black", type = 'semicircle') + theme_ggparliament()
+\donttest{
+data <- election_data[election_data$country == "USA" & 
+election_data$house == "Representatives" & 
+election_data$year == "2016",]
+usa_data <- parliament_data(election_data = data, 
+type = "semicircle", 
+party_seats = data$seats, 
+parl_rows = 8)
+ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color=party_long)) + 
+geom_parliament_seats() + 
+draw_majoritythreshold(n = 218, 
+label = TRUE, 
+type = 'semicircle') + 
+theme_ggparliament()
+}
 }
 \author{
 Zoe Meers

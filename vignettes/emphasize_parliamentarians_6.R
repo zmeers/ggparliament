@@ -1,0 +1,54 @@
+## ----setup, include=FALSE------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+
+library(ggparliament)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(ggplot2)
+source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
+source("../R/geom_emphasize_parliamentarians.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
+source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
+
+
+
+## ------------------------------------------------------------------------
+# Take preliminary data as provided in ggparliament
+data <- election_data %>% 
+  filter(year == "2016" & country == "USA" & house == "Representatives")
+usa_data <- parliament_data(election_data = data, type = "semicircle", party_seats = data$seats, parl_rows = 8)
+
+# The Center for American Women and Politics provides statistics concerning women in U.S. politics
+# See http://www.cawp.rutgers.edu/women-us-congress-2018 for more information.
+# We create a binary variable -- women are 1, men are 0 -- for each party. Remember, the plot starts from the left hand side and finishes at the right hand side of the legislature. Given that we want to compare the two parties, it makes sense for them to be roughly parallel. 
+women_in_congress <- c(1, 0, 0, 1) 
+# The number of women in US congress - 23 Reps, 61 Dems. The two middle numbers are the remainder (i.e., number of men).
+number_of_women <- c(23, 218, 133, 61)
+# Use rep and mutate to append the binary female variable to the long data set. 
+usa_data <- usa_data %>% mutate(women = rep(women_in_congress, number_of_women))
+# Plot the US congress as normal using geom_parliament_seats
+ggplot(usa_data, aes(x, y, color=party_long)) + 
+    geom_parliament_seats() + 
+    # emphasize the women in each political party -- this must be specified in order for it to work!
+    geom_emphasize_parliamentarians(women == 1) +  
+    draw_majoritythreshold(n = 218, label = FALSE, linecolour = "black", type = 'semicircle') + 
+    draw_partylabels(type = 'semicircle', party_seats = seats, party_names = party_short, party_colours = colour) + 
+    theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none") + 
+    scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long) + 
+    annotate(geom = "text", x = 0, y = 0.2, label = "61 Democrats in Congress\n are women. Only 23\nelected Republicans are women.") + 
+    labs(title = "Women in 115th U.S. Congress") 
+
