@@ -118,7 +118,6 @@ uk<- election_data %>%
   split(.$year) %>%
   map(~parliament_data(election_data = .,
   party_seats = .$seats,
-  parl_rows = 12,
   group = .$government,
   type = "opposing_benches")) %>%
   bind_rows()

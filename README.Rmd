@@ -162,8 +162,7 @@ uk_gov <- ggplot(uk_17, aes(x,
                             y, 
                             colour = party_short)) +
   geom_parliament_seats() + 
-  draw_totalseats(n = 650, type = "opposing_benches") +
-  theme_ggparliament(background_colour = TRUE) + 
+  theme_ggparliament() + 
   coord_flip() + 
   labs(colour = NULL, 
        title = "UK parliament in 2017") +

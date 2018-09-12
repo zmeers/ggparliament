@@ -49,29 +49,29 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
   
   plot_data <- plot$data
   
-  new_data1 <- plot$data %>% 
-    dplyr::mutate(group_no = match(!!object$party, unique(!!object$party))) %>% 
-    dplyr::count(group_no, p = !!object$party, c = !!object$colour) %>% 
-    dplyr::mutate(proportion = n/sum(n)) %>% 
-    dplyr::mutate(proportion1 = proportion * difference) %>% 
-    dplyr::mutate(start = cumsum(proportion1) - x_max) 
-  new_data1$end <- c(x_min, (cumsum(new_data1$proportion1)[-nrow(new_data1)] - x_max))
+  new_dat <- plot$data
+  new_dat <- mutate(new_dat, group_no = match(!!object$party, unique(!!object$party)))
+  new_dat <- count(new_dat, group_no, p = !!object$party, c = !!object$colour)
+  new_dat$proportion <- new_dat$n/sum(new_dat$n)
+  new_dat$proportion1 <- new_dat$proportion * difference
+  new_dat$start = cumsum(new_dat$proportion1 * difference)
+  new_dat$end <- c(x_min, (cumsum(new_dat$proportion1)[-nrow(new_dat)] - x_max))
   
   if(object$label == TRUE){
     plot + 
-      geom_rect(data = new_data1, 
+      geom_rect(data = new_dat, 
                 ggplot2::aes(xmin = start, xmax = end, fill = p, 
                     ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
                 inherit.aes = FALSE, show.legend = FALSE) + 
-      ggrepel::geom_text_repel(ggplot2::aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.55, label = scales::percent(proportion)), vjust = 0, segment.size = 0.02, nudge_y = 0.05, direction = "x", data = new_data1, inherit.aes = FALSE) +
-      ggplot2::scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+      ggrepel::geom_text_repel(ggplot2::aes(x = rowMeans(cbind(start, end)), y = max(plot$data$y)+0.55, label = scales::percent(proportion)), vjust = 0, segment.size = 0.02, nudge_y = 0.05, direction = "x", data = new_dat, inherit.aes = FALSE) +
+      ggplot2::scale_fill_manual(values = new_dat$c, limits = new_dat$p)
   } else{
     plot + 
-      geom_rect(data = new_data1, 
+      geom_rect(data = new_dat, 
                 ggplot2::aes(xmin = start, xmax = end, fill = p, 
                     ymin = max(plot$data$y)+0.2, ymax = max(plot$data$y)+0.5),
                 inherit.aes = FALSE, show.legend = FALSE) +
-      ggplot2::scale_fill_manual(values = new_data1$c, limits = new_data1$p)
+      ggplot2::scale_fill_manual(values = new_dat$c, limits = new_dat$p)
   }
   
 }
