@@ -8,11 +8,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-```{r setup, include = FALSE}
+    
+    ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 
 library(ggparliament)
@@ -34,9 +34,9 @@ load("../R/sysdata.rda")
 
 ## Introduction to `ggparliament`
 
-`ggparliament` is a `ggplot2` extension for creating parliament plots. Although there are many parliament layouts around the world, we cannot create templates for all of them! Instead, we have created templated versions for the five most popular. They are:
-
-- semicircle layouts
+`ggparliament` is a `ggplot2` extension for creating parliament plots. This `R` package allows users to plot different styles of legislatures. They are:
+    
+- semicircle layouts 
 
 - horseshoe parliaments
 
@@ -46,87 +46,93 @@ load("../R/sysdata.rda")
 
 - a circular parliament.
 
-We start with aggregate election returns by party. 
-This package comes with recent election results from the UK, Australia, the United Sates, Russia, and Germany.
+To plot a parliament in `ggparliament`, we start with a data frame containing the number of seats per political party. This package comes with recent election results from the UK, Australia, the United Sates, Russia, and Germany. `election_data` also provides party colour, abbreviated and full versions of the party name, as well as election returns over several election cycles.
 
 ### Semicircle Parliament
 
-If one wanted to plot the 115th Congress in the United States, they can run the following commands:
+To plot a semicircle legislature, run the following commands:
+    
+1. Gather some election results.
 
 ```{r}
 us_rep <- election_data %>%
-  filter(country == "USA" &
-    year == 2016 &
-    house == "Representatives")
+    filter(country == "USA" &
+               year == 2016 &
+               house == "Representatives")
 head(us_rep)
 ```
 
-We need to unravel the results to individual seats. To do this, we run:
+2. Input the data into ggparliament::parliament_data.
+
+This function unravels election results by party to individual seats. Users must define the input data frame, the type of legislature, the number of rows in the legislature, and a numeric variable which expands the number of seats to the total number of members in the legislature.
 
 ```{r}
 us_house_semicircle <- parliament_data(election_data = us_rep,
-  type = "semicircle",
-  parl_rows = 10,
-  party_seats = us_rep$seats)
+                                       type = "semicircle",
+                                       parl_rows = 10,
+                                       party_seats = us_rep$seats)
 head(us_house_semicircle)
 ```
 
-This data frame returns the x and y coordinates of each individual seat for a 10-row semicircle parliament. The user can take this data frame and plot by the x and y coordinates using `geom_parliament_seats()`. See as follows:
+The resulting data frame returns the x and y coordinates of each individual seat for a 10-row semicircle parliament. 
 
-```{r, fig.width=6, fig.height=4}
-us <- ggplot(us_house_semicircle, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() + 
-  theme_ggparliament() +
-  labs(colour = NULL, 
-       title = "United States Congress") +
-  scale_colour_manual(values = us_house_semicircle$colour, 
-                      limits = us_house_semicircle$party_short) 
+3. Plot the data in ggparliament
+
+The user can take this data frame and plot by the x and y coordinates using `geom_parliament_seats()`. 
+    
+    ```{r, fig.width=6, fig.height=4}
+us <- ggplot(us_house_semicircle, aes(x = x, y = y, colour = party_short)) +
+    geom_parliament_seats() + 
+    theme_ggparliament() +
+    labs(colour = NULL, 
+         title = "United States Congress") +
+    scale_colour_manual(values = us_house_semicircle$colour, 
+                        limits = us_house_semicircle$party_short) 
 
 us
 ```
 
-`election_data` also provides party colour, abbreviated and full versions of the party name, as well as data for several election cycles for each country. 
+
+Other parliaments are plotted using the same method. The type of parliament should change - i.e, for a horseshoe parliament, specify horseshoe and so on. There are five types - "semicircle", "horseshoe", "opposing_benches", "classroom" and "circle".
 
 ### Horsehoe Parliament
 
-The process is similar for other layouts -- just remember to change the 'type' paramater in `parliament_data()` !
-
 ```{r}
 australia <- election_data %>%
-  filter(country == "Australia" &
-    house == "Representatives" &
-    year == 2016) 
+    filter(country == "Australia" &
+               house == "Representatives" &
+               year == 2016) 
 
 australia_horseshoe <- parliament_data(election_data = australia,
-  party_seats = australia$seats,
-  parl_rows = 4,
-  type = "horseshoe")
+                                       party_seats = australia$seats,
+                                       parl_rows = 4,
+                                       type = "horseshoe")
 ```
 
 ```{r,fig.width=4, fig.height=4}
 au <- ggplot(australia_horseshoe, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() + 
-  theme_ggparliament() +
-  labs(colour = NULL, 
-       title = "Australian Parliament") +
-  scale_colour_manual(values = australia$colour, 
-                      limits = australia$party_short) + 
-  theme(legend.position = 'bottom')
+    geom_parliament_seats() + 
+    theme_ggparliament() +
+    labs(colour = NULL, 
+         title = "Australian Parliament") +
+    scale_colour_manual(values = australia$colour, 
+                        limits = australia$party_short) + 
+    theme(legend.position = 'bottom')
 
 au
 ```
 
 ### Opposing Benches Parliament
 
-The opposing bench style of parliament calls for a variable to split the left and right side. We split on the government column which is a binary variable.
+The opposing bench style of parliament calls for a variable to split the left and right bench. Using the ggparliament election data, we split on the government column which is a binary variable.
+
 
 ```{r, fig.height=6, fig.width = 6}
 #get the data for the last election
 uk_data <- election_data %>%
   filter(country == "UK") %>%
-  filter(year == 2017) %>%
-  #parl_data it out
-  parliament_data(election_data = .,
+  filter(year == 2017) %>% #parliament_data() can be called in a dplyr chain.
+  parliament_data(election_data = ., 
                   party_seats = .$seats,
                   #need to include grouping for opposing benches by definition
                   group = .$government,
@@ -135,7 +141,7 @@ uk_data <- election_data %>%
 
 #plot it
 uk <- ggplot(uk_data, aes(x, y, colour = party_short)) +
-  scale_colour_manual(values = unique(uk_data$colour)) +
+  scale_colour_manual(values = uk_data$colour, limits = uk_data$party_short) +
   geom_parliament_seats() +
   theme_ggparliament()
 
@@ -174,8 +180,7 @@ rus
 
 ### Circle parliament
 
-We have included the circle parliament as an option although we have yet to find a country that currently uses this parliamentary style!
-To take the Russian data from above, we run:
+There are few national legislative bodies that use a circular parliament. Given that this vignette is primarily to explain how the process works, we are re-using the Russian election returns for this example.
 
 ```{r}
 russia_circle <- election_data %>%
@@ -221,5 +226,26 @@ plot <- ggplot(made_up_layout, aes(x, y, colour = party)) +
     theme(legend.position = "bottom")
 
 plot
+```
+
+You can also create a data frame in `R` and plot your results.
+```{r}
+house_of_reps <- data.frame(
+  party = c("Vacancies","Republicans", "Democrats", "Vacancies"),
+  seats = c(3, 236, 193, 3),
+  color = c("gray", "red", "blue", "gray")
+) 
+house_of_reps <- house_of_reps %>% 
+  mutate(party = as.character(party), color = as.character(color)) %>%
+  parliament_data(election_data = .,
+                            parl_rows = 8,
+                            party_seats = .$seats,
+                            type = 'semicircle')
+ggplot(data = house_of_reps) +
+  geom_parliament_seats(aes(x = x,  y = y, color = party)) +
+  theme_ggparliament() +
+  scale_color_manual(values = house_of_reps$color, 
+                     limits = house_of_reps$party)
+
 ```
 

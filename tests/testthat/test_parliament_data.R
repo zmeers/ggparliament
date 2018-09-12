@@ -12,7 +12,5 @@ test_that("Check that the number of expanded observations is identical to the su
 })
 
 test_that("Check that the resulting output contains 12 headers", {
-  expect_equal(colnames(result), c("year","country","house","party_long","party_short","seats","government","colour","x","y","row","theta"))
+  expect_equal(colnames(result), c("year", "country", "house", "party_long", "party_short", "seats", "government", "colour", "x", "y", "row", "theta"))
 })
-
-

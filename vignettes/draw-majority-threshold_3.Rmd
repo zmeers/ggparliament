@@ -36,8 +36,9 @@ load("../R/sysdata.rda")
 
 ```
 
+Majority thresholds 
 
-To draw the majority threshold on the parliament plot, the user must define the majority threshold number as well as the type of parliament. At the moment, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. By default, it also adds an annotation noting the seats required for a government to form. This can be turned off by writing `label = FALSE`.
+The majority threshold marks the point where one group has half or more than half of the seats in parliament. To draw the majority threshold on a parliament plot, the user should input the number that constitues a majority as well as the type of parliament. The function plots a line through the majority seat. By default, the majority threshold adds an annotation noting the seats required for a government to form. This can be turned off by writing `label = FALSE`.
 
 Some examples are as follows:
 
@@ -82,6 +83,7 @@ uk <- ggplot(uk_data, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = unique(uk_data$colour)) +
   geom_parliament_seats() +
   draw_majoritythreshold(n = 325, type = "opposing_benches") +
+  coord_flip() + 
   theme_ggparliament()
 
 uk
@@ -97,8 +99,6 @@ australia <- election_data %>%
 australia1 <- parliament_data(election_data = australia,
   party_seats = australia$seats,
   parl_rows = 4,
-  #as we want to show the government, plot in order of governing party and by seat number
-  plot_order = australia$government,
   type = "horseshoe")
 
 au <-ggplot(australia1, aes(x, y, colour = party_short)) +

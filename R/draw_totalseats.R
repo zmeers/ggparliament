@@ -5,16 +5,16 @@
 #' @param type Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)
 #' @examples
 #' \donttest{
-#' data <- election_data[election_data$country == "USA" & 
-#' election_data$house == "Representatives" & 
+#' data <- election_data[election_data$country == "USA" &
+#' election_data$house == "Representatives" &
 #' election_data$year == "2016",]
-#' usa_data <- parliament_data(election_data = data, 
-#' type = "semicircle", 
-#' party_seats = data$seats, 
+#' usa_data <- parliament_data(election_data = data,
+#' type = "semicircle",
+#' party_seats = data$seats,
 #' parl_rows = 8)
-#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color=party_long)) + 
-#' geom_parliament_seats() + 
-#' draw_totalseats(n = 435, type = 'semicircle') + 
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color=party_long)) +
+#' geom_parliament_seats() +
+#' draw_totalseats(n = 435, type = 'semicircle') +
 #' theme_ggparliament()
 #' }
 #' @author Zoe Meers
@@ -24,12 +24,13 @@
 draw_totalseats <- function(n = NULL,
                             size = 12,
                             colour = "black",
-                            type = c("horseshoe", 
-                                     "semicircle", 
-                                     "opposing_benches", 
-                                     "circle",
-                                     "classroom")
-                            ) {
+                            type = c(
+                              "horseshoe",
+                              "semicircle",
+                              "opposing_benches",
+                              "circle",
+                              "classroom"
+                            )) {
   structure(
     list(
       n = n,
@@ -42,51 +43,54 @@ draw_totalseats <- function(n = NULL,
 }
 
 ggplot_add.totalLabels <- function(object, plot, object_name) {
-  
+  n <- rlang::enquo(n)
   if (object$type == "horseshoe") {
     plot +
       ggplot2::annotate("text",
-      x = 0, y = 3,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      colour = object$colour
-    )
-  }
-  if (object$type == "classroom" ) {
+        x = 0, y = 3,
+        label = object$n,
+        fontface = "bold",
+        size = object$size,
+        colour = object$colour
+      )
+  } else if (object$type == "classroom") {
     plot +
       ggplot2::annotate("text",
-                        x = max(plot$data$x)/2,
-                        y = max(plot$data$y)+0.2,
-                        label = object$n,
-                        fontface = "bold",
-                        size = object$size,
-                        colour = object$colour
+        x = max(plot$data$x) / 2,
+        y = max(plot$data$y) + 0.2,
+        label = object$n,
+        fontface = "bold",
+        size = object$size,
+        colour = object$colour
       )
-  }
-  if (object$type == "opposing_benches" | object$type == "cirlce" ) {
+  } else if (object$type == "opposing_benches") {
     plot +
       ggplot2::annotate("text",
-                        x = max(plot$data$x)/2,
-                        y = max(plot$data$y)/2,
-                        label = object$n,
-                        fontface = "bold",
-                        size = object$size,
-                        colour = object$colour
+        x = max(plot$data$x) / 2,
+        y = max(plot$data$y) / 2,
+        label = object$n,
+        fontface = "bold",
+        size = object$size,
+        colour = object$colour
+      )
+  } else if (object$type == "semicircle") {
+    plot +
+      ggplot2::annotate("text",
+        x = 0, y = 0.2,
+        label = object$n,
+        fontface = "bold",
+        size = object$size,
+        colour = object$colour
+      )
+  } else {
+    plot +
+      ggplot2::annotate("text",
+        x = max(plot$data$x) / 2,
+        y = max(plot$data$y) / 2,
+        label = object$n,
+        fontface = "bold",
+        size = object$size,
+        colour = object$colour
       )
   }
-  if (object$type == "semicircle") {
-    plot + 
-      ggplot2::annotate("text",
-      x = 0, y = 0.2,
-      label = object$n,
-      fontface = "bold",
-      size = object$size,
-      colour = object$colour
-    )
-  } 
-  
-
-
-  
 }

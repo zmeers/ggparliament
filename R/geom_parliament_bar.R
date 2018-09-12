@@ -4,16 +4,16 @@
 #' @param label If label = TRUE, print the percentage above the bar.
 #' @examples
 #' \donttest{
-#' data <- election_data[election_data$country == "USA" & 
-#' election_data$house == "Representatives" & 
+#' data <- election_data[election_data$country == "USA" &
+#' election_data$house == "Representatives" &
 #' election_data$year == "2016",]
-#' usa_data <- parliament_data(election_data = data, 
-#' type = "semicircle", 
-#' party_seats = data$seats,  
+#' usa_data <- parliament_data(election_data = data,
+#' type = "semicircle",
+#' party_seats = data$seats,
 #' parl_rows = 8)
-#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color = party_long)) + 
-#' geom_parliament_seats() + 
-#' geom_parliament_bar(colour, party_long) + 
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color = party_long)) +
+#' geom_parliament_seats() +
+#' geom_parliament_bar(colour, party_long) +
 #' ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +
 #' theme_ggparliament()
 #' }
@@ -23,32 +23,33 @@
 
 geom_parliament_bar <- function(colour = colour, party = party, label = TRUE) {
   structure(
-    list(colour = enquo(colour),
-         label = label,
-         party  = enquo(party)),
+    list(
+      colour = enquo(colour),
+      label = label,
+      party = enquo(party)
+    ),
     class = "parliamentBar"
   )
 }
 
 ggplot_add.parliamentBar <- function(object, plot, object_name) {
-  
   count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- group_no <- label <- NULL
-  
+
 
   max_y <- max(plot$data$y, na.rm = TRUE)
   min_y <- min(plot$data$y, na.rm = TRUE)
   max_x <- max(plot$data$x, na.rm = TRUE)
   min_x <- min(plot$data$x, na.rm = TRUE)
-  
+
   difference <- max_x - min_x
   y_min <- min_y
   y_max <- max_y
-  
+
   x_max <- max_x
   x_min <- min_x
-  
+
   plot_data <- plot$data
-  
+
   new_dat <- plot$data
   new_dat <- mutate(new_dat, group_no = match(!!object$party, unique(!!object$party)))
   new_dat <- count(new_dat, group_no, p = !!object$party, c = !!object$colour)
@@ -73,5 +74,4 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
                 inherit.aes = FALSE, show.legend = FALSE) +
       ggplot2::scale_fill_manual(values = new_dat$c, limits = new_dat$p)
   }
-  
 }
