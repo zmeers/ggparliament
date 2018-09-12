@@ -201,4 +201,25 @@ russia_circle_example <- ggplot(russia_circle, aes(x, y, colour = party_short)) 
 russia_circle_example
 ```
 
+Though not suggested, data can also be plotted simply from a vector of the parties winning seats as below.
+
+```{r}
+#a made up example of a vector of seats
+seats <- c(rep("democrats", 40), rep("republicans", 30), rep("socialists", 20), rep("nationalists", 10))
+
+made_up_layout <- parliament_data(election_data = NULL,
+    party_seats = as.numeric(table(seats)),
+    parl_rows = 4,
+    type = "semicircle")
+
+made_up_layout$party = seats
+
+plot <- ggplot(made_up_layout, aes(x, y, colour = party)) +
+    geom_parliament_seats() +
+    theme_ggparliament() +
+    labs(colour = NULL) +
+    theme(legend.position = "bottom")
+
+plot
+```
 
