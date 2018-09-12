@@ -189,13 +189,16 @@ russia_circle <- election_data %>%
 ```
 
 ```{r,fig.width=4, fig.height=4}
-example <- ggplot(russia_circle, aes(x, y), colour = "black") +
+russia_circle_example <- ggplot(russia_circle, aes(x, y, colour = party_short)) +
   geom_parliament_seats() +
   theme_ggparliament() +
+  scale_colour_manual(
+    values = russia_circle$colour,
+    limits = russia_circle$party_short) +
   labs(colour = NULL) +
   theme(legend.position = "bottom")
 
-example
+russia_circle_example
 ```
 
 
