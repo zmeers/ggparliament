@@ -121,11 +121,11 @@ parliament_data <- function(election_data = NULL,
   if(!is.null(election_data)) {
     
     if (type != "opposing_benches") {
-      parl_data <- as.data.frame(election_data[rep(row.names(election_data)[order(-party_seats)],party_seats[order(-party_seats)]),])
+      parl_data <- as.data.frame(election_data[rep(row.names(election_data),party_seats),])
       
       if(!is.null(plot_order)) {
         #order the data not by seats- e.g. by government then seats
-        parl_data <- parl_data[order(-rep(plot_order[order(-party_seats)], party_seats[order(-party_seats)])),]
+        parl_data <- parl_data[order(-rep(plot_order, party_seats)),]
       }
       
     } else {
