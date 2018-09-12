@@ -33,15 +33,20 @@ parliament_data <- function(election_data = NULL,
   if (type == "horseshoe") {
     # calculate the layout of the final plot from supplied data
     parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(8, 10))
-    # add in a column for the party names
+    parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-party_seats)]),])
+    parl_layout <- cbind(parl_data, parl_layout)
   }
 
   else if (type == "semicircle") {
     parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2))
+    parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-party_seats)]),])
+    parl_layout <- cbind(parl_data, parl_layout)
   }
 
   else if (type == "circle") {
     parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2), segment = 1)
+    parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-party_seats)]),])
+    parl_layout <- cbind(parl_data, parl_layout)
   }
 
   else if (type == "classroom") {
@@ -59,10 +64,14 @@ parliament_data <- function(election_data = NULL,
         tail(1:max(parl_layout$x), leftovers / 2),
         head(1:max(parl_layout$x), leftovers / 2)
       )), ]
+    
+    parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-party_seats)]),])
+    parl_layout <- cbind(parl_data, parl_layout)
   }
 
   else if (type == "opposing_benches") {
     #get the seats for each group
+    #opposing benches by definition needs grouping for each bench
     gov_seats <- sum(party_seats[which(group == 1)])
     opp_seats <- sum(party_seats[which(group == 0)])
     
@@ -112,19 +121,9 @@ parliament_data <- function(election_data = NULL,
     parl_layout <- cbind(parl_data, parl_layout)
   }
 
-  else if (type == NULL) {
+  else if (is.null(type)) {
     warning("Warning: parliament layout not supported.")
   }
 
-  # bind layout results back to expanded election_data?
-  if (!is.null(election_data) & type != "opposing_benches") {
-    # bind the coordinates to the uncounted original data
-    parl_data <- tidyr::uncount(election_data, party_seats)
-    parl_data <- dplyr::bind_cols(parl_data, parl_layout)
-
-    # otherwise just return the coordinates with the party names attached
-  } else {
-    parl_data <- parl_layout
-  }
-  return(parl_data)
+  return(parl_layout)
 }
