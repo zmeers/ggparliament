@@ -79,9 +79,9 @@ uk_data <- election_data %>%
 
 #plot it
 uk <- ggplot(uk_data, aes(x, y, colour = party_short)) +
-  scale_colour_manual(values = unique(uk_data$colour)) +
+  #scale_colour_manual(values = unique(uk_data$colour)) +
   geom_parliament_seats() +
-  draw_majoritythreshold(n = 325, type = "opposing_benches") +
+  draw_majoritythreshold(n = 649, type = "opposing_benches") +
   theme_ggparliament()
 
 uk
@@ -97,6 +97,8 @@ australia <- election_data %>%
 australia1 <- parliament_data(election_data = australia,
   party_seats = australia$seats,
   parl_rows = 4,
+  #as we want to show the government, plot in order of governing party and by seat number
+  plot_order = australia$government,
   type = "horseshoe")
 
 au <-ggplot(australia1, aes(x, y, colour = party_short)) +

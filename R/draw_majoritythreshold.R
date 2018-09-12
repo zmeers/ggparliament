@@ -50,12 +50,11 @@ draw_majoritythreshold <- function(n = NULL,
 
 
 ggplot_add.majorityLine <- function(object, plot, object_name) {
-  government <- NULL
+  warning("doing stuff")
   new_dat <- plot$data %>%
-    dplyr::filter(government == 1) %>%
     dplyr::filter(dplyr::row_number() == object$n)
   x_pos <- new_dat$x
-  y_pos_oppbenches <- new_dat$y
+  y_pos_oppbenches <- new_dat$y[1]
 
   if (object$type == "semicircle") {
     if (!object$label) {
