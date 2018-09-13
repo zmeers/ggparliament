@@ -17,9 +17,9 @@ knitr::opts_chunk$set(
 
 library(ggparliament)
 library(dplyr)
-library(tidyr)
-library(magrittr)
 library(ggplot2)
+require(tidyr)
+require(magrittr)
 
 source("../R/parliament_data.R")
 source("../R/geom_parliament_seats.R")
@@ -34,7 +34,7 @@ load("../R/sysdata.rda")
 
 ```
 
-`ggparliament` has two functions for adding labels to parliament plots. The first (`draw_partylabels()`) plots the abbreviated name of parties and the total number of seats allocated to the party. The second (`draw_totalseats()`) plots the total number of parliamentarians in the center of the plot.
+`ggparliament` includes two functions for labelling parliament plots. The first, `draw_partylabels()`, plots the abbreviated name of parties and the number of seats allocated to the party. The second function, `draw_totalseats()`, plots the total number of parliamentarians in the center of the graph.
 
 # Drawing party labels
 

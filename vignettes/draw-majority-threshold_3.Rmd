@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 library(ggparliament)
 library(dplyr)
-library(tidyr)
-library(magrittr)
 library(ggplot2)
+require(tidyr)
+require(magrittr)
 
 source("../R/parliament_data.R")
 source("../R/geom_parliament_seats.R")
@@ -36,8 +36,9 @@ load("../R/sysdata.rda")
 
 ```
 
+Majority thresholds 
 
-To draw the majority threshold on the parliament plot, the user must define the majority threshold number as well as the type of parliament. At the moment, we have 'horseshoe', 'semicircle', and 'opposing_benches' as options. The function plots a line through the majority seat from the outtermost row to the inner row. By default, it also adds an annotation noting the seats required for a government to form. This can be turned off by writing `label = FALSE`.
+The majority threshold marks the point where one group has half or more than half of the seats in parliament. To draw the majority threshold on a parliament plot, the user should input the number that constitues a majority as well as the type of parliament. The function plots a line through the majority seat. By default, the majority threshold adds an annotation noting the seats required for a government to form. This can be turned off by writing `label = FALSE`.
 
 Some examples are as follows:
 
@@ -74,15 +75,24 @@ uk_data <- election_data %>%
   parliament_data(election_data = .,
                   party_seats = .$seats,
                   group = .$government,
-                  parl_rows = 12,
+                  parl_rows = NULL,
                   type = "opposing_benches")
+#note that for opposing benches, parliament_data tries to calculate a number of rows per dot
+#that allows clear visualisation of the majority line
+#try to use a number of rows that is an exact divisor of the threshold
+
+colscale = 
 
 #plot it
 uk <- ggplot(uk_data, aes(x, y, colour = party_short)) +
-  scale_colour_manual(values = unique(uk_data$colour)) +
-  geom_parliament_seats() +
+  scale_colour_manual(values = unique(uk_data$colour),
+                      limits = unique(uk_data$party_short),
+                      name = "Party") +
+  geom_parliament_seats(size = 1.5) +
   draw_majoritythreshold(n = 325, type = "opposing_benches") +
-  theme_ggparliament()
+  coord_flip() + 
+  theme_ggparliament() +
+  theme(legend.position = c("bottom"))
 
 uk
 
@@ -123,6 +133,7 @@ germany <- election_data %>%
 germany <- parliament_data(election_data = germany, 
                            parl_rows = 12,
                            party_seats = germany$seats, 
+                           plot_order = germany$government,
                            type = 'semicircle')
 
 german_parliament <- ggplot(germany, aes(x, y, colour = party_short)) +
