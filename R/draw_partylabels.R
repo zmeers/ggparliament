@@ -26,6 +26,7 @@
 #' }
 #' @author Zoe Meers
 #' @export
+#' @importFrom ggplot2 ggplot_add
 
 
 draw_partylabels <- function(type = c("semicircle", "horseshoe"),

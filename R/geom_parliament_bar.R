@@ -19,6 +19,7 @@
 #' }
 #' @author Zoe Meers
 #' @export
+#' @importFrom ggplot2 ggplot_add
 
 
 geom_parliament_bar <- function(colour = colour, party = party, label = TRUE) {

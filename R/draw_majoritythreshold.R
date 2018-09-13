@@ -24,6 +24,7 @@
 #' }
 #' @author Zoe Meers
 #' @export
+#' @importFrom ggplot2 ggplot_add
 
 
 

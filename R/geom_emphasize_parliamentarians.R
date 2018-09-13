@@ -26,6 +26,7 @@
 #' geom_emphasize_parliamentarians(expr)
 #' @author Zoe Meers
 #' @export
+#' @importFrom ggplot2 ggplot_add
 
 geom_emphasize_parliamentarians <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "emphMPs")

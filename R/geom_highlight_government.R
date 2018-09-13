@@ -22,6 +22,8 @@
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/
 #' @export
+#' @importFrom ggplot2 ggplot_add
+
 geom_highlight_government <- function(expr, colour = "black", size = 3, shape = 19, stroke = 1.8) {
   structure(list(
     expr = rlang::enquo(expr),

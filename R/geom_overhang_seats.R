@@ -34,6 +34,7 @@
 #' geom_overhang_seats(expr)
 #' @author Zoe Meers
 #' @export
+#' @importFrom ggplot2 ggplot_add
 
 
 geom_overhang_seats <- function(expr) {
