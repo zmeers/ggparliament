@@ -24,9 +24,9 @@
 geom_parliament_bar <- function(colour = colour, party = party, label = TRUE) {
   structure(
     list(
-      colour = enquo(colour),
+      colour = rlang::enquo(colour),
       label = label,
-      party = enquo(party)
+      party = rlang::enquo(party)
     ),
     class = "parliamentBar"
   )

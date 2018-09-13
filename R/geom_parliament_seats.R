@@ -5,6 +5,7 @@
 #' @param data The parliament_data data frame.
 #' @param stat "identity"
 #' @param position "identity"
+#' @param size Size of the seat
 #' @param na.rm If `FALSE`, the default, missing values are
 #' removed with a warning.
 #' If `TRUE`, missing values are silently removed.
@@ -30,6 +31,7 @@ geom_parliament_seats <- function(mapping = NULL,
                                   stat = "identity",
                                   position = "identity",
                                   na.rm = FALSE,
+                                  size = 3.5,
                                   show.legend = NA,
                                   inherit.aes = TRUE) {
   layer(
@@ -41,7 +43,8 @@ geom_parliament_seats <- function(mapping = NULL,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
-      na.rm = na.rm
+      na.rm = na.rm,
+      size = size
     )
   )
 }
@@ -61,7 +64,7 @@ GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
     size = 3,
     fill = NA,
     alpha = NA,
-    stroke = 1
+    stroke = 1.5
   ),
 
   draw_panel = function(data, panel_params, coord, na.rm = FALSE) {

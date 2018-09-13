@@ -185,8 +185,8 @@ australia <- election_data %>%
 
 ```r
 au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() + 
-  geom_highlight_government(government == 1, colour = "pink") + 
+  geom_parliament_seats(size = 3.5) + 
+  geom_highlight_government(government == 1, colour = "pink", size = 5) + 
   draw_majoritythreshold(n = 76, 
                          label = TRUE, 
                          linesize = 0.5,

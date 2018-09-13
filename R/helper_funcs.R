@@ -1,7 +1,3 @@
-## Functions to create parliaments for ggparliament
-## Zoe Meers and Rob Hickman
-##
-
 #' A function that calculates the coordinates of parliamentary seats in incomplete circular parliaments
 #' E.g. The US (semicircle) and Australian (horsehoe) shaped parliaments
 #' @param N the total of number of seats

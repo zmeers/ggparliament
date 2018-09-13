@@ -25,6 +25,7 @@ Suggests:
     scales
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+Encoding: UTF-8
 Collate:
     'ggparliament_package.R'
     'data.R'
