@@ -52,7 +52,8 @@ draw_majoritythreshold <- function(n = NULL,
 #calculate the positions of the thresholds
 #' @export
 ggplot_add.majorityLine <- function(object, plot, object_name) {
-  new_dat <- filter(plot$data, dplyr::row_number() == object$n)
+  filter <- group_by <- NULL
+  new_dat <- dplyr::filter(plot$data, dplyr::row_number() == object$n)
   x_pos <- new_dat$x
   y_pos_oppbenches <- new_dat$y[1]
 
