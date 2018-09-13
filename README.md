@@ -63,9 +63,7 @@ us_senate <- parliament_data(
 
 
 ```r
-ggplot(us_house, aes(x, 
-                         y, 
-                         colour = party_short)) +
+representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   #highlight the party in control of the House with a black line
   geom_highlight_government(government == 1) +
@@ -79,6 +77,8 @@ ggplot(us_house, aes(x,
        subtitle = "Party that controls the House highlighted.") +
   scale_colour_manual(values = us_house$colour, 
                       limits = us_house$party_short) 
+
+representatives
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
@@ -87,9 +87,7 @@ ggplot(us_house, aes(x,
 
 
 ```r
-senate <- ggplot(us_senate, aes(x, 
-                                y, 
-                                colour = party_long)) +
+senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
   # add bar showing proportion of seats by party in legislature
@@ -119,9 +117,7 @@ germany <- parliament_data(election_data = germany,
                            type = 'semicircle',
                            party_seats = germany$seats)
 
-ggplot(germany, aes(x,
-                    y,
-                    colour = party_short)) +
+bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
   geom_parliament_seats() +
   geom_highlight_government(government == 1) + 
   labs(colour="Party",
@@ -129,6 +125,8 @@ ggplot(germany, aes(x,
   theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
+
+bundestag
 ```
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
@@ -150,19 +148,16 @@ uk_17 <- election_data %>%
                   group = .$government)
 
 
-uk_gov <- ggplot(uk_17, aes(x, 
-                            y, 
-                            colour = party_short)) +
+commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
-  draw_totalseats(n = 650, type = "opposing_benches") +
-  theme_ggparliament(background_colour = TRUE) + 
+  theme_ggparliament() + 
   coord_flip() + 
   labs(colour = NULL, 
        title = "UK parliament in 2017") +
   scale_colour_manual(values = uk_17$colour, 
                       limits = uk_17$party_short)
 
-uk_gov
+commons
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
@@ -189,9 +184,7 @@ australia <- election_data %>%
 
 
 ```r
-au <-ggplot(australia, aes(x, 
-                            y, 
-                            colour = party_short)) +
+au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1, colour = "pink") + 
   draw_majoritythreshold(n = 76, 
@@ -205,7 +198,8 @@ au <-ggplot(australia, aes(x,
        subtitle = "Government circled in pink.") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) 
-au
+
+au_rep
 ```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)

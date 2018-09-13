@@ -36,27 +36,22 @@ ggplot_add.parliamentBar <- function(object, plot, object_name) {
   count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- group_no <- label <- NULL
 
 
-  max_y <- max(plot$data$y, na.rm = TRUE)
-  min_y <- min(plot$data$y, na.rm = TRUE)
-  max_x <- max(plot$data$x, na.rm = TRUE)
-  min_x <- min(plot$data$x, na.rm = TRUE)
+  y_min <- min(plot$data$y, na.rm = TRUE)
+  y_max <- max(plot$data$y, na.rm = TRUE)
 
-  difference <- max_x - min_x
-  y_min <- min_y
-  y_max <- max_y
-
-  x_max <- max_x
-  x_min <- min_x
-
-  plot_data <- plot$data
-
+  x_max <- max(plot$data$x, na.rm = TRUE)
+  x_min <- min(plot$data$x, na.rm = TRUE)
+  
+  difference <- x_max - x_min 
+  
   new_dat <- plot$data
   new_dat <- mutate(new_dat, group_no = match(!!object$party, unique(!!object$party)))
   new_dat <- count(new_dat, group_no, p = !!object$party, c = !!object$colour)
   new_dat$proportion <- new_dat$n/sum(new_dat$n)
   new_dat$proportion1 <- new_dat$proportion * difference
-  new_dat$start = cumsum(new_dat$proportion1 * difference)
+  new_dat$start = cumsum(new_dat$proportion1) - x_max
   new_dat$end <- c(x_min, (cumsum(new_dat$proportion1)[-nrow(new_dat)] - x_max))
+
   
   if(object$label == TRUE){
     plot + 
