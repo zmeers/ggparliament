@@ -33,7 +33,7 @@ geom_emphasize_parliamentarians <- function(expr) {
 }
 
 
-
+#' @export
 ggplot_add.emphMPs <- function(object, plot, object_name) {
   new_data <- dplyr::filter(plot$data, !(!!object$expr))
   new_layer <- ggplot2::geom_point(

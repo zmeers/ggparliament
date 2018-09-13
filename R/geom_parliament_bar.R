@@ -33,6 +33,7 @@ geom_parliament_bar <- function(colour = colour, party = party, label = TRUE) {
   )
 }
 
+#' @export
 ggplot_add.parliamentBar <- function(object, plot, object_name) {
   count <- mutate <- n <- proportion <- proportion1 <- start <- end <- p <- group_no <- label <- NULL
 

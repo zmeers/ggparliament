@@ -42,7 +42,7 @@ draw_totalseats <- function(n = NULL,
     class = "totalLabels"
   )
 }
-
+#' @export
 ggplot_add.totalLabels <- function(object, plot, object_name) {
   n <- rlang::enquo(n)
   if (object$type == "horseshoe") {

@@ -41,6 +41,7 @@ geom_overhang_seats <- function(expr) {
   structure(list(expr = rlang::enquo(expr)), class = "hangingseats")
 }
 
+#' @export
 ggplot_add.hangingseats <- function(object, plot, object_name) {
   new_data <- dplyr::filter(plot$data, !!object$expr)
   new_layer <- ggplot2::geom_point(

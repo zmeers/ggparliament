@@ -48,6 +48,7 @@ draw_partylabels <- function(type = c("semicircle", "horseshoe"),
   )
 }
 
+#' @export
 ggplot_add.partyLabels <- function(object, plot, object_name) {
   x <- y <- NULL
 
