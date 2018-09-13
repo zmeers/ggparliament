@@ -4,8 +4,8 @@
 #' as well as the colour of each political party).
 #' @param data The parliament_data data frame.
 #' @param stat "identity"
+#' @param size Size of the point
 #' @param position "identity"
-#' @param size Size of the seat
 #' @param na.rm If `FALSE`, the default, missing values are
 #' removed with a warning.
 #' If `TRUE`, missing values are silently removed.
@@ -56,33 +56,33 @@ geom_parliament_seats <- function(mapping = NULL,
 #' @usage NULL
 #' @export
 GeomParliamentSeats <- ggplot2::ggproto("GeomParliamentSeats", ggplot2::Geom,
-  required_aes = c("x", "y", "colour"),
-  non_missing_aes = c("size", "shape"),
-  default_aes = ggplot2::aes(
-    shape = 19,
-    colour = "black",
-    size = 3,
-    fill = NA,
-    alpha = NA,
-    stroke = 1.5
-  ),
-
-  draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
-    coords <- coord$transform(data, panel_params)
-    ggplot2:::ggname(
-      "geom_parliament_seats",
-      grid::pointsGrob(
-        coords$x, coords$y,
-        pch = coords$shape,
-        gp = grid::gpar(
-          col = alpha(coords$colour, coords$alpha),
-          fill = alpha(coords$fill, coords$alpha),
-          fontsize = coords$size * ggplot2::.pt + coords$stroke * .stroke,
-          lwd = coords$stroke * .stroke
-        )
-      )
-    )
-  },
-
-  draw_key = ggplot2::draw_key_point
+                                        required_aes = c("x", "y", "colour"),
+                                        non_missing_aes = c("shape", "size"),
+                                        default_aes = ggplot2::aes(
+                                          shape = 19,
+                                          colour = "black",
+                                          size = 3.5,
+                                          fill = NA,
+                                          alpha = NA,
+                                          stroke = 1
+                                        ),
+                                        
+                                        draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
+                                          coords <- coord$transform(data, panel_params)
+                                          ggplot2:::ggname(
+                                            "geom_parliament_seats",
+                                            grid::pointsGrob(
+                                              coords$x, coords$y,
+                                              pch = coords$shape,
+                                              gp = grid::gpar(
+                                                col = alpha(coords$colour, coords$alpha),
+                                                fill = alpha(coords$fill, coords$alpha),
+                                                fontsize = coords$size * ggplot2::.pt + coords$stroke * .stroke,
+                                                lwd = coords$stroke * .stroke
+                                              )
+                                            )
+                                          )
+                                        },
+                                        
+                                        draw_key = ggplot2::draw_key_point
 )

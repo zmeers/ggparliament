@@ -6,7 +6,7 @@
 The parliament seats geom is used for plotting data from parliament_data()}
 \usage{
 geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, show.legend = NA,
+  position = "identity", na.rm = FALSE, size = 3.5, show.legend = NA,
   inherit.aes = TRUE)
 }
 \arguments{
@@ -22,6 +22,8 @@ as well as the colour of each political party).}
 \item{na.rm}{If `FALSE`, the default, missing values are
 removed with a warning.
 If `TRUE`, missing values are silently removed.}
+
+\item{size}{Size of the point}
 
 \item{show.legend}{If `TRUE`, print legend.
 If `FALSE` do not print legend.}

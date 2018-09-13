@@ -118,7 +118,7 @@ germany <- parliament_data(election_data = germany,
                            party_seats = germany$seats)
 
 bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() +
+  geom_parliament_seats(size = 3) +
   geom_highlight_government(government == 1) + 
   labs(colour="Party",
        subtitle = "Government circled in black.") +  
@@ -149,7 +149,7 @@ uk_17 <- election_data %>%
 
 
 commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() + 
+  geom_parliament_seats(size = 3) + 
   theme_ggparliament() + 
   coord_flip() + 
   labs(colour = NULL, 
@@ -186,7 +186,7 @@ australia <- election_data %>%
 ```r
 au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 3.5) + 
-  geom_highlight_government(government == 1, colour = "pink", size = 5) + 
+  geom_highlight_government(government == 1, colour = "pink", size = 4) + 
   draw_majoritythreshold(n = 76, 
                          label = TRUE, 
                          linesize = 0.5,
