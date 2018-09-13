@@ -75,16 +75,24 @@ uk_data <- election_data %>%
   parliament_data(election_data = .,
                   party_seats = .$seats,
                   group = .$government,
-                  parl_rows = 12,
+                  parl_rows = NULL,
                   type = "opposing_benches")
+#note that for opposing benches, parliament_data tries to calculate a number of rows per dot
+#that allows clear visualisation of the majority line
+#try to use a number of rows that is an exact divisor of the threshold
+
+colscale = 
 
 #plot it
 uk <- ggplot(uk_data, aes(x, y, colour = party_short)) +
-  scale_colour_manual(values = unique(uk_data$colour)) +
-  geom_parliament_seats() +
+  scale_colour_manual(values = unique(uk_data$colour),
+                      limits = unique(uk_data$party_short),
+                      name = "Party") +
+  geom_parliament_seats(size = 1.5) +
   draw_majoritythreshold(n = 325, type = "opposing_benches") +
   coord_flip() + 
-  theme_ggparliament()
+  theme_ggparliament() +
+  theme(legend.position = c("bottom"))
 
 uk
 

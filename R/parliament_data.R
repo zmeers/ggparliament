@@ -71,15 +71,19 @@ parliament_data <- function(election_data = NULL,
     bench_seats <- c(gov_seats, opp_seats)
 
     threshold <- ceiling(sum(gov_seats, opp_seats) / 2)
-
-    # if there is a nice divisor for the majority threshold use this
-    # else use 12
-    nrows <- which(threshold %% seq_len(threshold) == 0)
-
-    if (any(nrows > 10 & nrows < 15)) {
-      nrows <- nrows[first(which(nrows > 10))]
+    
+    if(!is.null(parl_rows)) {
+      nrows <- parl_rows
     } else {
-      nrows <- 12
+      # if there is a nice divisor for the majority threshold use this
+      # else use 12
+      nrows <- which(threshold %% seq_len(threshold) == 0)
+      
+      if (any(nrows > 10 & nrows < 15)) {
+        nrows <- nrows[first(which(nrows > 10))]
+      } else {
+        nrows <- 12
+      }
     }
 
     # lapply expanding the group

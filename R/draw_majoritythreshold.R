@@ -88,7 +88,7 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
             ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x) / 2),
               colour = object$linecolour, size = object$linesize, linetype = object$linetype, alpha = object$linealpha
             ) +
-            ggplot2::annotate("text", x = max(plot$data$x) / 1.9, y = y_pos_oppbenches - 0.5, label = paste0(object$n, " seats needed\nfor a majority."))
+            ggplot2::annotate("text", x = max(plot$data$x) / 1.9, y = y_pos_oppbenches - (y_pos_oppbenches/15), label = paste0(object$n, " seats needed\nfor a majority."))
         }
       } else {
         warning("Warning: parliament layout not supported.")

@@ -130,7 +130,7 @@ ggplot(data = uk,
        aes(x = x,
            y = y,
            color = party_long)) +
-  geom_parliament_seats() +  
+  geom_parliament_seats(size = 1.5) +  
   coord_flip() + 
   facet_wrap(~year, ncol = 2) + 
   scale_color_manual(values = uk$colour, 
