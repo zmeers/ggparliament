@@ -37,7 +37,7 @@ If you have any issues, please note the problem and inform us!
 
 
 
-```{r}
+```r
 #filter the election data for the most recent US House of Representatives
 us_house <- election_data %>%
   filter(country == "USA" &
@@ -59,7 +59,10 @@ us_senate <- parliament_data(
   type = "semicircle",
   parl_rows = 4,
   party_seats = us_senate$seats)
+```
 
+
+```r
 representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   #highlight the party in control of the House with a black line
@@ -75,6 +78,15 @@ representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
   scale_colour_manual(values = us_house$colour, 
                       limits = us_house$party_short) 
 
+representatives
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+
+### Plot of US Senate
+
+
+```r
 senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
@@ -86,11 +98,10 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
        subtitle = "The party that has control of the Senate is encircled in black.") +
   scale_colour_manual(values = us_senate$colour,
                       limits = us_senate$party_long)
-
+senate 
 ```
-![us_rep](figure/ur_rep.png)
 
-![us_senate](figure/senate.png)
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 
 ### Plot of German Bundestag
@@ -114,11 +125,15 @@ bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
   theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
+
+bundestag
 ```
 
-![german_bundestag](figure/bundestag.png)
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
 ## Opposing Benches Parliament
+
+
 
 ### United Kingdom
 
@@ -143,9 +158,11 @@ commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
        title = "UK parliament in 2017") +
   scale_colour_manual(values = uk_17$colour, 
                       limits = uk_17$party_short)
+
+commons
 ```
 
-![uk_commons](figure/commons.png)
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 
 
@@ -183,9 +200,11 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
        subtitle = "Government circled in pink.") +
   scale_colour_manual(values = australia$colour, 
                       limits = australia$party_short) 
+
+au_rep
 ```
 
-![australia_representatives](figure/au_rep.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 
 
