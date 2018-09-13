@@ -1,14 +1,9 @@
-language: r
-sudo: required
-warnings_are_errors: true
+{
+  "os": "linux",
+  "dist": "trusty",
+  "sudo": false,
+  "cache": "packages",
+  "group": "stable",
+  "language": "r"
+}
 
-r_packages:
- - ggplot2
- - devtools
- - RcppArmadillo
- - knitr
- - gridExtra
- - grid
-
-r_build_args: "--no-build-vignettes"
-r_check_args: "--no-build-vignettes --as-cran"
