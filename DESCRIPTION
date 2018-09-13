@@ -17,6 +17,8 @@ Imports:
     dplyr,
     rlang
 Suggests:
+    tidyr,
+    magrittr,
     knitr,
     testthat,
     rmarkdown,
