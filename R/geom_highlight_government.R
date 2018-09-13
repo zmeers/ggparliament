@@ -34,6 +34,8 @@ geom_highlight_government <- function(expr, colour = "black", size = 3, shape = 
   ), class = "highlight")
 }
 
+
+#' @export
 ggplot_add.highlight <- function(object, plot, object_name) {
   new_data <- dplyr::filter(plot$data, !!object$expr)
   new_layer <- ggplot2::geom_point(
