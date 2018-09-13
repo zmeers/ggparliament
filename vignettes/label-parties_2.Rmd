@@ -17,9 +17,9 @@ knitr::opts_chunk$set(
 
 library(ggparliament)
 library(dplyr)
-library(tidyr)
-library(magrittr)
 library(ggplot2)
+require(tidyr)
+require(magrittr)
 
 source("../R/parliament_data.R")
 source("../R/geom_parliament_seats.R")
