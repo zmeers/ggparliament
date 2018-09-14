@@ -11,7 +11,7 @@ pagetitle: README
 
 
 
-# ggparliament <img src = "figure/HexSticker.png" align = "right" width = "200"/>
+# ggparliament <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # Parliament plots
 
@@ -85,7 +85,7 @@ representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
 representatives
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](man/figures/unnamed-chunk-4-1.png)
 
 ### Plot of US Senate
 
@@ -105,7 +105,7 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
 senate 
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](man/figures/unnamed-chunk-5-1.png)
 
 
 ### Plot of German Bundestag
@@ -133,7 +133,7 @@ bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
 bundestag
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-6](man/figures/unnamed-chunk-6-1.png)
 
 ## Opposing Benches Parliament
 
@@ -166,7 +166,7 @@ commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
 commons
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-7](man/figures/unnamed-chunk-7-1.png)
 
 
 
@@ -208,7 +208,7 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-9](man/figures/unnamed-chunk-9-1.png)
 
 
 
