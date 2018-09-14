@@ -1,5 +1,5 @@
 #' A function that calculates the coordinates of parliamentary seats in incomplete circular parliaments
-#' E.g. The US (semicircle) and Australian (horsehoe) shaped parliaments
+#' E.g. The US (semicircle) and Australian (horseshoe) shaped parliaments
 #' @param N the total of number of seats
 #' @param M the number of rows in parliament
 #' @param limits the limits to seq the radii between- controls the 'shape' of the parliament
