@@ -55,7 +55,7 @@ ggplot_add.partyLabels <- function(object, plot, object_name) {
   #calculate the positions of the labels
   filt_data <- dplyr::filter(plot$data, row == max(row))
   group_data <- dplyr::group_by(filt_data, pn = !!object$party_names, ps = !!object$party_seats, pc = !!object$party_colours)
-  new_dat <- summarise(group_data, mean_x = mean(x), mean_y = mean(y))
+  new_dat <- dplyr::summarise(group_data, mean_x = mean(x), mean_y = mean(y))
 
   pos_movement_horseshoe <- c(new_dat$mean_x + 2)
   pos_movement_semicircle <- c(new_dat$mean_x + 0.8)
