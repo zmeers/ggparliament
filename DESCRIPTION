@@ -11,8 +11,6 @@ URL: https://github.com/robwhickman/ggparliament
 BugReports: https://github.com/robwhickman/ggparliament/issues
 LazyData: true
 Imports:
-    stats,
-    utils,
     ggplot2,
     dplyr,
     rlang
