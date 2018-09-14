@@ -3,7 +3,7 @@
 \name{calc_coordinates}
 \alias{calc_coordinates}
 \title{A function that calculates the coordinates of parliamentary seats in incomplete circular parliaments
-E.g. The US (semicircle) and Australian (horsehoe) shaped parliaments}
+E.g. The US (semicircle) and Australian (horseshoe) shaped parliaments}
 \usage{
 calc_coordinates(N, M, limits, segment = 0.5)
 }
@@ -18,7 +18,7 @@ calc_coordinates(N, M, limits, segment = 0.5)
 }
 \description{
 A function that calculates the coordinates of parliamentary seats in incomplete circular parliaments
-E.g. The US (semicircle) and Australian (horsehoe) shaped parliaments
+E.g. The US (semicircle) and Australian (horseshoe) shaped parliaments
 }
 \author{
 Zoe Meers, Rob Hickman
