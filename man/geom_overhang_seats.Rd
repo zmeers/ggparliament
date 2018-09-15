@@ -37,7 +37,7 @@ c(16, 295, 11, 182, 3, 61, 3, 60))
 ggplot2::ggplot(german_data, ggplot2::aes(x,y,colour = party_short)) +
  geom_parliament_seats() +
  geom_overhang_seats(overhang_seats == 1) +
- theme_ggparliament +
+ theme_ggparliament() +
  ggplot2::scale_color_manual(values = as.character(german_data$color),
  limits = as.character(german_data$party))
  }
