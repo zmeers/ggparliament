@@ -42,9 +42,10 @@ draw_totalseats <- function(n = NULL,
     class = "totalLabels"
   )
 }
+
 #' @export
 ggplot_add.totalLabels <- function(object, plot, object_name) {
-  n <- rlang::enquo(n)
+  #n <- rlang::enquo(object$n)
   if (object$type == "horseshoe") {
     plot +
       ggplot2::annotate("text",
