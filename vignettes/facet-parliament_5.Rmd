@@ -44,7 +44,7 @@ To facet your parliament plot, use the split-apply-combine strategy in a `dplyr`
 You must:
 
 1) split by year
-2) apply the coordinates for each party in parl_data
+2) apply the coordinates for each party in parliament_data
 3) combine the rows into one large data frame.
 
 This can be done using map from `purrr`.

@@ -38,7 +38,7 @@ load("../R/sysdata.rda")
 
 ## What are "overhang seats" and why do they matter?
 
-Various democratic countries use different processes to elect politicians. A few places use Mixed-member proportional (MMP) representation (Germany, New Zealand, Lesotho and Bolivia). In a MMP electoral system, voters have two votes: one for a representative for their electoral consituency and the other for a nation-wide political party. Seats are filled first by the constituency votes and then by political party. A party wins a certain number of seats based on the total vote percentage (a combination of both constituenct votes and party votes). Sometimes a party does not win the number of constituencies needed to fill the total number of seats (i.e., they win 6 seats in total but are only elected to 4 constituencies). The remaining seats are known as **overhang seats**. 
+Various democratic countries use different processes to elect politicians. A few places use Mixed-member proportional (MMP) representation (Germany, New Zealand, Lesotho and Bolivia). In a MMP electoral system, voters have two votes: one for a representative for their electoral constituency and the other for a nation-wide political party. Seats are filled first by the constituency votes and then by political party. A party wins a certain number of seats based on the total vote percentage (a combination of both constituency votes and party votes). Sometimes a party does not win the number of constituencies needed to fill the total number of seats (i.e., they win 6 seats in total but are only elected to 4 constituencies). The remaining seats are known as **overhang seats**. 
 
 
 ## Germany 2013 election

@@ -30,7 +30,8 @@ source("../R/draw_totalseats.R")
 source("../R/theme_ggparliament.R")
 load("../R/sysdata.rda")
 ```
-## Improving Information Converyance via Plot Order
+
+## Improving Plot Information via Plot Order
 The provided example data for elections is in order of country, year, winning power, and then seats. However, this need not be so. It's easy to imagine downloading data in (e.g.) alphabetical order
 ```{r}
 unformatted_data <- election_data %>%
