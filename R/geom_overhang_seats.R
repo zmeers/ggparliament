@@ -1,5 +1,5 @@
 
-#' Draw overhang seats in MMP electoral systems
+#' Draw overhang seats in mixed-member proportional (MMP) electoral systems
 #' @param expr Expr refers to the designated overhang seats.
 #' @examples
 #' \donttest{
