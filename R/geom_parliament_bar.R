@@ -10,7 +10,7 @@
 #' type = "semicircle",
 #' party_seats = data$seats,
 #' parl_rows = 8)
-#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color = party_long)) +
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, colour = party_long)) +
 #' geom_parliament_seats() +
 #' geom_parliament_bar(colour, party_long) +
 #' ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +

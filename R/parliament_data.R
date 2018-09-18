@@ -7,13 +7,16 @@
 #' @param type type of parliament (horseshoe, semicircle, circle, classroom, opposing benches)
 #'
 #' @examples
-#' data <- election_data[election_data$country == "USA" &
-#' election_data$house == "Representatives" &
-#' election_data$year == "2016",]
-#' usa_data <- parliament_data(election_data = data,
-#' type = "semicircle",
-#' party_seats = data$seats,
-#' parl_rows = 8)
+#' data <- election_data[
+#'   election_data$country == "USA" &
+#'   election_data$house == "Representatives" &
+#'   election_data$year == "2016",]
+#' usa_data <- parliament_data(
+#'   election_data = data,
+#'   type = "semicircle",
+#'   party_seats = data$seats,
+#'   parl_rows = 8
+#' )
 #' @author
 #' Zoe Meers, Rob Hickman
 #' @export

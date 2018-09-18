@@ -1,7 +1,7 @@
 #' Draw total number of seats in the middle of the parliament
 #' @param n  The number of total seats in the legislature.
 #' @param size Size of font
-#' @param color color of label
+#' @param colour colour of label
 #' @param type Type of parliament (horseshoe, semicircle, circle, opposing benches, classroom)
 #' @examples
 #' data <- election_data[
@@ -15,7 +15,7 @@
 #'   party_seats = data$seats,
 #'   parl_rows = 8
 #' )
-#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, color = party_long)) +
+#' ggplot2::ggplot(usa_data, ggplot2::aes(x, y, colour = party_long)) +
 #'   geom_parliament_seats() +
 #'   draw_totalseats(n = 435, type = 'semicircle') +
 #'   theme_ggparliament()
@@ -26,7 +26,7 @@
 
 draw_totalseats <- function(n = NULL,
                             size = 12,
-                            color = "black",
+                            colour = "black",
                             type = c(
                               "horseshoe",
                               "semicircle",
@@ -39,7 +39,7 @@ draw_totalseats <- function(n = NULL,
       n = n,
       size = size,
       type = type,
-      color = color
+      colour = colour
     ),
     class = "totalLabels"
   )
@@ -55,7 +55,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
         label = object$n,
         fontface = "bold",
         size = object$size,
-        color = object$color
+        colour = object$colour
       )
   } else if (object$type == "classroom") {
     plot +
@@ -65,7 +65,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
         label = object$n,
         fontface = "bold",
         size = object$size,
-        color = object$color
+        colour = object$colour
       )
   } else if (object$type == "opposing_benches") {
     plot +
@@ -75,7 +75,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
         label = object$n,
         fontface = "bold",
         size = object$size,
-        color = object$color
+        colour = object$colour
       )
   } else if (object$type == "semicircle") {
     plot +
@@ -84,7 +84,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
         label = object$n,
         fontface = "bold",
         size = object$size,
-        color = object$color
+        colour = object$colour
       )
   } else {
     plot +
@@ -94,7 +94,7 @@ ggplot_add.totalLabels <- function(object, plot, object_name) {
         label = object$n,
         fontface = "bold",
         size = object$size,
-        color = object$color
+        colour = object$colour
       )
   }
 }
