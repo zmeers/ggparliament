@@ -1,4 +1,4 @@
-#' Emphasize certain parliamentarians (for example, female MPs) by increasing transparency on the remaining observations.
+#' Emphasize certain parliamentarians (for example, female members of parliament) by increasing transparency on the remaining observations.
 #' @param expr The observation that you wish to emphasize
 #' @examples
 #' data <- election_data[election_data$country == "USA"
