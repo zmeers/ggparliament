@@ -5,7 +5,6 @@
 #' @param shape Shape of highlight
 #' @param stroke Size of stroke shape
 #' @examples
-#' \donttest{
 #' data <- election_data[election_data$country == "USA" &
 #' election_data$house == "Representatives" &
 #' election_data$year == "2016",]
@@ -17,7 +16,6 @@
 #' geom_parliament_seats() +
 #' geom_highlight_government(government == 1) +
 #' theme_ggparliament()
-#' }
 #' @usage geom_highlight_government(expr, colour, size, shape, stroke)
 #' @author Zoe Meers
 #' @source https://yutani.rbind.io/post/2017-11-07-ggplot-add/

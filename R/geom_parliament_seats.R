@@ -13,7 +13,6 @@
 #' If `FALSE` do not print legend.
 #' @param inherit.aes Inherit aes from other ggplot2 functions.
 #' @examples
-#' \donttest{
 #' data <- election_data[election_data$country == "USA" &
 #' election_data$house == "Representatives" &
 #' election_data$year == "2016",]
@@ -23,7 +22,6 @@
 #' ggplot2::ggplot(usa_data, ggplot2::aes(x = x, y = y, color = party_long)) +
 #' geom_parliament_seats() +
 #' theme_ggparliament()
-#' }
 #' @author Zoe Meers
 #' @export
 geom_parliament_seats <- function(mapping = NULL,

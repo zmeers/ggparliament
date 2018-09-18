@@ -7,7 +7,6 @@
 #' @param linetype The style of the line. Defaults to 2, or a dashed line.
 #' @param linealpha Set the transparency of the line. Defaults to 1.
 #' @examples
-#' \donttest{
 #' data <- election_data[
 #'   election_data$country == "USA" &
 #'   election_data$house == "Representatives" &
@@ -27,7 +26,6 @@
 #'     type = 'semicircle'
 #'   ) +
 #'   theme_ggparliament()
-#' }
 #' @author Zoe Meers
 #' @export
 #' @importFrom ggplot2 ggplot_add

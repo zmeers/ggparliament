@@ -3,7 +3,6 @@
 #' @param colour The colours associated with each political party.
 #' @param label If label = TRUE, print the percentage above the bar.
 #' @examples
-#' \donttest{
 #' data <- election_data[election_data$country == "USA" &
 #' election_data$house == "Representatives" &
 #' election_data$year == "2016",]
@@ -16,7 +15,6 @@
 #' geom_parliament_bar(colour, party_long) +
 #' ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long)  +
 #' theme_ggparliament()
-#' }
 #' @author Zoe Meers
 #' @export
 #' @importFrom ggplot2 ggplot_add

@@ -2,7 +2,6 @@
 #' Draw overhang seats in mixed-member proportional (MMP) electoral systems
 #' @param expr Expr refers to the designated overhang seats.
 #' @examples
-#' \donttest{
 #' germany <- data.frame(
 #'    year = 2013,
 #'    seats = c(64, 63, 311, 193),
@@ -29,7 +28,6 @@
 #'  theme_ggparliament() +
 #'  ggplot2::scale_color_manual(values = as.character(german_data$color),
 #'  limits = as.character(german_data$party))
-#'  }
 #' @usage
 #' geom_overhang_seats(expr)
 #' @author Zoe Meers

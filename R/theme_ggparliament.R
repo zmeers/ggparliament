@@ -7,7 +7,6 @@
 #' @param background_colour If background colour = `TRUE`, fill panel with a grey background. Defaults to `FALSE`.
 #' @param border If `TRUE` add panel border. Defaults to `FALSE`.
 #' @examples
-#' \donttest{
 #' data <- election_data[election_data$country == "USA"
 #' & election_data$house == "Representatives"
 #' & election_data$year == "2016",]
@@ -19,7 +18,6 @@
 #' geom_parliament_seats() +
 #' geom_highlight_government(government == 1) +
 #' theme_ggparliament(legend = TRUE, background_colour = TRUE, border = TRUE)
-#' }
 #' @author Zoe Meers
 #' @export
 

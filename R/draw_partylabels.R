@@ -6,7 +6,6 @@
 #' @param seats If TRUE, finds party seats from data. Defaults to TRUE.
 #' @param type Define type. Currently only supports semicircle and horseshoe style parliaments.
 #' @examples
-#' \donttest{
 #' data <- election_data[
 #'   election_data$country == "USA" &
 #'   election_data$house == "Representatives" &
@@ -30,7 +29,6 @@
 #'     values = usa_data$color,
 #'     limits = usa_data$party_long)  +
 #'   theme_ggparliament()
-#' }
 #' @author Zoe Meers
 #' @export
 #' @importFrom ggplot2 ggplot_add
