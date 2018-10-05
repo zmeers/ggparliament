@@ -8,6 +8,8 @@ pagetitle: README
 
 ### Status
 [![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
+[![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
 
 
 
