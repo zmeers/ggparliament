@@ -8,7 +8,11 @@ pagetitle: README
 
 
 
-[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.svg?branch=final_presubmission_cleaning)](https://travis-ci.org/RobWHickman/ggparliament)
+
+# Status
+[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
+![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
+![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
 # ggparliament <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # Parliament plots
