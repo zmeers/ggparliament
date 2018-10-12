@@ -27,7 +27,11 @@ library(tidyr)
 library(ggplot2)
 load("R/sysdata.rda")
 ```
-[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.svg?branch=final_presubmission_cleaning)](https://travis-ci.org/RobWHickman/ggparliament)
+
+# Status
+[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
+![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
+![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
 # ggparliament <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # Parliament plots
@@ -35,9 +39,13 @@ load("R/sysdata.rda")
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
-This `R` package is a `ggplot2` extension.
+This `R` package is a `ggplot2` extension and is now on CRAN. Please install the stable version in `R` by running:
 
-To install the package:
+```{r, eval=FALSE}
+install.packages("ggparliament")
+```
+
+To install the package from source:
 ```{r, eval=FALSE}
 devtools::install_github("robwhickman/ggparliament")
 ```
