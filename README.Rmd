@@ -219,7 +219,32 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
+##Generating DF to plot
+
+```{r}
+parties <- c("People's Front of Judea", "Judean People's Front", "Judean Popular People's Front", "Popular Front of Judea")
+party_short <- c("PFJ", "JPF", "JPPF", "PopFJ")
+seats <- c(10, 20, 30, 40)
 
 
+brian_parliament <- data.frame(party = parties,
+                            name = party_short,
+                            seats = seats)  %>%
+  parliament_data(election_data = .,
+    party_seats = .$seats,
+    parl_rows = 4,
+    type = "semicircle")
+
+brian_plot <-ggplot(brian_parliament, aes(x, y, colour = name)) +
+  geom_parliament_seats(size = 3.5) + 
+  theme_ggparliament() +
+  theme(legend.position = 'bottom') + 
+  labs(colour = NULL,
+       title = "Monty Python Parliament") +
+    scale_colour_manual(values = c("red", "blue", "black", "goldenrod"), 
+                      limits = brian_parliament$party_short) 
+
+
+```
 
 
