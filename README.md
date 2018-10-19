@@ -1,54 +1,57 @@
----
-title: "README"
-output: github_document
-pagetitle: README
----
+README
+================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
-
-
 # Status
-[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
+
+[![Build
+Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
 ![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
-# ggparliament <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
+\# ggparliament
+<img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # Parliament plots
 
+This package attempts to implement “parliament plots” - visual
+representations of the composition of legislatures that display seats
+colour-coded by party. The input is a data frame containing one row per
+party, with columns representing party name/label and number of seats,
+respectively.
 
-This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
+This `R` package is a `ggplot2` extension and is now on CRAN. Please
+install the stable version in `R` by running:
 
-This `R` package is a `ggplot2` extension and is now on CRAN. Please install the stable version in `R` by running:
-
-
-```r
+``` r
 install.packages("ggparliament")
 ```
 
 To install the package from source:
 
-```r
+``` r
 devtools::install_github("robwhickman/ggparliament")
 ```
 
-Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
-is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+Inspiration from this package comes from:
+[parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
+is used on Wikipedia,
+[parliament-svg](https://github.com/juliuste/parliament-svg), which is a
+javascript clone, and [a discussion on
+StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart),
+which provided some of the code for part for the “arc” representations
+used in this package.
 
-
-If you have any issues, please note the problem and inform us!
+If you have any issues, please note the problem and inform
+us\!
 
 ## Semicircle parliament
 
-### EU, France, United States, and so on...
-
+### EU, France, United States, and so on…
 
 ### Plot of US House of Representatives
 
-
-
-```r
+``` r
 #filter the election data for the most recent US House of Representatives
 us_house <- election_data %>%
   filter(country == "USA" &
@@ -72,8 +75,7 @@ us_senate <- parliament_data(
   party_seats = us_senate$seats)
 ```
 
-
-```r
+``` r
 representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   #highlight the party in control of the House with a black line
@@ -92,12 +94,11 @@ representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
 representatives
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ### Plot of US Senate
 
-
-```r
+``` r
 senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
@@ -112,13 +113,11 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
 senate 
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
-
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ### Plot of German Bundestag
 
-
-```r
+``` r
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -140,16 +139,13 @@ bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
 bundestag
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ## Opposing Benches Parliament
 
-
-
 ### United Kingdom
 
-
-```r
+``` r
 #data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
@@ -173,16 +169,13 @@ commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
 commons
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
-
-
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ## Horseshoe parliament
 
 ### Australia, New Zealand
 
-
-```r
+``` r
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
@@ -195,8 +188,7 @@ australia <- election_data %>%
 
 ### Plot of Australian parliament
 
-
-```r
+``` r
 au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 3.5) + 
   geom_highlight_government(government == 1, colour = "pink", size = 4) + 
@@ -215,9 +207,31 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+\#\#Generating DF to
+plot
+
+``` r
+parties <- c("People's Front of Judea", "Judean People's Front", "Judean Popular People's Front", "Popular Front of Judea")
+party_short <- c("PFJ", "JPF", "JPPF", "PopFJ")
+seats <- c(10, 20, 30, 40)
 
 
+brian_parliament <- data.frame(party = parties,
+                            name = party_short,
+                            seats = seats)  %>%
+  parliament_data(election_data = .,
+    party_seats = .$seats,
+    parl_rows = 4,
+    type = "semicircle")
 
-
-
+brian_plot <-ggplot(brian_parliament, aes(x, y, colour = name)) +
+  geom_parliament_seats(size = 3.5) + 
+  theme_ggparliament() +
+  theme(legend.position = 'bottom') + 
+  labs(colour = NULL,
+       title = "Monty Python Parliament") +
+    scale_colour_manual(values = c("red", "blue", "black", "goldenrod"), 
+                      limits = brian_parliament$party_short) 
+```
