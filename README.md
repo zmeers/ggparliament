@@ -209,8 +209,7 @@ au_rep
 
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
-\#\#Generating DF to
-plot
+## Generating Own DF to Plot
 
 ``` r
 parties <- c("People's Front of Judea", "Judean People's Front", "Judean Popular People's Front", "Popular Front of Judea")
@@ -220,13 +219,15 @@ seats <- c(10, 20, 30, 40)
 
 brian_parliament <- data.frame(party = parties,
                             name = party_short,
-                            seats = seats)  %>%
+                            seats = seats)  
+
+brian_plot_data <- brian_parliament %>%
   parliament_data(election_data = .,
     party_seats = .$seats,
     parl_rows = 4,
     type = "semicircle")
 
-brian_plot <-ggplot(brian_parliament, aes(x, y, colour = name)) +
+brian_plot <- ggplot(brian_plot_data, aes(x, y, colour = name)) +
   geom_parliament_seats(size = 3.5) + 
   theme_ggparliament() +
   theme(legend.position = 'bottom') + 
@@ -234,4 +235,9 @@ brian_plot <-ggplot(brian_parliament, aes(x, y, colour = name)) +
        title = "Monty Python Parliament") +
     scale_colour_manual(values = c("red", "blue", "black", "goldenrod"), 
                       limits = brian_parliament$party_short) 
+
+
+brian_plot
 ```
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
