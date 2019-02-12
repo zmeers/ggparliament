@@ -29,7 +29,7 @@ bibliography: paper.bib
 
 Visualizing legislatures can be done in a variety of formats - usually in a JavaScript framework. `ggparliament` seeks to implement the flexibility from JavaScript in `R`. `R` users will find they can use a similar syntax to the popular `ggplot2` package to generate a visualization of a legislative body. In particular, `ggparliament` exists in `R` because it is a statistical computing language that many political scientists use in research. 
 
-`ggparliament` is useful research tool for a variety of social science disciplines, including quantitative political science. It is particularly beneficisl for political scientists who research political institutions, including but not limited to electoral systems or legislative politics. `ggparliament` has several default layouts, representing different legislative chambers e.g. the United Kingdom's House of Commons, Australia's horseshoe-shaped parliament, or the widely-used semicircle legislative chamber. 
+`ggparliament` is useful research tool for a variety of social science disciplines, including quantitative political science. It is particularly beneficial for political scientists who research political institutions, including but not limited to electoral systems or legislative politics. `ggparliament` has several default layouts, representing different legislative chambers e.g. the United Kingdom's House of Commons, Australia's horseshoe-shaped parliament, or the widely-used semicircle legislative chamber. 
 
 ![](ggparliament_layouts.png)
 
@@ -51,7 +51,7 @@ ggplot(us_data, aes(x,y), colour = "black") +
 
 `ggparliament` has been designed with several key features in mind, including accessibility for academic researchers who may not want to learn how to visualize legislatures in JavaScript. It is also provides multiple layouts for different parliamentary systems, catering to researchers of various political systems. `ggparliament` items can be more complex than what we have detailed here, for e.g. one can split the data over numerous elections and facet the ggparliament object; this work is further explained in the package documentation. 
 
-In this paper, we present an R package to plot legislatures, also known as parliament plots. Parliament plots provide summary statistics for the distribution of a legislature, allowing users to view the number of seats per party. In addition,`ggparliament` visualizes descriptive data about legislators or legislative districts, and election results. 
+In this paper we present an R package to plot legislatures, also known as parliament plots. Parliament plots provide summary statistics for the distribution of a legislature, allowing users to view the number of seats per party. In addition,`ggparliament` visualizes descriptive data about legislators or legislative districts, and election results. 
 
 
 # References
