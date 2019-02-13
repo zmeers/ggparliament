@@ -3,7 +3,8 @@ title: 'ggparliament: Simple Parliament Plots Using ggplot2'
 tags:
   - government statistics
   - data visualization
-  - social science statistics
+  - social science
+  - political science
 authors:
  - name: Zoe Meers
    affiliation: 1
