@@ -18,7 +18,7 @@ affiliations:
    index: 1
  - name: University of Cambridge
    index: 2
- - name: Facebook
+ - name: Department of Methodology, London School of Economics and Political Science
    index: 3
 date: 12 February 2018
 bibliography: paper.bib
