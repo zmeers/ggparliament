@@ -47,10 +47,7 @@ In 2017, the Bloomberg visual graphics team created [an excellent data visualiza
 
 ```{r}
 data <- election_data %>%
-  filter(country == "Germany" & year == "2013") %>% # on the federal level, CSU is a part of CDU
-  mutate(seats = gsub("255", "311", seats)) %>% # Add the 56 CSU seats to CDU
-  mutate(seats = as.numeric(as.character(seats))) %>%
-  filter_all(all_vars(!grepl('Christian Social Union in Bavaria',.)))
+  filter(country == "Germany" & year == "2013") 
 # binary variable for overhang seat
 overhangseats <- c(1, 0, 1, 0, 1, 0, 1, 0)
 # number of overhang seats and remainder for each party
