@@ -32,9 +32,9 @@ load("R/sysdata.rda")
 [![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
 ![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
-# ggparliament <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
+<img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
-# Parliament plots
+# ggparliament: Parliament plots
 
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
@@ -140,9 +140,7 @@ germany <- parliament_data(election_data = germany,
 
 bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 3) +
-  geom_highlight_government(government == 1) + 
-  labs(colour="Party",
-       subtitle = "Government circled in black.") +  
+  labs(colour="Party") +  
   theme_ggparliament(legend = TRUE) +
   scale_colour_manual(values = germany$colour, 
                       limits = germany$party_short) 
