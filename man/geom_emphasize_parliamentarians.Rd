@@ -4,7 +4,7 @@
 \alias{geom_emphasize_parliamentarians}
 \title{Emphasize certain parliamentarians (for example, female members of parliament) by increasing transparency on the remaining observations.}
 \usage{
-geom_emphasize_parliamentarians(expr)
+geom_emphasize_parliamentarians(expr, size, shape, stroke)
 }
 \arguments{
 \item{expr}{The observation that you wish to emphasize}
