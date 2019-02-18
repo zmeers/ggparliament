@@ -1,5 +1,8 @@
 #' Emphasize certain parliamentarians (for example, female members of parliament) by increasing transparency on the remaining observations.
 #' @param expr The observation that you wish to emphasize
+#' @param size The size of the point
+#' @param shape The shape of the legislature seat (defaults to circle)
+#' @param stroke The size of the stroke
 #' @examples
 #' data <- election_data[
 #'   election_data$country == "USA" &

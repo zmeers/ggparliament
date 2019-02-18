@@ -8,6 +8,12 @@ geom_emphasize_parliamentarians(expr, size, shape, stroke)
 }
 \arguments{
 \item{expr}{The observation that you wish to emphasize}
+
+\item{size}{The size of the point}
+
+\item{shape}{The shape of the legislature seat (defaults to circle)}
+
+\item{stroke}{The size of the stroke}
 }
 \description{
 Emphasize certain parliamentarians (for example, female members of parliament) by increasing transparency on the remaining observations.
