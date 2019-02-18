@@ -3,6 +3,7 @@
   - Updated small errors in data
   - Included data from South America (Chile)
   - Added JOSS paper to paper folder
+  - Added size parameter to geom_emphasize_parliamentarians
 
 ## 09/2018
 

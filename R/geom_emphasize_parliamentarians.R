@@ -30,8 +30,12 @@
 #' @export
 #' @importFrom ggplot2 ggplot_add
 
-geom_emphasize_parliamentarians <- function(expr) {
-  structure(list(expr = rlang::enquo(expr)), class = "emphMPs")
+geom_emphasize_parliamentarians <- function(expr,  size = 3, shape = 19, stroke = 1.8) {
+  structure(list(expr = rlang::enquo(expr),
+                 size = size,
+                 shape = shape,
+                 stroke = stroke), 
+            class = "emphMPs")
 }
 
 
@@ -43,8 +47,9 @@ ggplot_add.emphMPs <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = alpha(0.6),
     alpha = 0.6,
-    show.legend = FALSE,
-    size = 3.5
+    size = object$size,
+    stroke = object$stroke,
+    shape = object$shape
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
