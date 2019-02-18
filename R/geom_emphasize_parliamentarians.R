@@ -25,7 +25,7 @@
 #'   ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long) +
 #'   ggplot2::labs(title = "Women in Congress")
 #' @usage
-#' geom_emphasize_parliamentarians(expr)
+#' geom_emphasize_parliamentarians(expr, size, shape, stroke)
 #' @author Zoe Meers
 #' @export
 #' @importFrom ggplot2 ggplot_add
