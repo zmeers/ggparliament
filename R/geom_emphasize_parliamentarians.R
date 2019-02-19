@@ -1,5 +1,8 @@
 #' Emphasize certain parliamentarians (for example, female members of parliament) by increasing transparency on the remaining observations.
 #' @param expr The observation that you wish to emphasize
+#' @param size The size of the point
+#' @param shape The shape of the legislature seat (defaults to circle)
+#' @param stroke The size of the stroke
 #' @examples
 #' data <- election_data[
 #'   election_data$country == "USA" &
@@ -25,13 +28,17 @@
 #'   ggplot2::scale_colour_manual(values = usa_data$colour, limits = usa_data$party_long) +
 #'   ggplot2::labs(title = "Women in Congress")
 #' @usage
-#' geom_emphasize_parliamentarians(expr)
+#' geom_emphasize_parliamentarians(expr, size, shape, stroke)
 #' @author Zoe Meers
 #' @export
 #' @importFrom ggplot2 ggplot_add
 
-geom_emphasize_parliamentarians <- function(expr) {
-  structure(list(expr = rlang::enquo(expr)), class = "emphMPs")
+geom_emphasize_parliamentarians <- function(expr,  size = 3, shape = 19, stroke = 1.8) {
+  structure(list(expr = rlang::enquo(expr),
+                 size = size,
+                 shape = shape,
+                 stroke = stroke), 
+            class = "emphMPs")
 }
 
 
@@ -43,8 +50,9 @@ ggplot_add.emphMPs <- function(object, plot, object_name) {
     mapping = plot$mapping,
     colour = alpha(0.6),
     alpha = 0.6,
-    show.legend = FALSE,
-    size = 3.5
+    size = object$size,
+    stroke = object$stroke,
+    shape = object$shape
   )
   plot$layers <- append(plot$layers, new_layer)
   plot
