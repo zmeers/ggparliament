@@ -1,5 +1,5 @@
 ---
-title: 'ggparliament: A ggplot2 extension for visualizing legislatures in R'
+title: 'ggparliament: A ggplot2 extension for parliament plots in R'
 tags:
   - government statistics
   - data visualization
