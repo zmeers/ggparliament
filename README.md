@@ -82,6 +82,7 @@ election_data %>%
 ```
 
 
+
 We also provide the following vignettes for further explanation:
 
 1. Basic parliament plots
@@ -93,6 +94,7 @@ We also provide the following vignettes for further explanation:
 7. Visualizaing overhang seats in MMP electoral systems
 8. Arranging seat order in ggparliament plots.
 
+Quick `ggparliament` examples can be viewed below.
 
 ## Semicircle parliament
 
