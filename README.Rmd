@@ -11,21 +11,21 @@ pagetitle: README
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 library(ggparliament)
-source("R/parliament_data.R")
-source("R/geom_parliament_seats.R")
-source("R/geom_highlight_government.R")
-source("R/geom_emphasize_parliamentarians.R")
-source("R/helper_funcs.R")
-source("R/draw_majoritythreshold.R")
-source("R/draw_partylabels.R")
-source("R/draw_majoritythreshold.R")
-source("R/draw_totalseats.R")
-source("R/theme_ggparliament.R")
-source("R/geom_parliament_bar.R")
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-load("R/sysdata.rda")
+# source("R/parliament_data.R")
+# source("R/geom_parliament_seats.R")
+# source("R/geom_highlight_government.R")
+# source("R/geom_emphasize_parliamentarians.R")
+# source("R/helper_funcs.R")
+# source("R/draw_majoritythreshold.R")
+# source("R/draw_partylabels.R")
+# source("R/draw_majoritythreshold.R")
+# source("R/draw_totalseats.R")
+# source("R/theme_ggparliament.R")
+# source("R/geom_parliament_bar.R")
+
 ```
 
 # Status
