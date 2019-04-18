@@ -42,7 +42,7 @@ If you have any issues, please note the problem and inform us!
 
 ## Election data
 
-`ggparliament` provides electiond data from the following countries. 
+`ggparliament` provides election data from the following countries. 
 
 
 ```r
@@ -80,8 +80,6 @@ election_data %>%
 ## 25 2016       USA          Senate
 ## 26 2016       USA Representatives
 ```
-
-
 
 We also provide the following vignettes for further explanation:
 
