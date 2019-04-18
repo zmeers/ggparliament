@@ -15,7 +15,7 @@ pagetitle: README
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
 <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
-# ggparliament: Parliament plots
+# `ggparliament`: Parliament plots
 
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
@@ -59,26 +59,32 @@ election_data %>%
 ## 4  2013 Australia          Senate
 ## 5  2016 Australia Representatives
 ## 6  2016 Australia          Senate
-## 7  1990   Germany       Bundestag
-## 8  1994   Germany       Bundestag
-## 9  1998   Germany       Bundestag
-## 10 2002   Germany       Bundestag
-## 11 2005   Germany       Bundestag
-## 12 2009   Germany       Bundestag
-## 13 2013   Germany       Bundestag
-## 14 2017   Germany       Bundestag
-## 15 2007    Russia            Duma
-## 16 2011    Russia            Duma
-## 17 2016    Russia            Duma
-## 18 2010        UK         Commons
-## 19 2015        UK         Commons
-## 20 2017        UK         Commons
-## 21 2012       USA          Senate
-## 22 2012       USA Representatives
-## 23 2014       USA          Senate
-## 24 2014       USA Representatives
-## 25 2016       USA          Senate
-## 26 2016       USA Representatives
+## 7  2009     Chile       Diputados
+## 8  2009     Chile       Senadores
+## 9  2013     Chile       Diputados
+## 10 2013     Chile       Senadores
+## 11 2017     Chile       Diputados
+## 12 2017     Chile       Senadores
+## 13 1990   Germany       Bundestag
+## 14 1994   Germany       Bundestag
+## 15 1998   Germany       Bundestag
+## 16 2002   Germany       Bundestag
+## 17 2005   Germany       Bundestag
+## 18 2009   Germany       Bundestag
+## 19 2013   Germany       Bundestag
+## 20 2017   Germany       Bundestag
+## 21 2007    Russia            Duma
+## 22 2011    Russia            Duma
+## 23 2016    Russia            Duma
+## 24 2010        UK         Commons
+## 25 2015        UK         Commons
+## 26 2017        UK         Commons
+## 27 2012       USA          Senate
+## 28 2012       USA Representatives
+## 29 2014       USA          Senate
+## 30 2014       USA Representatives
+## 31 2016       USA          Senate
+## 32 2016       USA Representatives
 ```
 
 We also provide the following vignettes for further explanation:
