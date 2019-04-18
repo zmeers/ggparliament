@@ -37,8 +37,8 @@ The parliament seats geom is used for plotting data from parliament_data()
 \examples{
 data <- election_data[
   election_data$country == "USA" &
-  election_data$house == "Representatives" &
-  election_data$year == "2016",
+    election_data$house == "Representatives" &
+    election_data$year == "2016",
 ]
 usa_data <- parliament_data(
   election_data = data,

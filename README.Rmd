@@ -56,6 +56,30 @@ is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-sv
 
 If you have any issues, please note the problem and inform us!
 
+
+## Election data
+
+`ggparliament` provides electiond data from the following countries. 
+
+```{r}
+election_data %>% 
+  distinct(year, country, house) %>% 
+  arrange(country, year)
+```
+
+
+We also provide the following vignettes for further explanation:
+
+1. Basic parliament plots
+2. Labelling parties
+3. Drawing the majority threshold line
+4. Highlighting parties in power
+5. Faceting legislatures
+6. Emphasizing certain seats
+7. Visualizaing overhang seats in MMP electoral systems
+8. Arranging seat order in ggparliament plots.
+
+
 ## Semicircle parliament
 
 ### EU, France, United States, and so on...

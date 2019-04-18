@@ -21,8 +21,8 @@ Emphasize certain parliamentarians (for example, female members of parliament) b
 \examples{
 data <- election_data[
   election_data$country == "USA" &
-  election_data$house == "Representatives" &
-  election_data$year == "2016",
+    election_data$house == "Representatives" &
+    election_data$year == "2016",
 ]
 usa_data <- parliament_data(
   election_data = data,
@@ -36,7 +36,7 @@ number_of_women <- c(23, 218, 133, 61)
 
 usa_data$women <- rep(women_in_congress, number_of_women)
 
-ggplot2::ggplot(usa_data, ggplot2::aes(x, y, colour=party_long)) +
+ggplot2::ggplot(usa_data, ggplot2::aes(x, y, colour = party_long)) +
   geom_parliament_seats() +
   geom_emphasize_parliamentarians(women == 1) +
   theme_ggparliament(legend = FALSE) +

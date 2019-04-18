@@ -8,8 +8,8 @@
 #' @examples
 #' data <- election_data[
 #'   election_data$country == "USA" &
-#'   election_data$house == "Representatives" &
-#'   election_data$year == "2016",
+#'     election_data$house == "Representatives" &
+#'     election_data$year == "2016",
 #' ]
 #' usa_data <- parliament_data(
 #'   election_data = data,
@@ -27,7 +27,8 @@
 #'   ) +
 #'   ggplot2::scale_colour_manual(
 #'     values = usa_data$colour,
-#'     limits = usa_data$party_long)  +
+#'     limits = usa_data$party_long
+#'   ) +
 #'   theme_ggparliament()
 #' @author Zoe Meers
 #' @export
@@ -57,7 +58,7 @@ draw_partylabels <- function(type = c("semicircle", "horseshoe"),
 ggplot_add.partyLabels <- function(object, plot, object_name) {
   x <- y <- filter <- group_by <- summarise <- NULL
 
-  #calculate the positions of the labels
+  # calculate the positions of the labels
   filt_data <- dplyr::filter(plot$data, row == max(row))
   group_data <- dplyr::group_by(filt_data, pn = !!object$party_names, ps = !!object$party_seats, pc = !!object$party_colours)
   new_dat <- dplyr::summarise(group_data, mean_x = mean(x), mean_y = mean(y))

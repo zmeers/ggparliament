@@ -9,8 +9,9 @@
 #' @examples
 #' data <- election_data[
 #'   election_data$country == "USA" &
-#'   election_data$house == "Representatives" &
-#'   election_data$year == "2016",]
+#'     election_data$house == "Representatives" &
+#'     election_data$year == "2016",
+#' ]
 #' usa_data <- parliament_data(
 #'   election_data = data,
 #'   type = "semicircle",
@@ -74,14 +75,14 @@ parliament_data <- function(election_data = NULL,
     bench_seats <- c(gov_seats, opp_seats)
 
     threshold <- ceiling(sum(gov_seats, opp_seats) / 2)
-    
-    if(!is.null(parl_rows)) {
+
+    if (!is.null(parl_rows)) {
       nrows <- parl_rows
     } else {
       # if there is a nice divisor for the majority threshold use this
       # else use 12
       nrows <- which(threshold %% seq_len(threshold) == 0)
-      
+
       if (any(nrows > 10 & nrows < 15)) {
         nrows <- nrows[first(which(nrows > 10))]
       } else {
@@ -110,37 +111,35 @@ parliament_data <- function(election_data = NULL,
     # the x axis space between the two benches
     spacer <- 5
 
-    #space the benches and rbind
+    # space the benches and rbind
     parl_layout[[2]]$x <- parl_layout[[2]]$x + max(parl_layout[[1]]$x + spacer)
     parl_layout <- rbind(parl_layout[[1]], parl_layout[[2]])
-    
-    #bind in the election data
-    #can probably be parsed out to later if we include grouping in other geoms
-    election_data <- election_data[order(-group, -party_seats),]
+
+    # bind in the election data
+    # can probably be parsed out to later if we include grouping in other geoms
+    election_data <- election_data[order(-group, -party_seats), ]
   }
-  
-  else if (is.null(type) | !type %in% c("horseshoe","semicircle","circle","classroom","opposing_benches")) {
+
+  else if (is.null(type) | !type %in% c("horseshoe", "semicircle", "circle", "classroom", "opposing_benches")) {
     warning("Warning: parliament layout 'type' not supported.")
   }
-  
-  #if election data is not null, bind layout to original data
-  if(!is.null(election_data)) {
-    
+
+  # if election data is not null, bind layout to original data
+  if (!is.null(election_data)) {
     if (type != "opposing_benches") {
-      parl_data <- as.data.frame(election_data[rep(row.names(election_data),party_seats),])
-      
-      if(!is.null(plot_order)) {
-        #order the data not by seats- e.g. by government then seats
-        parl_data <- parl_data[order(-rep(plot_order, party_seats)),]
+      parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats), ])
+
+      if (!is.null(plot_order)) {
+        # order the data not by seats- e.g. by government then seats
+        parl_data <- parl_data[order(-rep(plot_order, party_seats)), ]
       }
-      
     } else {
-      parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-group, -party_seats)]),])
-      #not implemented ordering yet- seems unlikely it would ever not be by largest party in bench system?
+      parl_data <- as.data.frame(election_data[rep(row.names(election_data), party_seats[order(-group, -party_seats)]), ])
+      # not implemented ordering yet- seems unlikely it would ever not be by largest party in bench system?
     }
-    
+
     parl_layout <- cbind(parl_data, parl_layout)
   }
-  
+
   return(parl_layout)
 }
