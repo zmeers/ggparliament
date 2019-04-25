@@ -5,8 +5,8 @@
 \title{Draw labels for political parties and seats per party}
 \usage{
 draw_partylabels(type = c("semicircle", "horseshoe"), names = TRUE,
-  seats = TRUE, party_names = party_names,
-  party_colours = party_colours, party_seats = party_seats)
+  seats = TRUE, party_names = party_names, party_colours = party_colours,
+  party_seats = party_seats)
 }
 \arguments{
 \item{type}{Define type. Currently only supports semicircle and horseshoe style parliaments.}
