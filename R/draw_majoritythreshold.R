@@ -9,8 +9,8 @@
 #' @examples
 #' data <- election_data[
 #'   election_data$country == "USA" &
-#'   election_data$house == "Representatives" &
-#'   election_data$year == "2016",
+#'     election_data$house == "Representatives" &
+#'     election_data$year == "2016",
 #' ]
 #' usa_data <- parliament_data(
 #'   election_data = data,
@@ -23,7 +23,7 @@
 #'   draw_majoritythreshold(
 #'     n = 218,
 #'     label = TRUE,
-#'     type = 'semicircle'
+#'     type = "semicircle"
 #'   ) +
 #'   theme_ggparliament()
 #' @author Zoe Meers
@@ -53,7 +53,7 @@ draw_majoritythreshold <- function(n = NULL,
   )
 }
 
-#calculate the positions of the thresholds
+# calculate the positions of the thresholds
 #' @export
 ggplot_add.majorityLine <- function(object, plot, object_name) {
   filter <- group_by <- NULL
@@ -92,7 +92,7 @@ ggplot_add.majorityLine <- function(object, plot, object_name) {
             ggplot2::geom_segment(aes(y = y_pos_oppbenches + 0.5, yend = y_pos_oppbenches + 0.5, x = min(plot$data$x), xend = max(plot$data$x) / 2),
               colour = object$linecolour, size = object$linesize, linetype = object$linetype, alpha = object$linealpha
             ) +
-            ggplot2::annotate("text", x = max(plot$data$x) / 1.9, y = y_pos_oppbenches - (y_pos_oppbenches/15), label = paste0(object$n, " seats needed\nfor a majority."))
+            ggplot2::annotate("text", x = max(plot$data$x) / 1.9, y = y_pos_oppbenches - (y_pos_oppbenches / 15), label = paste0(object$n, " seats needed\nfor a majority."))
         }
       } else {
         warning("Warning: parliament layout not supported.")

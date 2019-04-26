@@ -1,3 +1,7 @@
+# ggparliament 2.1.0
+## 04/2019
+- Added revised JOSS paper
+
 # ggparliament 2.0.1 
 ## 02/2019
   - Updated small errors in data

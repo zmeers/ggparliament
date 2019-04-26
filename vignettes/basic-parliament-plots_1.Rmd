@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
     comment = "#>"
 )
 
+    
 library(ggparliament)
 library(dplyr)
 library(ggplot2)
@@ -81,7 +82,9 @@ The resulting data frame returns the x and y coordinates of each individual seat
 The user can take this data frame and plot by the x and y coordinates using `geom_parliament_seats()`. 
     
     ```{r, fig.width=6, fig.height=4}
-us <- ggplot(us_house_semicircle, aes(x = x, y = y, colour = party_short)) +
+us <- ggplot(us_house_semicircle, aes(x = x, 
+                                      y = y, 
+                                      colour = party_short)) +
     geom_parliament_seats() + 
     theme_ggparliament() +
     labs(colour = NULL, 
@@ -110,7 +113,9 @@ australia_horseshoe <- parliament_data(election_data = australia,
 ```
 
 ```{r,fig.width=4, fig.height=4}
-au <- ggplot(australia_horseshoe, aes(x, y, colour = party_short)) +
+au <- ggplot(australia_horseshoe, aes(x = x, 
+                                      y = y, 
+                                      colour = party_short)) +
     geom_parliament_seats() + 
     theme_ggparliament() +
     labs(colour = NULL, 
@@ -163,14 +168,14 @@ russia_classroom <- election_data %>%
 ```
 
 ```{r,fig.width=4, fig.height=4}
-rus <- ggplot(russia_classroom, aes(x, y, colour = party_short)) +
+rus <- ggplot(russia_classroom, aes(x, 
+                                    y, 
+                                    colour = party_short)) +
   geom_parliament_seats() +
   theme_ggparliament() +
-  labs(
-    colour = NULL,
+  labs(colour = NULL,
     title = "Russian Duma") +
-  scale_colour_manual(
-    values = russia_classroom$colour,
+  scale_colour_manual(values = russia_classroom$colour,
     limits = russia_classroom$party_short) +
   theme(legend.position = "bottom")
 
@@ -194,7 +199,9 @@ russia_circle <- election_data %>%
 ```
 
 ```{r,fig.width=4, fig.height=4}
-russia_circle_example <- ggplot(russia_circle, aes(x, y, colour = party_short)) +
+russia_circle_example <- ggplot(russia_circle, aes(x, 
+                                                   y, 
+                                                   colour = party_short)) +
   geom_parliament_seats() +
   theme_ggparliament() +
   scale_colour_manual(
@@ -210,7 +217,10 @@ Though not suggested, data can also be plotted simply from a vector of the parti
 
 ```{r}
 #a made up example of a vector of seats
-seats <- c(rep("democrats", 40), rep("republicans", 30), rep("socialists", 20), rep("nationalists", 10))
+seats <- c(rep("democrats", 40), 
+           rep("republicans", 30), 
+           rep("socialists", 20), 
+           rep("nationalists", 10))
 
 made_up_layout <- parliament_data(election_data = NULL,
     party_seats = as.numeric(table(seats)),
@@ -219,7 +229,9 @@ made_up_layout <- parliament_data(election_data = NULL,
 
 made_up_layout$party = seats
 
-plot <- ggplot(made_up_layout, aes(x, y, colour = party)) +
+plot <- ggplot(made_up_layout, aes(x, 
+                                   y, 
+                                   colour = party)) +
     geom_parliament_seats() +
     theme_ggparliament() +
     labs(colour = NULL) +
@@ -236,7 +248,8 @@ house_of_reps <- data.frame(
   color = c("gray", "red", "blue", "gray")
 ) 
 house_of_reps <- house_of_reps %>% 
-  mutate(party = as.character(party), color = as.character(color)) %>%
+  mutate(party = as.character(party), 
+         color = as.character(color)) %>%
   parliament_data(election_data = .,
                             parl_rows = 8,
                             party_seats = .$seats,

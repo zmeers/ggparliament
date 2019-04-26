@@ -6,8 +6,8 @@
 The parliament seats geom is used for plotting data from parliament_data()}
 \usage{
 geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, size = 3.5,
-  show.legend = NA, inherit.aes = TRUE)
+  position = "identity", na.rm = FALSE, size = 3.5, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Mapping the aesthetics (the x and y coordinates,
@@ -37,8 +37,8 @@ The parliament seats geom is used for plotting data from parliament_data()
 \examples{
 data <- election_data[
   election_data$country == "USA" &
-  election_data$house == "Representatives" &
-  election_data$year == "2016",
+    election_data$house == "Representatives" &
+    election_data$year == "2016",
 ]
 usa_data <- parliament_data(
   election_data = data,

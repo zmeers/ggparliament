@@ -5,8 +5,8 @@
 \title{Draw labels for political parties and seats per party}
 \usage{
 draw_partylabels(type = c("semicircle", "horseshoe"), names = TRUE,
-  seats = TRUE, party_names = party_names,
-  party_colours = party_colours, party_seats = party_seats)
+  seats = TRUE, party_names = party_names, party_colours = party_colours,
+  party_seats = party_seats)
 }
 \arguments{
 \item{type}{Define type. Currently only supports semicircle and horseshoe style parliaments.}
@@ -27,8 +27,8 @@ Draw labels for political parties and seats per party
 \examples{
 data <- election_data[
   election_data$country == "USA" &
-  election_data$house == "Representatives" &
-  election_data$year == "2016",
+    election_data$house == "Representatives" &
+    election_data$year == "2016",
 ]
 usa_data <- parliament_data(
   election_data = data,
@@ -46,7 +46,8 @@ ggplot2::ggplot(usa_data, ggplot2::aes(x, y, colour = party_long)) +
   ) +
   ggplot2::scale_colour_manual(
     values = usa_data$colour,
-    limits = usa_data$party_long)  +
+    limits = usa_data$party_long
+  ) +
   theme_ggparliament()
 }
 \author{
