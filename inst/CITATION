@@ -1,0 +1,24 @@
+citHeader("To cite ggparliament in publications use")
+
+## R >= 2.8.0 passes package metadata to citation().
+##if(!exists("meta") || is.null(meta)) meta <- packageDescription("ggparliament")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+citEntry(entry="Article",
+         title = "{ggparliament}: A {ggplot2} extension for parliament plots in {R}",
+         author = personList(as.person("Zoe Meers"), 
+                         as.person("Robert Hickman"),
+                             as.person("Thomas J. Leeper")),
+         journal      = "Journal of Open Source Software",
+         year         = "2019",
+         volume       = "4",
+         number       = "36",
+         doi          = "https://doi.org/10.21105/joss.01313",
+         pages = "1313",
+         textVersion = 
+         paste("Zoe Meers, Robert Hickman, Thomas J. Leeper (2019).", 
+               "ggparliament: A ggplot2 extension for parliament plots in R.",
+               "Journal of Open Source Software 4(36).",
+               "DOI https://doi.org/10.21105/joss.01313.")
+)
