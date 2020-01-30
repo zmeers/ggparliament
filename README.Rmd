@@ -116,7 +116,7 @@ us_senate <- parliament_data(
 
 ```
 
-```{r, fig.width=8, fig.height=4}
+```{r, fig.width=8, fig.height=4, dpi=300}
 representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   #highlight the party in control of the House with a black line
@@ -137,7 +137,7 @@ representatives
 
 ### Plot of US Senate
 
-```{r, fig.width=6, fig.height=4}
+```{r, fig.width=6, fig.height=4, dpi=300}
 senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
@@ -155,7 +155,7 @@ senate
 
 ### Plot of German Bundestag
 
-```{r, fig.height=4, fig.width=8}
+```{r, fig.height=4, fig.width=8, dpi=300}
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -181,7 +181,7 @@ bundestag
 
 ### United Kingdom
 
-```{r, fig.height = 4}
+```{r, fig.height = 4, dpi=300}
 #data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
@@ -225,7 +225,7 @@ australia <- election_data %>%
 
 ### Plot of Australian parliament
 
-```{r}
+```{r, dpi=300}
 au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 3.5) + 
   geom_highlight_government(government == 1, colour = "pink", size = 4) + 
