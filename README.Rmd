@@ -244,7 +244,3 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
-
-
-
-

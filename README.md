@@ -1,115 +1,114 @@
----
-title: "README"
-output: github_document
-pagetitle: README
----
+README
+================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
-
-
 # Status
-[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
+
+[![Build
+Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
 ![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01313/status.svg)](https://doi.org/10.21105/joss.01313)
 <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # `ggparliament`: Parliament plots
 
+This package attempts to implement “parliament plots” - visual
+representations of the composition of legislatures that display seats
+colour-coded by party. The input is a data frame containing one row per
+party, with columns representing party name/label and number of seats,
+respectively.
 
-This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
+This `R` package is a `ggplot2` extension and is now on CRAN. Please
+install the stable version in `R` by running:
 
-This `R` package is a `ggplot2` extension and is now on CRAN. Please install the stable version in `R` by running:
-
-
-```r
+``` r
 install.packages("ggparliament")
 ```
 
 To install the package from source:
 
-```r
+``` r
 devtools::install_github("robwhickman/ggparliament")
 ```
 
-Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
-is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+Inspiration from this package comes from:
+[parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
+is used on Wikipedia,
+[parliament-svg](https://github.com/juliuste/parliament-svg), which is a
+javascript clone, and [a discussion on
+StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart),
+which provided some of the code for part for the “arc” representations
+used in this package.
 
-
-If you have any issues, please note the problem and inform us!
-
+If you have any issues, please note the problem and inform us\!
 
 ## Election data
 
-`ggparliament` provides election data from the following countries. 
+`ggparliament` provides election data from the following countries.
 
-
-```r
+``` r
 election_data %>% 
   distinct(year, country, house) %>% 
   arrange(country, year)
 ```
 
-```
-##    year   country           house
-## 1  2010 Australia Representatives
-## 2  2010 Australia          Senate
-## 3  2013 Australia Representatives
-## 4  2013 Australia          Senate
-## 5  2016 Australia Representatives
-## 6  2016 Australia          Senate
-## 7  2009     Chile       Diputados
-## 8  2009     Chile       Senadores
-## 9  2013     Chile       Diputados
-## 10 2013     Chile       Senadores
-## 11 2017     Chile       Diputados
-## 12 2017     Chile       Senadores
-## 13 1990   Germany       Bundestag
-## 14 1994   Germany       Bundestag
-## 15 1998   Germany       Bundestag
-## 16 2002   Germany       Bundestag
-## 17 2005   Germany       Bundestag
-## 18 2009   Germany       Bundestag
-## 19 2013   Germany       Bundestag
-## 20 2017   Germany       Bundestag
-## 21 2007    Russia            Duma
-## 22 2011    Russia            Duma
-## 23 2016    Russia            Duma
-## 24 2010        UK         Commons
-## 25 2015        UK         Commons
-## 26 2017        UK         Commons
-## 27 2012       USA          Senate
-## 28 2012       USA Representatives
-## 29 2014       USA          Senate
-## 30 2014       USA Representatives
-## 31 2016       USA          Senate
-## 32 2016       USA Representatives
-```
+    ##    year   country           house
+    ## 1  2010 Australia Representatives
+    ## 2  2010 Australia          Senate
+    ## 3  2013 Australia Representatives
+    ## 4  2013 Australia          Senate
+    ## 5  2016 Australia Representatives
+    ## 6  2016 Australia          Senate
+    ## 7  2009     Chile       Diputados
+    ## 8  2009     Chile       Senadores
+    ## 9  2013     Chile       Diputados
+    ## 10 2013     Chile       Senadores
+    ## 11 2017     Chile       Diputados
+    ## 12 2017     Chile       Senadores
+    ## 13 1990   Germany       Bundestag
+    ## 14 1994   Germany       Bundestag
+    ## 15 1998   Germany       Bundestag
+    ## 16 2002   Germany       Bundestag
+    ## 17 2005   Germany       Bundestag
+    ## 18 2009   Germany       Bundestag
+    ## 19 2013   Germany       Bundestag
+    ## 20 2017   Germany       Bundestag
+    ## 21 2007    Russia            Duma
+    ## 22 2011    Russia            Duma
+    ## 23 2016    Russia            Duma
+    ## 24 2010        UK         Commons
+    ## 25 2015        UK         Commons
+    ## 26 2017        UK         Commons
+    ## 27 2012       USA          Senate
+    ## 28 2012       USA Representatives
+    ## 29 2014       USA          Senate
+    ## 30 2014       USA Representatives
+    ## 31 2016       USA          Senate
+    ## 32 2016       USA Representatives
 
 We also provide the following vignettes for further explanation:
 
-1. Basic parliament plots
-2. Labelling parties
-3. Drawing the majority threshold line
-4. Highlighting parties in power
-5. Faceting legislatures
-6. Emphasizing certain seats
-7. Visualizaing overhang seats in MMP electoral systems
-8. Arranging seat order in ggparliament plots.
+1.  Basic parliament plots
+2.  Labelling parties
+3.  Drawing the majority threshold line
+4.  Highlighting parties in power
+5.  Faceting legislatures
+6.  Emphasizing certain seats
+7.  Visualizaing overhang seats in MMP electoral systems
+8.  Arranging seat order in ggparliament plots.
 
-Quick `ggparliament` examples can be viewed below.
+Quick `ggparliament` examples can be viewed
+below.
 
 ## Semicircle parliament
 
-### EU, France, United States, and so on...
-
+### EU, France, United States, and so on…
 
 ### Plot of US House of Representatives
 
-
-
-```r
+``` r
 #filter the election data for the most recent US House of Representatives
 us_house <- election_data %>%
   filter(country == "USA" &
@@ -133,8 +132,7 @@ us_senate <- parliament_data(
   party_seats = us_senate$seats)
 ```
 
-
-```r
+``` r
 representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   #highlight the party in control of the House with a black line
@@ -153,12 +151,11 @@ representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
 representatives
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ### Plot of US Senate
 
-
-```r
+``` r
 senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) +
@@ -173,13 +170,11 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
 senate 
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
-
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Plot of German Bundestag
 
-
-```r
+``` r
 germany <- election_data %>%
   filter(year == 2017 & 
            country == "Germany") 
@@ -199,16 +194,13 @@ bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
 bundestag
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ## Opposing Benches Parliament
 
-
-
 ### United Kingdom
 
-
-```r
+``` r
 #data preparation
 uk_17 <- election_data %>% 
   filter(country == "UK" & 
@@ -232,16 +224,13 @@ commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
 commons
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
-
-
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ## Horseshoe parliament
 
 ### Australia, New Zealand
 
-
-```r
+``` r
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
@@ -254,8 +243,7 @@ australia <- election_data %>%
 
 ### Plot of Australian parliament
 
-
-```r
+``` r
 au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 3.5) + 
   geom_highlight_government(government == 1, colour = "pink", size = 4) + 
@@ -274,9 +262,4 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
-
-
-
-
-
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
