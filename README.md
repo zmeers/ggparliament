@@ -10,6 +10,7 @@ pagetitle: README
 
 
 # Status
+
 [![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
 ![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
@@ -152,19 +153,10 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
        subtitle = "The party that has control of the Senate is encircled in black.") +
   scale_colour_manual(values = us_senate$colour,
                       limits = us_senate$party_long)
-```
-
-```
-## Error in loadNamespace(name): there is no package called 'ggrepel'
-```
-
-```r
 senate 
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'senate' not found
-```
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 
 ### Plot of German Bundestag
