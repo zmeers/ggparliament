@@ -1,4 +1,7 @@
-# ggparliament 2.1.0
+# ggparliament 2.1.5
+## 04/2021
+- Added new election data for the US, the UK, and Australia
+
 ## 04/2019
 - Added revised JOSS paper
 

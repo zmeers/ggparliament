@@ -10,9 +10,11 @@ pagetitle: README
 
 
 # Status
+
 [![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
 ![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01313/status.svg)](https://doi.org/10.21105/joss.01313)
 <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # `ggparliament`: Parliament plots
@@ -52,39 +54,20 @@ election_data %>%
 ```
 
 ```
-##    year   country           house
-## 1  2010 Australia Representatives
-## 2  2010 Australia          Senate
-## 3  2013 Australia Representatives
-## 4  2013 Australia          Senate
-## 5  2016 Australia Representatives
-## 6  2016 Australia          Senate
-## 7  2009     Chile       Diputados
-## 8  2009     Chile       Senadores
-## 9  2013     Chile       Diputados
-## 10 2013     Chile       Senadores
-## 11 2017     Chile       Diputados
-## 12 2017     Chile       Senadores
-## 13 1990   Germany       Bundestag
-## 14 1994   Germany       Bundestag
-## 15 1998   Germany       Bundestag
-## 16 2002   Germany       Bundestag
-## 17 2005   Germany       Bundestag
-## 18 2009   Germany       Bundestag
-## 19 2013   Germany       Bundestag
-## 20 2017   Germany       Bundestag
-## 21 2007    Russia            Duma
-## 22 2011    Russia            Duma
-## 23 2016    Russia            Duma
-## 24 2010        UK         Commons
-## 25 2015        UK         Commons
-## 26 2017        UK         Commons
-## 27 2012       USA          Senate
-## 28 2012       USA Representatives
-## 29 2014       USA          Senate
-## 30 2014       USA Representatives
-## 31 2016       USA          Senate
-## 32 2016       USA Representatives
+## # A tibble: 39 x 3
+##    country    year house          
+##    <chr>     <dbl> <chr>          
+##  1 Australia  2010 Representatives
+##  2 Australia  2010 Senate         
+##  3 Australia  2013 Representatives
+##  4 Australia  2013 Senate         
+##  5 Australia  2016 Representatives
+##  6 Australia  2016 Senate         
+##  7 Australia  2019 Representatives
+##  8 Australia  2019 Senate         
+##  9 Chile      2009 Diputados      
+## 10 Chile      2009 Senadores      
+## # … with 29 more rows
 ```
 
 We also provide the following vignettes for further explanation:
