@@ -1,6 +1,5 @@
 {
   "os": "linux",
-  "dist": "trusty",
   "sudo": false,
   "cache": "packages",
   "group": "stable",
