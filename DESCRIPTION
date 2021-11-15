@@ -22,7 +22,8 @@ Suggests:
     rmarkdown,
     purrr,
     ggrepel,
-    scales
+    scales,
+    markdown
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Encoding: UTF-8
