@@ -32,7 +32,7 @@ install.packages("ggparliament")
 To install the package from source:
 
 ```r
-devtools::install_github("robwhickman/ggparliament")
+devtools::install_github("zmeers/ggparliament")
 ```
 
 Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
