@@ -1,0 +1,159 @@
+---
+title: "How to facet parliaments by year or house"
+author: "Zoe Meers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Facet Parliament}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+
+library(ggparliament)
+library(dplyr)
+library(ggplot2)
+require(tidyr)
+require(magrittr)
+require(purrr)
+
+source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
+source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
+```
+
+
+To facet your parliament plot, use the split-apply-combine strategy in a `dplyr` chain.
+
+## Steps
+You must:
+
+1) split by year
+2) apply the coordinates for each party in parliament_data
+3) combine the rows into one large data frame.
+
+This can be done using map from `purrr`.
+A few examples are as follows:
+
+### American Congress from 2010 onwards
+```{r}
+usa <- election_data %>%
+  filter(country == "USA" &
+    house == "Representatives") %>%
+  split(.$year) %>% # split
+  map(~ parliament_data(
+    election_data = ., # apply
+    party_seats = .$seats,
+    parl_rows = 8,
+    type = "semicircle"
+  )) %>%
+  bind_rows() # combine
+```
+
+```{r, fig.width=12, fig.height=8}
+us <- ggplot(usa, aes(x, y, colour = party_short)) +
+  geom_parliament_seats(size = 2.8) +
+  geom_highlight_government(government == 1) +
+  labs(
+    colour = NULL,
+    title = "American Congress",
+    subtitle = "The party that has control of US Congress is encircled in black."
+  ) +
+  theme_ggparliament() +
+  scale_colour_manual(
+    values = usa$colour,
+    limits = usa$party_short
+  ) +
+  theme(legend.position = "bottom") +
+  facet_wrap(~year, ncol = 2)
+
+us
+```
+
+
+### Facet Australian Parliament by House
+```{r}
+australia <- election_data %>%
+  filter(country == "Australia" &
+    year == "2016") %>%
+  split(.$house) %>% # split
+  map(~ parliament_data(
+    election_data = ., # apply
+    party_seats = .$seats,
+    parl_rows = 4,
+    type = "horseshoe"
+  )) %>%
+  bind_rows() # combine
+```
+
+```{r,fig.width=10, fig.height=5}
+au <- ggplot(australia, aes(x, y, colour = party_short)) +
+  geom_parliament_seats(size = 2.7) +
+  geom_highlight_government(government == 1) +
+  labs(
+    colour = NULL,
+    title = "Australian Parliament",
+    subtitle = "Government encircled in black."
+  ) +
+  scale_colour_manual(
+    values = australia$colour,
+    limits = australia$party_short
+  ) +
+  theme_ggparliament() +
+  theme(legend.position = "bottom") +
+  facet_grid(~house, scales = "free")
+
+au
+```
+
+### Facet UK Parliament
+
+```{r}
+uk <- election_data %>%
+  filter(country == "UK") %>%
+  split(.$year) %>%
+  map(~ parliament_data(
+    election_data = .,
+    party_seats = .$seats,
+    group = .$government,
+    type = "opposing_benches"
+  )) %>%
+  bind_rows()
+```
+
+
+```{r, fig.height = 6, fig.width=8}
+ggplot(
+  data = uk,
+  aes(
+    x = x,
+    y = y,
+    color = party_long
+  )
+) +
+  geom_parliament_seats(size = 1.5) +
+  coord_flip() +
+  facet_wrap(~year, ncol = 2) +
+  scale_color_manual(
+    values = uk$colour,
+    limits = uk$party_long
+  ) +
+  theme_ggparliament()
+```
+
+
+
+
