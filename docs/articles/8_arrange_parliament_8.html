@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggparliament</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1.6</span>
       </span>
     </div>
 
@@ -72,6 +72,54 @@
     </li>
     <li>
       <a href="../articles/8_arrange_parliament_8.html">Arranging Parliament Plots</a>
+    </li>
+    <li>
+      <a href="../articles/a_basic-parliament-plots_1.html">Basic Parliament Plots</a>
+    </li>
+    <li>
+      <a href="../articles/arrange_parliament_8.html">Arranging Parliament Plots</a>
+    </li>
+    <li>
+      <a href="../articles/b_label-parties_2.html">How to add party labels and extraneous information to your parliament plot</a>
+    </li>
+    <li>
+      <a href="../articles/basic-parliament-plots_1.html">Basic Parliament Plots</a>
+    </li>
+    <li>
+      <a href="../articles/c_draw-majority-threshold_3.html">How to draw the majority threshold</a>
+    </li>
+    <li>
+      <a href="../articles/d_highlight-government_4.html">How to highlight government or party in control of the legislature</a>
+    </li>
+    <li>
+      <a href="../articles/draw-majority-threshold_3.html">How to draw the majority threshold</a>
+    </li>
+    <li>
+      <a href="../articles/e_facet-parliament_5.html">How to facet parliaments by year or house</a>
+    </li>
+    <li>
+      <a href="../articles/emphasize_parliamentarians_6.html">How to emphasize parliamentarians</a>
+    </li>
+    <li>
+      <a href="../articles/f_emphasize_parliamentarians_6.html">How to emphasize parliamentarians</a>
+    </li>
+    <li>
+      <a href="../articles/facet-parliament_5.html">How to facet parliaments by year or house</a>
+    </li>
+    <li>
+      <a href="../articles/g_hanging_seats_7.html">How to draw overhang seats in a legislature</a>
+    </li>
+    <li>
+      <a href="../articles/h_arrange_parliament_8.html">Arranging Parliament Plots</a>
+    </li>
+    <li>
+      <a href="../articles/hanging_seats_7.html">How to draw overhang seats in a legislature</a>
+    </li>
+    <li>
+      <a href="../articles/highlight-government_4.html">How to highlight government or party in control of the legislature</a>
+    </li>
+    <li>
+      <a href="../articles/label-parties_2.html">How to add party labels and extraneous information to your parliament plot</a>
     </li>
   </ul>
 </li>
@@ -156,7 +204,7 @@ on the left, starting with the largest party):</p>
 <span>                  party_seats <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">seats</span>,</span>
 <span>                  type <span class="op">=</span> <span class="st">"semicircle"</span><span class="op">)</span></span>
 <span><span class="va">german_parliament</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">formatted_parl_data</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, colour <span class="op">=</span> <span class="va">party_short</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/geom_parliament_seats.html">geom_parliament_seats</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_parliament_seats.html">geom_parliament_seats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_highlight_government.html">geom_highlight_government</a></span><span class="op">(</span><span class="va">government</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/draw_majoritythreshold.html">draw_majoritythreshold</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">355</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"semicircle"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"Party"</span>, </span>
@@ -181,7 +229,7 @@ as NULL, no ordering takes place.</p>
 <span>                  plot_order <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">seats</span>,</span>
 <span>                  type <span class="op">=</span> <span class="st">"semicircle"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, colour <span class="op">=</span> <span class="va">party_short</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/geom_parliament_seats.html">geom_parliament_seats</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_parliament_seats.html">geom_parliament_seats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_highlight_government.html">geom_highlight_government</a></span><span class="op">(</span><span class="va">government</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/draw_majoritythreshold.html">draw_majoritythreshold</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">355</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"semicircle"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"Party"</span>, </span>
@@ -204,7 +252,7 @@ in the first plot is to multiple this by the number of seats, i.e.:</p>
 <span>                  plot_order <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">seats</span> <span class="op">*</span> <span class="va">.</span><span class="op">$</span><span class="va">government</span>,</span>
 <span>                  type <span class="op">=</span> <span class="st">"semicircle"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, colour <span class="op">=</span> <span class="va">party_short</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/geom_parliament_seats.html">geom_parliament_seats</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_parliament_seats.html">geom_parliament_seats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_highlight_government.html">geom_highlight_government</a></span><span class="op">(</span><span class="va">government</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/draw_majoritythreshold.html">draw_majoritythreshold</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">355</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"semicircle"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"Party"</span>, </span>
