@@ -35,7 +35,7 @@ devtools::install_github("zmeers/ggparliament")
 ```
 
 Inspiration from this package comes from: [parliamentdiagram](https://github.com/slashme/parliamentdiagram), which
-is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](http://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
+is used on Wikipedia, [parliament-svg](https://github.com/juliuste/parliament-svg), which is a javascript clone, and [a discussion on StackOverflow](https://stackoverflow.com/questions/42729174/creating-a-half-donut-or-parliamentary-seating-chart), which provided some of the code for part for the "arc" representations used in this package.
 
 
 If you have any issues, please note the problem and inform us!
