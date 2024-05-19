@@ -45,7 +45,7 @@ Various democratic countries use different processes to elect politicians. A few
 
 In 2017, the Bloomberg visual graphics team created [an excellent data visualization](https://www.bloomberg.com/graphics/2017-how-germany-forms-government/) of the German Bundestag prior to the 2017 German election. They represented the overhang seats by adding hollow seats to each party. We have decided to recreate the idea of hollow seats in `ggparliament` with `geom_overhang_seats()`.
 
-```{r}
+```{r, fig.width = 9, fig.height = 4}
 data <- election_data %>%
   filter(country == "Germany" & year == "2013") 
 # binary variable for overhang seat
