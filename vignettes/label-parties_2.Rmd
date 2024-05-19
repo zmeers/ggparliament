@@ -38,7 +38,7 @@ load("../R/sysdata.rda")
 
 # Drawing party labels
 
-```{r, fig.width=6, fig.height=4}
+```{r, fig.width=7, fig.height=4}
 data <- election_data %>% 
     filter(year == "2016" & 
              country == "USA" & 
@@ -59,7 +59,7 @@ ggplot(usa_data, aes(x, y, color=party_long)) +
     theme_ggparliament(legend = FALSE) 
 ```
 
-```{r,fig.width=4, fig.height=4}
+```{r,fig.width=5, fig.height=4}
 australia <- election_data %>%
   filter(country == "Australia" &
     house == "Representatives" &
@@ -87,7 +87,7 @@ au
 
 # Draw label noting total number of parliamentarians
 
-```{r, fig.width=6, fig.height=4}
+```{r, fig.width=7, fig.height=4}
 data <- election_data %>% 
     filter(year == "2016" & 
              country == "USA" & 
