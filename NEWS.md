@@ -1,3 +1,8 @@
+# ggparliament 3.1.5
+## 04/2024
+- Fixed CRAN error in package vignette; package resubmitted.
+- Added `pkgdown` documentation in the docs subdirectory.
+
 # ggparliament 2.1.5
 ## 04/2021
 - Added new election data for the US, the UK, and Australia
