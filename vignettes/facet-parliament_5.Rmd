@@ -63,9 +63,9 @@ usa <- election_data %>%
   bind_rows() # combine
 ```
 
-```{r, fig.width=12, fig.height=4}
+```{r, fig.width=12, fig.height=8}
 us <- ggplot(usa, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() +
+  geom_parliament_seats(size = 2.8) +
   geom_highlight_government(government == 1) +
   labs(
     colour = NULL,
@@ -78,7 +78,7 @@ us <- ggplot(usa, aes(x, y, colour = party_short)) +
     limits = usa$party_short
   ) +
   theme(legend.position = "bottom") +
-  facet_grid(~year, scales = "free")
+  facet_wrap(~year, ncol = 2)
 
 us
 ```
@@ -99,9 +99,9 @@ australia <- election_data %>%
   bind_rows() # combine
 ```
 
-```{r,fig.width=8, fig.height=5}
+```{r,fig.width=10, fig.height=5}
 au <- ggplot(australia, aes(x, y, colour = party_short)) +
-  geom_parliament_seats() +
+  geom_parliament_seats(size = 2.7) +
   geom_highlight_government(government == 1) +
   labs(
     colour = NULL,
@@ -135,7 +135,7 @@ uk <- election_data %>%
 ```
 
 
-```{r}
+```{r, fig.height = 6, fig.width=8}
 ggplot(
   data = uk,
   aes(
