@@ -63,7 +63,7 @@ us_rep <- election_data %>%
 head(us_rep)
 ```
 
-2. Input the data into ggparliament::parliament_data.
+2. Input the data into `ggparliament::parliament_data`.
 
 This function unravels election results by party to individual seats. Users must define the input data frame, the type of legislature, the number of rows in the legislature, and a numeric variable which expands the number of seats to the total number of members in the legislature.
 
@@ -167,7 +167,7 @@ russia_classroom <- election_data %>%
                   type = "classroom")
 ```
 
-```{r,fig.width=4, fig.height=4}
+```{r,fig.width=6, fig.height=4}
 rus <- ggplot(russia_classroom, aes(x, 
                                     y, 
                                     colour = party_short)) +
@@ -198,7 +198,7 @@ russia_circle <- election_data %>%
     type = "circle")
 ```
 
-```{r,fig.width=4, fig.height=4}
+```{r,fig.width=6, fig.height=4}
 russia_circle_example <- ggplot(russia_circle, aes(x, 
                                                    y, 
                                                    colour = party_short)) +
@@ -215,7 +215,7 @@ russia_circle_example
 
 Though not suggested, data can also be plotted simply from a vector of the parties winning seats as below.
 
-```{r}
+```{r,fig.width=6, fig.height=4}
 #a made up example of a vector of seats
 seats <- c(rep("democrats", 40), 
            rep("republicans", 30), 
@@ -241,7 +241,7 @@ plot
 ```
 
 You can also create a data frame in `R` and plot your results.
-```{r}
+```{r,fig.width=8, fig.height=4}
 house_of_reps <- data.frame(
   party = c("Vacancies","Republicans", "Democrats", "Vacancies"),
   seats = c(3, 236, 193, 3),
