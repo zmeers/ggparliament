@@ -1,0 +1,99 @@
+---
+title: "How to highlight government or party in control of the legislature"
+author: "Zoe Meers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Highlight Government}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+
+library(ggparliament)
+library(dplyr)
+library(ggplot2)
+require(tidyr)
+require(magrittr)
+
+source("../R/parliament_data.R")
+source("../R/geom_parliament_seats.R")
+source("../R/geom_highlight_government.R")
+source("../R/helper_funcs.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_partylabels.R")
+source("../R/draw_majoritythreshold.R")
+source("../R/draw_totalseats.R")
+source("../R/theme_ggparliament.R")
+load("../R/sysdata.rda")
+
+
+```
+
+## Highlighting governments or parties in control of legislative chamber
+
+We can specify whether a party is a part of the government (or otherwise has control of the legislature if they hold a majority of seats) in our visualization by using  `geom_highlight_government()`. `geom_highlight_government()` surrounds the circle with an outline. 
+
+### 115th Congress
+
+```{r}
+us_congress <- election_data %>%
+  filter(country == "USA" &
+    year == 2016 &
+    house == "Representatives")
+head(us_congress)
+```
+
+```{r}
+us_congress <- parliament_data(election_data = us_congress,
+  type = "semicircle",
+  parl_rows = 10,
+  party_seats = us_congress$seats)
+head(us_congress)
+```
+
+```{r, fig.width=8, fig.height=4}
+us <- ggplot(us_congress, aes(x, y, colour = party_short)) +
+  geom_parliament_seats() + 
+  geom_highlight_government(government == 1) + #specify the variable you want to highlight here!
+  theme_ggparliament() +
+  labs(colour = NULL, 
+       title = "United States Congress") +
+  scale_colour_manual(values = us_congress$colour, 
+                      limits = us_congress$party_short) 
+
+us
+```
+
+Although the primary purpose is to highlight members of a governing coalition, this function is *not* limited to highlighting governments. If, for example, you wish to highlight the Australian government's front branch, write
+```{r}
+australia <- election_data %>%
+  filter(country == "Australia" &
+    house == "Representatives" &
+    year == 2016) 
+
+australia <- parliament_data(election_data = australia,
+  party_seats = australia$seats,
+  parl_rows = 4,
+  type = "horseshoe")
+```
+
+```{r,fig.width=5, fig.height=5}
+au <- ggplot(australia, aes(x, y, colour = party_short)) +
+  geom_parliament_seats() + 
+  geom_highlight_government(row == 1 & government == 1) + # this highlights the front bench.
+  theme_ggparliament() +
+  labs(colour = NULL, 
+       title = "Australian Parliament") +
+  scale_colour_manual(values = australia$colour, 
+                      limits = australia$party_short) + 
+  theme(legend.position = 'bottom') 
+
+au
+```
