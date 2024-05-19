@@ -1,23 +1,13 @@
----
-title: "README"
-output: github_document
-pagetitle: README
----
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
-
-
-# Status
-
-![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
-![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.01313/status.svg)](https://doi.org/10.21105/joss.01313)
 <img src = "man/figures/HexSticker.png" align = "right" width = "200"/>
 
 # `ggparliament`: Parliament plots
 
+
+![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
+![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01313/status.svg)](https://doi.org/10.21105/joss.01313)
 
 This package attempts to implement "parliament plots" - visual representations of the composition of legislatures that display seats colour-coded by party. The input is a data frame containing one row per party, with columns representing party name/label and number of seats, respectively.
 
