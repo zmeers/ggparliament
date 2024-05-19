@@ -41,7 +41,7 @@ load("../R/sysdata.rda")
 To emphasize certain parliamentarians, add `geom_emphasize_parliamentarians()` to your `ggplot2` plot, specifying the variable you want to emphasize. This will set the alpha on the remaining seats to 0.6.
 
 ### Women in the 115th American Congress
-```{r}
+```{r, fig.width = 8, fig.height = 5}
 # Take preliminary data as provided in ggparliament
 data <- election_data %>% 
   filter(year == "2016" & country == "USA" & house == "Representatives")
