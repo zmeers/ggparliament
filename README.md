@@ -11,7 +11,6 @@ pagetitle: README
 
 # Status
 
-[![Build Status](https://travis-ci.org/RobWHickman/ggparliament.png)](https://travis-ci.org/RobWHickman/ggparliament)
 ![CRAN Status](https://www.r-pkg.org/badges/version/ggparliament)
 ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggparliament)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01313/status.svg)](https://doi.org/10.21105/joss.01313)
@@ -136,7 +135,7 @@ representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
 representatives
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![US House of Representatives](figure/unnamed-chunk-6-1.png)
 
 ### Plot of US Senate
 
@@ -156,7 +155,7 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
 senate 
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![US Senate](figure/unnamed-chunk-7-1.png)
 
 
 ### Plot of German Bundestag
@@ -182,7 +181,7 @@ bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
 bundestag
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+![German Bundestag](figure/unnamed-chunk-8-1.png)
 
 ## Opposing Benches Parliament
 
@@ -215,7 +214,7 @@ commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
 commons
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![UK Parliament](figure/unnamed-chunk-9-1.png)
 
 
 
@@ -257,7 +256,7 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![Australian Parliament](figure/unnamed-chunk-11-1.png)
 
 
 

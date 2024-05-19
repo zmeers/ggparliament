@@ -1,0 +1,14 @@
+pandoc: 3.1.11
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  1_basic-parliament-plots_1: 1_basic-parliament-plots_1.html
+  2_label-parties_2: 2_label-parties_2.html
+  3_draw-majority-threshold_3: 3_draw-majority-threshold_3.html
+  4_highlight-government_4: 4_highlight-government_4.html
+  5_facet-parliament_5: 5_facet-parliament_5.html
+  6_emphasize_parliamentarians_6: 6_emphasize_parliamentarians_6.html
+  7_hanging_seats_7: 7_hanging_seats_7.html
+  8_arrange_parliament_8: 8_arrange_parliament_8.html
+last_built: 2024-05-19T07:41Z
+
