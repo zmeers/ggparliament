@@ -40,7 +40,7 @@ unformatted_data <- election_data %>%
 head(unformatted_data)
 ```
 One simple way to deal with this is to arrange the data before piping it through ggparliament. For instance, in the order I prefer (government on the left, starting with the largest party):
-```{r, fig.width=6, fig.height=4}
+```{r, fig.width=8, fig.height=4}
 formatted_data <- unformatted_data %>%
   arrange(-government, -seats)
 formatted_parl_data <- formatted_data %>%
@@ -59,8 +59,10 @@ german_parliament <- ggplot(formatted_parl_data, aes(x, y, colour = party_short)
                       limits = formatted_parl_data$party_short)
 german_parliament
 ```
+
 However, for whatever reason this might not be possible, or just undesirable. To deal with this, parliament_data also includes the ability to order the data for plotting using plot_order. If this is left as NULL, no ordering takes place.
-```{r, fig.width=6, fig.height=4}
+
+```{r, fig.width=8, fig.height=4}
 german_parliament <- unformatted_data %>%
   parliament_data(.,
                   parl_rows = 12,
@@ -80,7 +82,8 @@ german_parliament
   
 ```
 Given that government is a binary variable, the simplest way to order as in the first plot is to multiple this by the number of seats, i.e.:
-```{r, fig.width=6, fig.height=4}
+
+```{r, fig.width=8, fig.height=4}
 german_parliament <- unformatted_data %>%
   parliament_data(.,
                   parl_rows = 12,
