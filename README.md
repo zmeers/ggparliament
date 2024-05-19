@@ -135,7 +135,7 @@ representatives <- ggplot(us_house, aes(x, y, colour = party_short)) +
 representatives
 ```
 
-![US House of Representatives](figure/unnamed-chunk-6-1.png)
+![US House of Representatives](docs/figure/unnamed-chunk-6-1.png)
 
 ### Plot of US Senate
 
@@ -155,7 +155,7 @@ senate <- ggplot(us_senate, aes(x, y, colour = party_long)) +
 senate 
 ```
 
-![US Senate](figure/unnamed-chunk-7-1.png)
+![US Senate](docs/figure/unnamed-chunk-7-1.png)
 
 
 ### Plot of German Bundestag
@@ -181,7 +181,7 @@ bundestag <- ggplot(germany, aes(x, y, colour = party_short)) +
 bundestag
 ```
 
-![German Bundestag](figure/unnamed-chunk-8-1.png)
+![German Bundestag](docs/figure/unnamed-chunk-8-1.png)
 
 ## Opposing Benches Parliament
 
@@ -214,7 +214,7 @@ commons <- ggplot(uk_17, aes(x, y, colour = party_short)) +
 commons
 ```
 
-![UK Parliament](figure/unnamed-chunk-9-1.png)
+![UK Parliament](docs/figure/unnamed-chunk-9-1.png)
 
 
 
@@ -256,7 +256,7 @@ au_rep <-ggplot(australia, aes(x, y, colour = party_short)) +
 au_rep
 ```
 
-![Australian Parliament](figure/unnamed-chunk-11-1.png)
+![Australian Parliament](docs/figure/unnamed-chunk-11-1.png)
 
 
 
