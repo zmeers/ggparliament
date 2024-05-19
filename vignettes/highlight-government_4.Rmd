@@ -58,7 +58,7 @@ us_congress <- parliament_data(election_data = us_congress,
 head(us_congress)
 ```
 
-```{r, fig.width=6, fig.height=4}
+```{r, fig.width=8, fig.height=4}
 us <- ggplot(us_congress, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(government == 1) + #specify the variable you want to highlight here!
@@ -84,7 +84,7 @@ australia <- parliament_data(election_data = australia,
   type = "horseshoe")
 ```
 
-```{r,fig.width=4, fig.height=4}
+```{r,fig.width=5, fig.height=5}
 au <- ggplot(australia, aes(x, y, colour = party_short)) +
   geom_parliament_seats() + 
   geom_highlight_government(row == 1 & government == 1) + # this highlights the front bench.
