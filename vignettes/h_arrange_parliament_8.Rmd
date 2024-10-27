@@ -68,11 +68,11 @@ german_parliament <- unformatted_data %>%
                   parl_rows = 12,
                   party_seats = .$seats,
                   plot_order = .$seats,
-                  type = "circle") %>%
+                  type = "semicircle") %>%
   ggplot(., aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 2.8) +
   geom_highlight_government(government == 1) + 
-  #draw_majoritythreshold(n = 355, label = FALSE, type = "circle") + 
+  draw_majoritythreshold(n = 355, label = FALSE, type = "semicircle") + 
   labs(colour="Party", 
        title="Germany 2017 Election Results Arranged by Seats per Party") + 
   theme_ggparliament() +
@@ -86,10 +86,10 @@ Given that government is a binary variable, the simplest way to order as in the 
 ```{r, fig.width=8, fig.height=4}
 german_parliament <- unformatted_data %>%
   parliament_data(.,
-                  parl_rows = 16,
+                  parl_rows = 12,
                   party_seats = .$seats,
                   plot_order = .$seats * .$government,
-                  type = "thirdcircle") %>%
+                  type = "semicircle") %>%
   ggplot(., aes(x, y, colour = party_short)) +
   geom_parliament_seats(size = 2.8) +
   geom_highlight_government(government == 1) + 

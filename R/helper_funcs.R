@@ -19,7 +19,6 @@ calc_coordinates <- function(N, M, limits, segment = 0.5) {
     lapply(1:M, function(i) {
       # find how many seats for this parl_row
       counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
-      ### ROB- Need to symmetry-ise this for non 0.5/1 values of segment ###
       # For a hemicycle, seq from 0-180degrees for the row for the cartesian position
       # For a narrower cycle (where segment < 0.5), calculate the offset (theta_narrow)
       # in radians from each side
