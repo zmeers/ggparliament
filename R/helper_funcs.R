@@ -19,12 +19,15 @@ calc_coordinates <- function(N, M, limits, segment = 0.5) {
     lapply(1:M, function(i) {
       # find how many seats for this parl_row
       counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
-      # seq from 0-180degress for the row for the cartesian position
       ### ROB- Need to symmetry-ise this for non 0.5/1 values of segment ###
+      # For a hemicycle, seq from 0-180degrees for the row for the cartesian position
+      # For a narrower cycle (where segment < 0.5), calculate the offset (theta_narrow)
+      # in radians from each side
       theta_narrow <- (0.5 - segment) * pi
+      # theta_left is the left-hand start of the arc
       theta_left <- theta_narrow
+      # theta_right is the right-hand end of the arc
       theta_right <- pi - theta_narrow
-      print(paste("theta values (as degrees)", theta_left/pi*180, theta_right/pi*180, theta_narrow/pi*180 ))
       theta <- seq( theta_left, theta_right,
                    len = counts[i])
       # subtract the seats already plotted from N
