@@ -21,7 +21,12 @@ calc_coordinates <- function(N, M, limits, segment = 0.5) {
       counts[i] <<- round(N * radii[i] / sum(radii[i:M]))
       # seq from 0-180degress for the row for the cartesian position
       ### ROB- Need to symmetry-ise this for non 0.5/1 values of segment ###
-      theta <- seq(0, segment * 2 * pi, len = counts[i])
+      theta_narrow <- (0.5 - segment) * pi
+      theta_left <- theta_narrow
+      theta_right <- pi - theta_narrow
+      print(paste("theta values (as degrees)", theta_left/pi*180, theta_right/pi*180, theta_narrow/pi*180 ))
+      theta <- seq( theta_left, theta_right,
+                   len = counts[i])
       # subtract the seats already plotted from N
       # N becomes 'seats left to calculate'
       N <<- N - counts[i]

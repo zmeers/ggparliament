@@ -29,6 +29,7 @@ parliament_data <- function(election_data = NULL,
                             type = c(
                               "horseshoe",
                               "semicircle",
+                              "thirdcircle",
                               "circle",
                               "classroom",
                               "opposing_benches"
@@ -43,6 +44,10 @@ parliament_data <- function(election_data = NULL,
 
   else if (type == "semicircle") {
     parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2))
+  }
+  
+  else if (type == "thirdcircle") {
+    parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2), segment = 1/3)
   }
 
   else if (type == "circle") {
