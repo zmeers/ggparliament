@@ -5,9 +5,16 @@
 \title{Parliament seats
 The parliament seats geom is used for plotting data from parliament_data()}
 \usage{
-geom_parliament_seats(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, size = 3.5, show.legend = NA,
-  inherit.aes = TRUE)
+geom_parliament_seats(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  na.rm = FALSE,
+  size = 3.5,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Mapping the aesthetics (the x and y coordinates,

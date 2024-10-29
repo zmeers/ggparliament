@@ -125,8 +125,13 @@ parliament_data <- function(election_data = NULL,
     election_data <- election_data[order(-group, -party_seats), ]
   }
 
-  else if (is.null(type) | !type %in% c("horseshoe", "semicircle", "circle", "classroom", "opposing_benches")) {
-    warning("Warning: parliament layout 'type' not supported.")
+  else if (is.null(type) | !type %in% c("horseshoe", "thirdcycle", "semicircle", "circle", "classroom", "opposing_benches")) {
+    if (is.null(type)) {
+      type_name <- "<null>"
+    } else {
+      type_name <- type
+    }
+    warning("Warning: parliament layout \"", type, "\" not supported.")
   }
 
   # if election data is not null, bind layout to original data

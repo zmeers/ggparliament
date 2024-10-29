@@ -2,9 +2,28 @@
 % Please edit documentation in R/ggparliament_package.R
 \docType{package}
 \name{ggparliament-package}
+\alias{ggparliament}
 \alias{ggparliament-package}
 \title{ggparliament}
 \description{
-ggparliament
+Simple parliament plots using 'ggplot2'. Visualize election results as points in the architectural layout of the legislative chamber.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/zmeers/ggparliament}
+  \item Report bugs at \url{https://github.com/zmeers/ggparliament/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Zoe Meers \email{zoe.meers@gmail.com}
+
+Authors:
+\itemize{
+  \item Robert Hickman \email{robwhickman@gmail.com}
+  \item Thomas J. Leeper \email{thosjleeper@gmail.com} (\href{https://orcid.org/0000-0003-4097-6326}{ORCID})
+}
+
 }
 \keyword{package}

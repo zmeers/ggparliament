@@ -4,9 +4,12 @@
 \alias{draw_totalseats}
 \title{Draw total number of seats in the middle of the parliament}
 \usage{
-draw_totalseats(n = NULL, size = 12, colour = "black",
-  type = c("horseshoe", "semicircle", "opposing_benches", "circle",
-  "classroom"))
+draw_totalseats(
+  n = NULL,
+  size = 12,
+  colour = "black",
+  type = c("horseshoe", "semicircle", "opposing_benches", "circle", "classroom")
+)
 }
 \arguments{
 \item{n}{The number of total seats in the legislature.}

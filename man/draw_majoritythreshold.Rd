@@ -4,9 +4,15 @@
 \alias{draw_majoritythreshold}
 \title{Draw majority threshold}
 \usage{
-draw_majoritythreshold(n = NULL, label = TRUE, type = c("horseshoe",
-  "semicircle", "opposing_benches"), linecolour = "black", linesize = 1,
-  linetype = 2, linealpha = 1)
+draw_majoritythreshold(
+  n = NULL,
+  label = TRUE,
+  type = c("horseshoe", "semicircle", "opposing_benches"),
+  linecolour = "black",
+  linesize = 1,
+  linetype = 2,
+  linealpha = 1
+)
 }
 \arguments{
 \item{n}{The number of seats required for a majority}
