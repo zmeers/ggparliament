@@ -30,6 +30,7 @@ parliament_data <- function(election_data = NULL,
                               "horseshoe",
                               "semicircle",
                               "thirdcircle",
+                              "third_circle",
                               "circle",
                               "classroom",
                               "opposing_benches"
@@ -46,7 +47,7 @@ parliament_data <- function(election_data = NULL,
     parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2))
   }
   
-  else if (type == "thirdcircle") {
+  else if (type == "thirdcircle" | type == "third_circle") {
     parl_layout <- calc_coordinates(sum(party_seats), parl_rows, c(1, 2), segment = 1/3)
   }
 
@@ -55,7 +56,7 @@ parliament_data <- function(election_data = NULL,
   }
 
   else if (type == "classroom") {
-    # calculate parl_layour by expanding a grid of rows vs the length each row needs to be
+    # calculate parl_layout by expanding a grid of rows vs the length each row needs to be
     parl_layout <- expand.grid(
       y = 1:parl_rows,
       x = seq_len(ceiling(sum(party_seats) / parl_rows))
@@ -125,13 +126,14 @@ parliament_data <- function(election_data = NULL,
     election_data <- election_data[order(-group, -party_seats), ]
   }
 
-  else if (is.null(type) | !type %in% c("horseshoe", "thirdcycle", "semicircle", "circle", "classroom", "opposing_benches")) {
+  else if (is.null(type) | !type %in% c("horseshoe", "thirdcircle",
+                                        "third_circle", "semicircle", "circle", "classroom", "opposing_benches")) {
     if (is.null(type)) {
       type_name <- "<null>"
     } else {
       type_name <- type
     }
-    warning("Warning: parliament layout \"", type, "\" not supported.")
+    warning("Warning: parliament layout \"", type_name, "\" not supported.")
   }
 
   # if election data is not null, bind layout to original data

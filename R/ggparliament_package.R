@@ -1,7 +1,6 @@
 #' ggparliament
 #' @name ggparliament-package
-#' @docType package
-#' @keywords package
+#' @keywords "_PACKAGE"
 #'
 #' @import ggplot2
 #'

@@ -10,8 +10,8 @@ parliament_data(
   party_seats = election_data$seats,
   group = NULL,
   plot_order = NULL,
-  type = c("horseshoe", "semicircle", "thirdcircle", "circle", "classroom",
-    "opposing_benches")
+  type = c("horseshoe", "semicircle", "thirdcircle", "third_circle", "circle",
+    "classroom", "opposing_benches")
 )
 }
 \arguments{
