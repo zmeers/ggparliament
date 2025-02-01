@@ -127,6 +127,37 @@ au <- ggplot(australia_horseshoe, aes(x = x,
 au
 ```
 
+
+
+### Narrower "hemicycle" Parliament
+
+```{r}
+australia_sen <- election_data %>%
+    filter(country == "Australia" &
+               house == "Senate" &
+               year == 2016) 
+
+australia_senate <- parliament_data(election_data = australia_sen,
+                                       party_seats = australia_sen$seats,
+                                       parl_rows = 5,
+                                       type = "thirdcircle")
+```
+
+```{r,fig.width=4, fig.height=4}
+au_senate <- ggplot(australia_senate, aes(x = x, 
+                                   y = y, 
+                                   colour = party_short)) +
+    geom_parliament_seats() + 
+    theme_ggparliament() +
+    labs(colour = NULL, 
+         title = "Australian Senate") +
+    scale_colour_manual(values = australia_sen$colour, 
+                        limits = australia_sen$party_short) + 
+    theme(legend.position = 'bottom')
+
+au_senate
+```
+
 ### Opposing Benches Parliament
 
 The opposing bench style of parliament calls for a variable to split the left and right bench. Using the ggparliament election data, we split on the government column which is a binary variable.

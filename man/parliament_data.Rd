@@ -4,10 +4,15 @@
 \alias{parliament_data}
 \title{A function that prepares data for parliamentary plots}
 \usage{
-parliament_data(election_data = NULL, parl_rows = NULL,
-  party_seats = election_data$seats, group = NULL, plot_order = NULL,
-  type = c("horseshoe", "semicircle", "circle", "classroom",
-  "opposing_benches"))
+parliament_data(
+  election_data = NULL,
+  parl_rows = NULL,
+  party_seats = election_data$seats,
+  group = NULL,
+  plot_order = NULL,
+  type = c("horseshoe", "semicircle", "thirdcircle", "third_circle", "circle",
+    "classroom", "opposing_benches")
+)
 }
 \arguments{
 \item{election_data}{aggregate election results}

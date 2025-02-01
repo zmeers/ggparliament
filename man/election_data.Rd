@@ -4,7 +4,9 @@
 \name{election_data}
 \alias{election_data}
 \title{Election data from 5 countries}
-\format{A data frame with 167 rows and 8 variables}
+\format{
+A data frame with 167 rows and 8 variables
+}
 \usage{
 data(election_data)
 }
