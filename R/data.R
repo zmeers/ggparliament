@@ -4,7 +4,7 @@
 #' Australia, Canada, Chile, Germany, Russia, UK, and USA. The variables are as follows:
 #'
 #' \itemize{
-#'   \item year. The year of the election (1990-2021)
+#'   \item year. The year of the election (1990-2025)
 #'   \item country. The country the election took place within (Australia, Canada, Chile, Germany, Russia, UK, and USA)
 #'   \item house. The parliamentary house of the election
 #'   \item party_long. The full name of a party which had elected representatives
@@ -18,5 +18,5 @@
 #' @keywords datasets
 #' @name election_data
 #' @usage data(election_data)
-#' @format A tibble with 307 rows and 8 variables
+#' @format A tibble with 312 rows and 8 variables
 "election_data"
