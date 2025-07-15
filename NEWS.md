@@ -1,3 +1,13 @@
+# ggparliament 3.1.7
+## 07/2025
+- Added new elections data for Canada.
+- Updated election dataset documentation.
+
+# ggparliament 3.1.6
+## 05/2024
+- Updated DESCRIPTION, citation and README files.
+- Dropped old figure files and README_files folder.
+
 # ggparliament 3.1.5
 ## 04/2024
 - Fixed CRAN error in package vignette; package resubmitted.
